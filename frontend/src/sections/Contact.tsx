@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send, MessageCircle, CheckCircle, MapPinned } from 'lucide-react';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 // Contact Information
 const CONTACT_INFO = {
   phone: '0782169162',
   whatsapp: '250782169162',
-  email: 'cardinaloichirwa@gmail.com',
+  email: 'thehurbertltd@gmail.com',
   address: '1 KN 78 St, Kigali',
+  mapLink: 'https://maps.google.com/?q=1+KN+78+St,+Kigali,+Rwanda',
 };
 
 const contactInfo = [
@@ -14,23 +17,29 @@ const contactInfo = [
     icon: MapPinned,
     title: 'Address',
     content: CONTACT_INFO.address,
+    link: CONTACT_INFO.mapLink,
+    isExternal: true,
   },
   {
     icon: Phone,
     title: 'Phone / WhatsApp',
     content: CONTACT_INFO.phone,
     link: `tel:${CONTACT_INFO.phone}`,
+    isExternal: false,
   },
   {
     icon: Mail,
     title: 'Email',
     content: CONTACT_INFO.email,
-    link: `mailto:${CONTACT_INFO.email}`,
+    // For email, we'll handle click separately in the card
+    isEmail: true,
   },
   {
     icon: Clock,
     title: 'Working Hours',
-    content: 'Mon - Fri: 8:00 AM - 6:00 PM',
+    content: 'Open 24/7 - Always here for you',
+    link: null,
+    isExternal: false,
   },
 ];
 
@@ -80,6 +89,18 @@ export default function Contact() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handlePhoneChange = (value: string) => {
+    setFormData((prev) => ({ ...prev, phone: value }));
+  };
+
+  // Function to open Gmail compose for direct email
+  const openGmailCompose = () => {
+    const subject = encodeURIComponent('Inquiry from THE HURBERT Website');
+    const body = encodeURIComponent('Hello THE HURBERT team,\n\nI would like to inquire about your services.\n\nThank you.');
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_INFO.email}&su=${subject}&body=${body}`;
+    window.open(gmailUrl, '_blank');
   };
 
   // ============================================
@@ -260,10 +281,11 @@ This message was sent from THE HURBERT contact form.`;
             <div className="grid sm:grid-cols-2 gap-6 mb-10">
               {contactInfo.map((item, index) => {
                 const Icon = item.icon;
-                const content = (
+                const CardContent = (
                   <div
-                    className="p-6 bg-gray-50 rounded-xl transition-all duration-300 hover:bg-[#c9a86c]/10 hover:shadow-lg group"
+                    className={`p-6 bg-gray-50 rounded-xl transition-all duration-300 hover:bg-[#c9a86c]/10 hover:shadow-lg group ${item.link || item.isEmail ? 'cursor-pointer' : ''}`}
                     style={{ transitionDelay: `${200 + index * 100}ms` }}
+                    onClick={item.isEmail ? openGmailCompose : undefined}
                   >
                     <div className="w-12 h-12 rounded-full bg-[#c9a86c] flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110">
                       <Icon className="w-6 h-6 text-white" />
@@ -274,17 +296,27 @@ This message was sent from THE HURBERT contact form.`;
                     >
                       {item.title}
                     </h4>
-                    <p className="text-gray-600 text-sm">{item.content}</p>
+                    <p className="text-gray-600 text-sm hover:text-[#c9a86c] transition-colors">
+                      {item.content}
+                    </p>
                   </div>
                 );
 
-                return item.link ? (
-                  <a key={item.title} href={item.link} className="block">
-                    {content}
-                  </a>
-                ) : (
-                  <div key={item.title}>{content}</div>
-                );
+                if (item.link && !item.isEmail) {
+                  return (
+                    <a 
+                      key={item.title} 
+                      href={item.link} 
+                      target={item.isExternal ? "_blank" : undefined}
+                      rel={item.isExternal ? "noopener noreferrer" : undefined}
+                      className="block no-underline"
+                    >
+                      {CardContent}
+                    </a>
+                  );
+                } else {
+                  return <div key={item.title}>{CardContent}</div>;
+                }
               })}
             </div>
 
@@ -411,34 +443,36 @@ This message was sent from THE HURBERT contact form.`;
                     </div>
                   </div>
 
-                  {/* Phone & Subject */}
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Phone Number
-                      </label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent transition-all duration-300 bg-white"
-                        placeholder="0782169162"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Subject
-                      </label>
-                      <input
-                        type="text"
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent transition-all duration-300 bg-white"
-                        placeholder="How can we help?"
-                      />
-                    </div>
+                  {/* Phone with Country Code */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Phone Number
+                    </label>
+                    <PhoneInput
+                      country={'rw'}
+                      value={formData.phone}
+                      onChange={handlePhoneChange}
+                      inputClass="!w-full !pl-12 !py-3 !border-gray-200 !rounded-lg focus:!ring-2 focus:!ring-[#c9a86c] focus:!border-transparent !bg-white"
+                      buttonClass="!border-gray-200 !rounded-l-lg hover:!bg-gray-50"
+                      placeholder="Enter phone number"
+                      enableSearch={true}
+                      searchPlaceholder="Search country..."
+                    />
+                  </div>
+
+                  {/* Subject */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Subject
+                    </label>
+                    <input
+                      type="text"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent transition-all duration-300 bg-white"
+                      placeholder="How can we help?"
+                    />
                   </div>
 
                   {/* Message */}
