@@ -8,7 +8,7 @@ const navItems = [
     label: 'Services',
     href: '#services',
     children: [
-      { label: 'Events Consultancy', href: '#services' },
+      { label: 'Events Planning', href: '#services' },
       { label: 'Event Production', href: '#services' },
       { label: 'Car Rental', href: '#services' },
       { label: 'Tourism', href: '#services' },

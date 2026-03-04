@@ -16,6 +16,7 @@ import partnersRoutes from './routes/partners.js';
 import staffRoutes from './routes/staff.js';
 import bookingsRoutes from './routes/bookings.js';
 import dashboardRoutes from './routes/dashboard.js';
+import galleryRoutes from './routes/gallery.js';
 
 dotenv.config();
 
@@ -228,6 +229,7 @@ app.use('/api/partners', partnersRoutes);
 app.use('/api/staff', staffRoutes);
 app.use('/api/bookings', bookingsRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/gallery', galleryRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -257,5 +259,6 @@ app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
   console.log(`✅ API available at http://localhost:${PORT}/api`);
   console.log(`✅ Uploads available at http://localhost:${PORT}/uploads`);
+  console.log(`✅ Gallery API available at http://localhost:${PORT}/api/gallery`);
   console.log(`✅ Environment: ${process.env.NODE_ENV || 'development'}`);
 });

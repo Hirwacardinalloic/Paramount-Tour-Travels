@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { ArrowRight, Calendar, MapPin, X, Users, Clock, Car, Star, Briefcase, Mountain } from 'lucide-react';
+import { ArrowRight, Calendar, MapPin, X, Users, Clock, Car, Star, Briefcase, Mountain, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function Portfolio() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -12,6 +12,10 @@ export default function Portfolio() {
   const [activeTab, setActiveTab] = useState('all');
   const [returnToAllWorks, setReturnToAllWorks] = useState(false);
   
+  // Gallery states
+  const [galleryImages, setGalleryImages] = useState<{[key: string]: string[]}>({});
+  const [currentImageIndex, setCurrentImageIndex] = useState<{[key: string]: number}>({});
+
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -65,11 +69,46 @@ export default function Portfolio() {
     },
   });
 
+  // Fetch gallery images for an item
+  const fetchGallery = async (type: string, id: number) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/gallery/${type}/${id}`);
+      const data = await response.json();
+      const key = `${type}-${id}`;
+      
+      // Get all image URLs including the main image
+      const mainImage = type === 'event' 
+        ? events.find((e: any) => e.id === id)?.image
+        : type === 'car'
+        ? cars.find((c: any) => c.id === id)?.image
+        : tourism.find((t: any) => t.id === id)?.image;
+
+      const allImages = [
+        mainImage,
+        ...data.map((img: any) => img.image_url)
+      ].filter(Boolean);
+
+      setGalleryImages(prev => ({ ...prev, [key]: allImages }));
+      setCurrentImageIndex(prev => ({ ...prev, [key]: 0 }));
+    } catch (error) {
+      console.error('Failed to fetch gallery:', error);
+      // If gallery fetch fails, at least show main image
+      const mainImage = type === 'event' 
+        ? events.find((e: any) => e.id === id)?.image
+        : type === 'car'
+        ? cars.find((c: any) => c.id === id)?.image
+        : tourism.find((t: any) => t.id === id)?.image;
+      
+      const key = `${type}-${id}`;
+      setGalleryImages(prev => ({ ...prev, [key]: [mainImage].filter(Boolean) }));
+      setCurrentImageIndex(prev => ({ ...prev, [key]: 0 }));
+    }
+  };
+
   // Listen for storage events (when admin makes changes)
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'admin-update') {
-        // Refetch all data when admin makes changes
         refetchEvents();
         refetchCars();
         refetchTourism();
@@ -105,6 +144,22 @@ export default function Portfolio() {
     ? allWorks.filter(item => item.type === 'car')
     : allWorks.filter(item => item.type === 'tourism');
 
+  // Handle opening items
+  const openEvent = (item: any) => {
+    setSelectedEvent(item);
+    fetchGallery('event', item.id);
+  };
+
+  const openCar = (item: any) => {
+    setSelectedCar(item);
+    fetchGallery('car', item.id);
+  };
+
+  const openTourism = (item: any) => {
+    setSelectedTourism(item);
+    fetchGallery('tourism', item.id);
+  };
+
   // Handle closing modals and returning to all works
   const handleCloseEvent = () => {
     setSelectedEvent(null);
@@ -135,11 +190,56 @@ export default function Portfolio() {
     setShowAllWorks(false);
     setReturnToAllWorks(true);
     if (item.type === 'event') {
-      setSelectedEvent(item);
+      openEvent(item);
     } else if (item.type === 'car') {
-      setSelectedCar(item);
+      openCar(item);
     } else if (item.type === 'tourism') {
-      setSelectedTourism(item);
+      openTourism(item);
+    }
+  };
+
+  // Gallery navigation
+  const nextImage = (key: string) => {
+    setCurrentImageIndex(prev => ({
+      ...prev,
+      [key]: ((prev[key] || 0) + 1) % (galleryImages[key]?.length || 1)
+    }));
+  };
+
+  const prevImage = (key: string) => {
+    setCurrentImageIndex(prev => ({
+      ...prev,
+      [key]: ((prev[key] || 0) - 1 + (galleryImages[key]?.length || 1)) % (galleryImages[key]?.length || 1)
+    }));
+  };
+
+  // Scroll to specific service in booking section
+  const scrollToBooking = (serviceType: string) => {
+    setSelectedEvent(null);
+    setSelectedCar(null);
+    setSelectedTourism(null);
+    setShowAllWorks(false);
+    
+    // Map service type to section ID
+    let targetId = '#booking';
+    
+    if (serviceType === 'event') {
+      targetId = '#event-booking';
+    } else if (serviceType === 'car') {
+      targetId = '#car-booking';
+    } else if (serviceType === 'tourism') {
+      targetId = '#tourism-booking';
+    }
+    
+    const targetSection = document.querySelector(targetId);
+    if (targetSection) {
+      targetSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Fallback to main booking if specific section doesn't exist yet
+      const bookingSection = document.querySelector('#booking');
+      if (bookingSection) {
+        bookingSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -151,16 +251,36 @@ export default function Portfolio() {
     return cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`;
   };
 
-  // Parse JSON fields
-  const parseJsonField = (field: any) => {
-    if (!field) return [];
-    if (Array.isArray(field)) return field;
-    try {
-      return JSON.parse(field);
-    } catch {
-      return [];
+  // Parse JSON fields with debugging
+const parseJsonField = (field: any) => {
+  console.log('Parsing field:', field, 'type:', typeof field);
+  
+  if (!field) {
+    console.log('Field is empty, returning []');
+    return [];
+  }
+  
+  if (Array.isArray(field)) {
+    console.log('Field is already array, returning as is');
+    return field;
+  }
+  
+  try {
+    const parsed = JSON.parse(field);
+    console.log('Successfully parsed JSON:', parsed);
+    return Array.isArray(parsed) ? parsed : [parsed];
+  } catch (error) {
+    console.error('Failed to parse JSON:', field, error);
+    // If it's a comma-separated string, split it
+    if (typeof field === 'string' && field.includes(',')) {
+      const split = field.split(',').map(s => s.trim());
+      console.log('Split comma-separated string:', split);
+      return split;
     }
-  };
+    // Otherwise return as single-item array
+    return [field];
+  }
+};
 
   // Show loading if data is still being fetched
   if (events.length === 0 && cars.length === 0 && tourism.length === 0) {
@@ -207,9 +327,9 @@ export default function Portfolio() {
             <div
               key={`${item.type}-${item.id}-${index}`}
               onClick={() => {
-                if (item.type === 'event') setSelectedEvent(item);
-                else if (item.type === 'car') setSelectedCar(item);
-                else setSelectedTourism(item);
+                if (item.type === 'event') openEvent(item);
+                else if (item.type === 'car') openCar(item);
+                else openTourism(item);
               }}
               className="group relative rounded-xl overflow-hidden shadow-lg cursor-pointer"
             >
@@ -358,7 +478,7 @@ export default function Portfolio() {
         </div>
       )}
 
-      {/* Event Modal */}
+      {/* Event Modal with Carousel */}
       {selectedEvent && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
@@ -376,17 +496,70 @@ export default function Portfolio() {
             </button>
 
             <div className="overflow-y-auto max-h-[90vh]">
-              <div className="relative h-64 md:h-80 bg-gray-100">
+              {/* Image Carousel */}
+              <div className="relative h-64 md:h-80 bg-gray-900">
+                {/* Main Image */}
                 <img
-                  src={getImageUrl(selectedEvent.image)}
+                  src={getImageUrl(galleryImages[`event-${selectedEvent.id}`]?.[currentImageIndex[`event-${selectedEvent.id}`] || 0] || selectedEvent.image)}
                   alt={selectedEvent.title}
                   className="w-full h-full object-cover"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = '/placeholder.jpg';
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                <div className="absolute bottom-6 left-6">
+
+                {/* Navigation Arrows - Only show if multiple images */}
+                {galleryImages[`event-${selectedEvent.id}`]?.length > 1 && (
+                  <>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        prevImage(`event-${selectedEvent.id}`);
+                      }}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-[#c9a86c] transition-colors z-20"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        nextImage(`event-${selectedEvent.id}`);
+                      }}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-[#c9a86c] transition-colors z-20"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  </>
+                )}
+
+                {/* Dot Indicators */}
+                {galleryImages[`event-${selectedEvent.id}`]?.length > 1 && (
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                    {galleryImages[`event-${selectedEvent.id}`].map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentImageIndex(prev => ({
+                            ...prev,
+                            [`event-${selectedEvent.id}`]: index
+                          }));
+                        }}
+                        className={`w-2 h-2 rounded-full transition-all ${
+                          index === currentImageIndex[`event-${selectedEvent.id}`]
+                            ? 'w-4 bg-[#c9a86c]'
+                            : 'bg-white/50 hover:bg-white'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent pointer-events-none" />
+                
+                {/* Title Overlay */}
+                <div className="absolute bottom-6 left-6 z-10">
                   <span className="px-3 py-1 bg-[#c9a86c] text-white text-xs font-semibold uppercase tracking-wider rounded mb-3 inline-block">
                     {selectedEvent.category}
                   </span>
@@ -440,10 +613,10 @@ export default function Portfolio() {
                 )}
 
                 <button
-                  onClick={handleCloseEvent}
+                  onClick={() => scrollToBooking('event')}
                   className="w-full bg-[#c9a86c] text-white px-6 py-4 rounded-lg font-semibold uppercase tracking-wider hover:bg-black transition-colors"
                 >
-                  Close
+                  Book Similar Event
                 </button>
               </div>
             </div>
@@ -451,7 +624,7 @@ export default function Portfolio() {
         </div>
       )}
 
-      {/* Car Modal */}
+      {/* Car Modal with Carousel */}
       {selectedCar && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
@@ -469,15 +642,65 @@ export default function Portfolio() {
             </button>
 
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-1/2 bg-gray-100">
-                <img
-                  src={getImageUrl(selectedCar.image)}
-                  alt={selectedCar.title}
-                  className="w-full h-64 md:h-full object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/placeholder.jpg';
-                  }}
-                />
+              <div className="md:w-1/2 bg-gray-100 relative">
+                {/* Carousel for car images */}
+                <div className="relative h-64 md:h-full">
+                  <img
+                    src={getImageUrl(galleryImages[`car-${selectedCar.id}`]?.[currentImageIndex[`car-${selectedCar.id}`] || 0] || selectedCar.image)}
+                    alt={selectedCar.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/placeholder.jpg';
+                    }}
+                  />
+
+                  {/* Navigation Arrows */}
+                  {galleryImages[`car-${selectedCar.id}`]?.length > 1 && (
+                    <>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          prevImage(`car-${selectedCar.id}`);
+                        }}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-[#c9a86c] transition-colors"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          nextImage(`car-${selectedCar.id}`);
+                        }}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-[#c9a86c] transition-colors"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </>
+                  )}
+
+                  {/* Dot Indicators */}
+                  {galleryImages[`car-${selectedCar.id}`]?.length > 1 && (
+                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                      {galleryImages[`car-${selectedCar.id}`].map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCurrentImageIndex(prev => ({
+                              ...prev,
+                              [`car-${selectedCar.id}`]: index
+                            }));
+                          }}
+                          className={`w-1.5 h-1.5 rounded-full transition-all ${
+                            index === currentImageIndex[`car-${selectedCar.id}`]
+                              ? 'w-3 bg-[#c9a86c]'
+                              : 'bg-white/70'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="md:w-1/2 p-8">
@@ -492,10 +715,10 @@ export default function Portfolio() {
                 <p className="text-gray-600 mb-6">Fuel: {selectedCar.fuel}</p>
 
                 <button
-                  onClick={handleCloseCar}
+                  onClick={() => scrollToBooking('car')}
                   className="w-full bg-[#c9a86c] text-white px-6 py-4 rounded-lg font-semibold uppercase tracking-wider hover:bg-black transition-colors"
                 >
-                  Close
+                  Book This Vehicle
                 </button>
               </div>
             </div>
@@ -503,7 +726,7 @@ export default function Portfolio() {
         </div>
       )}
 
-      {/* Tourism Modal */}
+      {/* Tourism Modal with Carousel */}
       {selectedTourism && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
@@ -521,17 +744,69 @@ export default function Portfolio() {
             </button>
 
             <div className="overflow-y-auto max-h-[90vh]">
-              <div className="relative h-64 md:h-80 bg-gray-100">
+              {/* Image Carousel */}
+              <div className="relative h-64 md:h-80 bg-gray-900">
                 <img
-                  src={getImageUrl(selectedTourism.image)}
+                  src={getImageUrl(galleryImages[`tourism-${selectedTourism.id}`]?.[currentImageIndex[`tourism-${selectedTourism.id}`] || 0] || selectedTourism.image)}
                   alt={selectedTourism.title}
                   className="w-full h-full object-cover"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = '/placeholder.jpg';
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                <div className="absolute bottom-6 left-6">
+
+                {/* Navigation Arrows */}
+                {galleryImages[`tourism-${selectedTourism.id}`]?.length > 1 && (
+                  <>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        prevImage(`tourism-${selectedTourism.id}`);
+                      }}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-[#c9a86c] transition-colors z-20"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        nextImage(`tourism-${selectedTourism.id}`);
+                      }}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-[#c9a86c] transition-colors z-20"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  </>
+                )}
+
+                {/* Dot Indicators */}
+                {galleryImages[`tourism-${selectedTourism.id}`]?.length > 1 && (
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                    {galleryImages[`tourism-${selectedTourism.id}`].map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentImageIndex(prev => ({
+                            ...prev,
+                            [`tourism-${selectedTourism.id}`]: index
+                          }));
+                        }}
+                        className={`w-2 h-2 rounded-full transition-all ${
+                          index === currentImageIndex[`tourism-${selectedTourism.id}`]
+                            ? 'w-4 bg-[#c9a86c]'
+                            : 'bg-white/50 hover:bg-white'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent pointer-events-none" />
+                
+                {/* Title Overlay */}
+                <div className="absolute bottom-6 left-6 z-10">
                   <span className="px-3 py-1 bg-[#c9a86c] text-white text-xs font-semibold uppercase tracking-wider rounded mb-3 inline-block">
                     {selectedTourism.category}
                   </span>
@@ -578,10 +853,10 @@ export default function Portfolio() {
                 )}
 
                 <button
-                  onClick={handleCloseTourism}
+                  onClick={() => scrollToBooking('tourism')}
                   className="w-full bg-[#c9a86c] text-white px-6 py-4 rounded-lg font-semibold uppercase tracking-wider hover:bg-black transition-colors"
                 >
-                  Close
+                  Explore Similar Tours
                 </button>
               </div>
             </div>

@@ -240,9 +240,10 @@ export default function Services() {
                 }}
                 onMouseEnter={() => setHoveredCard(service.id)}
                 onMouseLeave={() => setHoveredCard(null)}
+                onClick={() => setSelectedService(service)} // Click on card opens modal
               >
                 {/* Background Image */}
-                <div className="aspect-[4/3] relative overflow-hidden">
+                <div className="aspect-[4/3] relative overflow-hidden cursor-pointer">
                   <img
                     src={service.image}
                     alt={service.title}
@@ -274,7 +275,10 @@ export default function Services() {
 
                     {/* CTA Link */}
                     <button
-                      onClick={() => setSelectedService(service)}
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent card click from firing twice
+                        setSelectedService(service);
+                      }}
                       className="inline-flex items-center gap-2 text-[#c9a86c] font-semibold text-sm uppercase tracking-wider transition-all duration-300 hover:gap-4"
                       style={{ fontFamily: 'Montserrat, sans-serif' }}
                     >
@@ -388,7 +392,7 @@ export default function Services() {
                     style={{ fontFamily: 'Montserrat, sans-serif' }}
                   >
                     <Calendar className="w-5 h-5" />
-                    Book This Service
+                    Book Similar Service
                   </button>
                   <button
                     onClick={() => openWhatsApp(selectedService.title)}

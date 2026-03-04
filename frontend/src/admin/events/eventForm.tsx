@@ -17,6 +17,12 @@ interface EventFormData {
   status: 'active' | 'inactive';
 }
 
+interface GalleryImage {
+  id?: number;
+  url: string;
+  tempId?: string; // For temporary images before save
+}
+
 const serviceOptions = [
   'Sound System',
   'Lighting',
@@ -35,6 +41,8 @@ export default function EventForm() {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadingGallery, setUploadingGallery] = useState(false);
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
   const [formData, setFormData] = useState<EventFormData>({
     title: '',
     category: '',
@@ -53,6 +61,7 @@ export default function EventForm() {
   useEffect(() => {
     if (id) {
       fetchEvent();
+      fetchGallery();
     }
   }, [id]);
 
@@ -66,11 +75,25 @@ export default function EventForm() {
     }
   };
 
+  const fetchGallery = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/gallery/event/${id}`);
+      const data = await response.json();
+      setGalleryImages(data.map((img: any) => ({ 
+        id: img.id, 
+        url: img.image_url 
+      })));
+    } catch (error) {
+      console.error('Failed to fetch gallery:', error);
+    }
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  // Main Image Upload
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -86,11 +109,41 @@ export default function EventForm() {
       });
       const data = await response.json();
       setFormData(prev => ({ ...prev, image: data.url }));
-      console.log('✅ Image uploaded:', data.url);
+      console.log('✅ Main image uploaded:', data.url);
     } catch (error) {
       console.error('❌ Upload failed:', error);
     } finally {
       setUploading(false);
+    }
+  };
+
+  // Gallery Images Upload
+  const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setUploadingGallery(true);
+    
+    try {
+      const uploadPromises = Array.from(files).map(async (file) => {
+        const formData = new FormData();
+        formData.append('image', file);
+
+        const response = await fetch('http://localhost:5000/api/upload', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const data = await response.json();
+        return { url: data.url, tempId: Date.now() + '-' + Math.random() };
+      });
+
+      const uploadedImages = await Promise.all(uploadPromises);
+      setGalleryImages(prev => [...prev, ...uploadedImages]);
+    } catch (error) {
+      console.error('Gallery upload failed:', error);
+    } finally {
+      setUploadingGallery(false);
     }
   };
 
@@ -108,6 +161,7 @@ export default function EventForm() {
     setIsLoading(true);
 
     try {
+      // Step 1: Save/Update the event
       const url = id ? `http://localhost:5000/api/events/${id}` : 'http://localhost:5000/api/events';
       const method = id ? 'PUT' : 'POST';
 
@@ -117,16 +171,42 @@ export default function EventForm() {
         body: JSON.stringify(formData),
       });
 
-      if (response.ok) {
-        // 🔴 TRIGGER AUTO-REFRESH ON PUBLIC WEBSITE
-        localStorage.setItem('admin-update', Date.now().toString());
-        navigate('/admin/events');
+      if (!response.ok) {
+        throw new Error('Failed to save event');
       }
+
+      const result = await response.json();
+      const eventId = id || result.id;
+
+      // Step 2: Save gallery images (only those without IDs - new ones)
+      if (galleryImages.length > 0) {
+        const newImages = galleryImages.filter(img => !img.id);
+        
+        for (const img of newImages) {
+          await fetch(`http://localhost:5000/api/gallery/event/${eventId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ image_url: img.url })
+          });
+        }
+      }
+
+      localStorage.setItem('admin-update', Date.now().toString());
+      navigate('/admin/events');
     } catch (error) {
       console.error('Failed to save event:', error);
+      alert('Failed to save. Please try again.');
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const removeGalleryImage = (index: number) => {
+    const imageToRemove = galleryImages[index];
+    
+    // If it has an ID, it's from database - we'll delete it on submit
+    // For now, just remove from UI
+    setGalleryImages(prev => prev.filter((_, i) => i !== index));
   };
 
   return (
@@ -321,10 +401,10 @@ export default function EventForm() {
           </div>
         </div>
 
-        {/* Image Upload */}
+        {/* Main Image Upload */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Event Image
+            Main Event Image
           </label>
           <div className="flex gap-2">
             <input
@@ -354,10 +434,10 @@ export default function EventForm() {
             </div>
           </div>
           
-          {/* Image Preview */}
+          {/* Main Image Preview */}
           {formData.image && (
             <div className="mt-4 border border-gray-200 rounded-lg p-4">
-              <p className="text-sm font-medium text-gray-700 mb-3">Preview</p>
+              <p className="text-sm font-medium text-gray-700 mb-3">Main Image Preview</p>
               <div className="relative w-full h-48 bg-gray-100 rounded-lg overflow-hidden">
                 <img
                   src={formData.image}
@@ -375,6 +455,59 @@ export default function EventForm() {
                   <X className="w-4 h-4" />
                 </button>
               </div>
+            </div>
+          )}
+        </div>
+
+        {/* Gallery Images Section */}
+        <div className="pt-6 border-t border-gray-200">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Gallery Images (Multiple)
+          </label>
+          <p className="text-xs text-gray-500 mb-3">
+            Upload multiple photos of this event
+          </p>
+          
+          <div className="flex gap-2 mb-4">
+            <div className="relative">
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleGalleryUpload}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                disabled={uploadingGallery}
+              />
+              <button
+                type="button"
+                disabled={uploadingGallery}
+                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-2 text-sm"
+              >
+                <Upload className="w-4 h-4" />
+                {uploadingGallery ? 'Uploading...' : 'Upload Gallery Images'}
+              </button>
+            </div>
+          </div>
+
+          {/* Gallery Preview */}
+          {galleryImages.length > 0 && (
+            <div className="grid grid-cols-4 gap-3 mt-4">
+              {galleryImages.map((img, index) => (
+                <div key={index} className="relative aspect-square rounded-lg overflow-hidden border border-gray-200 group">
+                  <img
+                    src={img.url}
+                    alt={`Gallery ${index + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeGalleryImage(index)}
+                    className="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </div>
+              ))}
             </div>
           )}
         </div>
