@@ -94,12 +94,12 @@ const services = [
   },
   {
     id: 4,
-    title: 'Destination Management',
-    description: 'Complete destination management services showcasing the best of Rwanda. We create unforgettable experiences through curated tours and activities.',
+    title: 'Tourism',
+    description: 'Complete Tourism services showcasing the best of Rwanda. We create unforgettable experiences through curated tours and activities.',
     image: '/tourism.png',
     icon: MapPin,
     details: {
-      fullDescription: 'Our Destination Management service offers comprehensive tour packages and experiences across Rwanda. From gorilla trekking to cultural tours, we create authentic adventures that showcase the beauty and hospitality of our country.',
+      fullDescription: 'Our Tourism service offers comprehensive tour packages and experiences across Rwanda. From gorilla trekking to cultural tours, we create authentic adventures that showcase the beauty and hospitality of our country.',
       features: [
         'Gorilla Trekking Expeditions',
         'National Park Safaris (Akagera, Nyungwe, Volcanoes)',

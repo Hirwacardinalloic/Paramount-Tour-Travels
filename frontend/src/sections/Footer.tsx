@@ -27,7 +27,7 @@ const services = [
   { label: 'Events Planning', href: '#services' },
   { label: 'Event Production', href: '#services' },
   { label: 'Car Rental', href: '#services' },
-  { label: 'Destination Management', href: '#services' },
+  { label: 'Tourism', href: '#services' },
 ];
 
 export default function Footer() {

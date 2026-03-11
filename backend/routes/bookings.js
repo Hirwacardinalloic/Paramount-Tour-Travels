@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../db.js';
+import { sendBookingConfirmation } from '../utils/email.js';
 
 const router = express.Router();
 
@@ -78,7 +79,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST create booking
+// POST create booking - WITH AUTO-REPLY EMAIL
 router.post('/', async (req, res) => {
   try {
     const {
@@ -108,6 +109,42 @@ router.post('/', async (req, res) => {
         paymentStatus || 'unpaid', notes
       ]
     );
+
+    // ============================================
+    // AUTO-REPLY EMAIL TO CLIENT
+    // ============================================
+    try {
+      // Get customer details for email
+      const customer = await db.getAsync(
+        'SELECT name, email FROM customers WHERE id = ?',
+        [customerId]
+      );
+
+      // Get service details
+      const service = await db.getAsync(
+        'SELECT name, type FROM services WHERE id = ?',
+        [serviceId]
+      );
+
+      // Send confirmation email (don't await - let it run in background)
+      sendBookingConfirmation({
+        customerName: customer.name,
+        customerEmail: customer.email,
+        bookingNumber,
+        serviceId,
+        serviceName: service.name,
+        serviceType: service.type,
+        startDate: startDate || eventDate,
+        endDate,
+        guests: guests || 1,
+        totalPrice: totalPrice || 0
+      }).catch(err => console.error('Background email error:', err));
+
+      console.log(`✅ Auto-reply email triggered for booking ${bookingNumber}`);
+    } catch (emailError) {
+      // Log email error but don't fail the booking
+      console.error('❌ Failed to trigger auto-reply email:', emailError);
+    }
 
     res.json({ 
       success: true, 

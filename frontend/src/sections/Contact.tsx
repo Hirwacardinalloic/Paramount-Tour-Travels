@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { MapPin, Phone, Mail, Clock, Send, MessageCircle, CheckCircle, MapPinned } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, MessageCircle, CheckCircle, MapPinned, AlertCircle } from 'lucide-react';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
@@ -31,7 +31,6 @@ const contactInfo = [
     icon: Mail,
     title: 'Email',
     content: CONTACT_INFO.email,
-    // For email, we'll handle click separately in the card
     isEmail: true,
   },
   {
@@ -50,16 +49,6 @@ export default function Contact() {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [messageId, setMessageId] = useState(null);
   
-  // Store the submitted data separately for email/WhatsApp
-  const [submittedData, setSubmittedData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: '',
-    email_subject: 'New Contact Message'
-  });
-
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -103,8 +92,46 @@ export default function Contact() {
     window.open(gmailUrl, '_blank');
   };
 
+  // Format email message for admin notification
+  const formatAdminEmailMessage = (data: any) => {
+    return `
+CONTACT FORM MESSAGE - THE HURBERT
+
+FROM:
+Name: ${data.name}
+Email: ${data.email}
+Phone: ${data.phone || 'Not provided'}
+
+SUBJECT:
+${data.subject || 'No subject'}
+
+MESSAGE:
+${data.message || 'No message provided'}
+
+---
+This message was sent from THE HURBERT contact form.
+    `;
+  };
+
+  // Format email message for auto-reply to client
+  const formatAutoReplyMessage = (data: any) => {
+    return `
+Dear ${data.name},
+
+Thank you for contacting THE HURBERT! We have received your message and appreciate you reaching out to us.
+
+We will review your inquiry and get back to you within 24 hours during business days.
+
+For urgent matters, please contact us via WhatsApp at +250 782 169 162.
+
+Best regards,
+The THE HURBERT Team
+www.thehurbert.com
+    `;
+  };
+
   // ============================================
-  // ✅ COMPLETE HANDLE SUBMIT WITH DATABASE SAVE
+  // HANDLE SUBMIT - SEND DIRECTLY TO EMAIL
   // ============================================
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -138,19 +165,37 @@ export default function Contact() {
       }
 
       // ========================================
-      // STEP 2: STORE DATA FOR EMAIL/WHATSAPP
+      // STEP 2: SEND EMAIL TO COMPANY (ADMIN NOTIFICATION)
       // ========================================
-      setSubmittedData({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        subject: formData.subject,
-        message: formData.message,
-        email_subject: subject
-      });
+      const adminEmailData = {
+        to: CONTACT_INFO.email,
+        subject: `📧 NEW CONTACT: ${formData.name} - ${formData.subject || 'No subject'}`,
+        body: formatAdminEmailMessage(formData)
+      };
+
+      await fetch('http://localhost:5000/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(adminEmailData)
+      }).catch(err => console.error('Admin email failed:', err));
 
       // ========================================
-      // STEP 3: SHOW SUCCESS
+      // STEP 3: SEND AUTO-REPLY TO CLIENT
+      // ========================================
+      const autoReplyData = {
+        to: formData.email,
+        subject: 'Thank you for contacting THE HURBERT',
+        body: formatAutoReplyMessage(formData)
+      };
+
+      await fetch('http://localhost:5000/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(autoReplyData)
+      }).catch(err => console.error('Auto-reply email failed:', err));
+
+      // ========================================
+      // STEP 4: SHOW SUCCESS MESSAGE (NO CHOICE SCREEN)
       // ========================================
       setSubmitSuccess(true);
       
@@ -169,55 +214,6 @@ export default function Contact() {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const openWhatsApp = () => {
-    const message = `Contact Message - THE HURBERT
-
-From:
-Name: ${submittedData.name || 'NOT PROVIDED'}
-Email: ${submittedData.email || 'NOT PROVIDED'}
-Phone: ${submittedData.phone || 'Not provided'}
-
-Subject:
-${submittedData.subject || 'No subject'}
-
-Message:
-${submittedData.message || 'No message provided'}
-
-Message ID: ${messageId || 'N/A'}`;
-
-    const whatsappUrl = `https://wa.me/${CONTACT_INFO.whatsapp}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-  };
-
-  const openEmail = () => {
-    const shortMessage = `CONTACT MESSAGE - THE HURBERT
-
-FROM:
-Name: ${submittedData.name || 'NOT PROVIDED'}
-Email: ${submittedData.email || 'NOT PROVIDED'}
-Phone: ${submittedData.phone || 'Not provided'}
-
-SUBJECT:
-${submittedData.subject || 'No subject'}
-
-MESSAGE:
-${submittedData.message || 'No message provided'}
-
-Message ID: ${messageId || 'N/A'}
----
-This message was sent from THE HURBERT contact form.`;
-
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_INFO.email}&su=${encodeURIComponent(submittedData.email_subject)}&body=${encodeURIComponent(shortMessage)}`;
-    window.open(gmailUrl, '_blank');
-  };
-
-  const openBoth = () => {
-    openWhatsApp();
-    setTimeout(() => {
-      openEmail();
-    }, 500);
   };
 
   const resetForm = () => {
@@ -369,42 +365,40 @@ This message was sent from THE HURBERT contact form.`;
                     className="text-2xl font-bold text-black mb-4"
                     style={{ fontFamily: 'Montserrat, sans-serif' }}
                   >
-                    Message Received!
+                    Message Sent!
                   </h3>
                   {messageId && (
                     <p className="text-sm bg-gray-100 inline-block px-4 py-2 rounded-full mb-4">
                       Message ID: <span className="font-bold">{messageId}</span>
                     </p>
                   )}
-                  <p className="text-gray-600 mb-6">
-                    Thank you for reaching out. Please choose how you'd like to send your message:
+                  <p className="text-gray-600 mb-4">
+                    Thank you for contacting us! We have received your message and will respond within 24 hours.
                   </p>
-                  <div className="space-y-3">
-                    <button
-                      onClick={openWhatsApp}
-                      className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 hover:bg-green-600"
+                  
+                  {/* WhatsApp for urgent support */}
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+                    <div className="flex items-center gap-3 mb-2">
+                      <AlertCircle className="w-5 h-5 text-yellow-600" />
+                      <p className="font-semibold text-yellow-800">Need urgent support?</p>
+                    </div>
+                    <p className="text-sm text-yellow-700 mb-3">
+                      For immediate assistance, you can reach us on WhatsApp:
+                    </p>
+                    <a
+                      href={`https://wa.me/${CONTACT_INFO.whatsapp}?text=${encodeURIComponent('URGENT: I just submitted a contact form and need immediate assistance.')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 bg-green-500 text-white px-6 py-3 rounded-lg font-semibold text-sm hover:bg-green-600 transition-colors"
                     >
-                      <MessageCircle className="w-5 h-5" />
-                      Send via WhatsApp
-                    </button>
-                    <button
-                      onClick={openEmail}
-                      className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 hover:bg-blue-600"
-                    >
-                      <Mail className="w-5 h-5" />
-                      Send via Gmail
-                    </button>
-                    <button
-                      onClick={openBoth}
-                      className="w-full bg-[#c9a86c] text-white py-3 rounded-lg font-semibold text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 hover:bg-black"
-                    >
-                      <Send className="w-5 h-5" />
-                      Send to Both
-                    </button>
+                      <MessageCircle className="w-4 h-4" />
+                      Chat on WhatsApp
+                    </a>
                   </div>
+                  
                   <button
                     onClick={resetForm}
-                    className="mt-6 text-gray-500 text-sm hover:text-[#c9a86c] transition-colors"
+                    className="text-gray-500 text-sm hover:text-[#c9a86c] transition-colors"
                   >
                     Send another message
                   </button>
@@ -491,11 +485,11 @@ This message was sent from THE HURBERT contact form.`;
                     />
                   </div>
 
-                  {/* Submit Button */}
+                  {/* Submit Button - Like Booking Form */}
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-black text-white py-4 rounded-lg font-semibold text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 hover:bg-[#c9a86c] disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-[#c9a86c] text-white py-4 rounded-lg font-semibold text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ fontFamily: 'Montserrat, sans-serif' }}
                   >
                     {isSubmitting ? (
@@ -512,8 +506,7 @@ This message was sent from THE HURBERT contact form.`;
                   </button>
 
                   <p className="text-xs text-gray-500 text-center">
-                    After submitting, you'll be able to send your message via WhatsApp or Gmail.
-                    Your message will be saved in our system.
+                    Your message will be sent directly to our team. You'll receive a confirmation email shortly.
                   </p>
                 </form>
               )}

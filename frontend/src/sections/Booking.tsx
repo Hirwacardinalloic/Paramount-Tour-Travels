@@ -42,7 +42,7 @@ const carServicesOptions = [
 
 // Car models/brands available - for multi-select dropdown
 const carModelsOptions = [
-  { value: 'Toyota RAV4', label: 'Toyota RAV4' },
+  { value: 'Toyota Altis', label: 'Toyota Altis' },
   { value: 'Toyota Land Cruiser Prado', label: 'Toyota Land Cruiser Prado' },
   { value: 'Range Rover Velar', label: 'Range Rover Velar' },
   { value: 'Mercedes C300', label: 'Mercedes C300' },
@@ -278,8 +278,8 @@ const formatWhatsAppMessage = (data: any, bookingNumber: string) => {
   if (data.service_id === 1) {
     message += `\n*EVENT DETAILS*\n`;
     message += `Event Type: ${data.eventType}\n`;
-    message += `Event Start Date: ${data.startDate}\n`;
-    message += `Event End Date: ${data.endDate}\n`;
+    message += `Event Start Date: ${data.eventStartDate}\n`;
+    message += `Event End Date: ${data.eventEndDate}\n`;
     message += `Guests: ${data.numberOfGuests}\n`;
     message += `Venue: ${data.venuePreference || 'Not specified'}\n`;
     if (data.selectedServices?.length) {
@@ -322,8 +322,8 @@ const formatWhatsAppMessage = (data: any, bookingNumber: string) => {
         message += `• ${p}\n`;
       });
     }
-    message += `\nTour Start Date: ${data.startDate}\n`;
-    message += `Tour End Date: ${data.endDate}\n`;
+    message += `\nTour Start Date: ${data.tourStartDate}\n`;
+    message += `Tour End Date: ${data.tourEndDate}\n`;
     message += `Travelers: ${data.numberOfTravelers}\n`;
     if (data.selectedServices?.length) {
       message += `\n*Additional Services:*\n`;
@@ -349,8 +349,8 @@ const formatEmailMessage = (data: any, bookingNumber: string) => {
   if (data.service_id === 1) {
     body += `EVENT DETAILS:\n`;
     body += `Event Type: ${data.eventType}\n`;
-    body += `Event Start Date: ${data.startDate}\n`;
-    body += `Event End Date: ${data.endDate}\n`;
+    body += `Event Start Date: ${data.eventStartDate}\n`;
+    body += `Event End Date: ${data.eventEndDate}\n`;
     body += `Number of Guests: ${data.numberOfGuests}\n`;
     body += `Venue: ${data.venuePreference || 'Not specified'}\n`;
     if (data.selectedServices?.length) {
@@ -393,8 +393,8 @@ const formatEmailMessage = (data: any, bookingNumber: string) => {
         body += `• ${p}\n`;
       });
     }
-    body += `\nTour Start Date: ${data.startDate}\n`;
-    body += `Tour End Date: ${data.endDate}\n`;
+    body += `\nTour Start Date: ${data.tourStartDate}\n`;
+    body += `Tour End Date: ${data.tourEndDate}\n`;
     body += `Travelers: ${data.numberOfTravelers}\n`;
     if (data.selectedServices?.length) {
       body += `\nAdditional Services:\n`;
@@ -410,6 +410,15 @@ const formatEmailMessage = (data: any, bookingNumber: string) => {
   return body;
 };
 
+// Helper function to get today's date in YYYY-MM-DD format for min attribute
+const getTodayDate = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 export default function Booking() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -419,6 +428,7 @@ export default function Booking() {
   const [bookingNumber, setBookingNumber] = useState('');
   const [showTerms, setShowTerms] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
+  const todayDate = getTodayDate();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -943,23 +953,42 @@ export default function Booking() {
                 Need Immediate Assistance?
               </h4>
               <div className="space-y-2 text-xs">
+                {/* Phone - works with tel: */}
                 <p className="flex items-center gap-2">
                   <Phone className="w-4 h-4 text-[#c9a86c]" />
                   <a href={`tel:${CONTACT_INFO.phone}`} className="hover:text-[#c9a86c] transition-colors">
                     {CONTACT_INFO.phone}
                   </a>
                 </p>
+                
+                {/* Email - opens Gmail compose */}
                 <p className="flex items-center gap-2">
                   <Mail className="w-4 h-4 text-[#c9a86c]" />
-                  <a href={`mailto:${CONTACT_INFO.email}`} className="hover:text-[#c9a86c] transition-colors">
+                  <a 
+                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_INFO.email}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#c9a86c] transition-colors"
+                  >
                     {CONTACT_INFO.email}
                   </a>
                 </p>
+                
+                {/* Address - opens Google Maps */}
                 <p className="flex items-center gap-2">
                   <MapPinned className="w-4 h-4 text-[#c9a86c]" />
-                  <span>{CONTACT_INFO.address}</span>
+                  <a 
+                    href="https://maps.google.com/?q=1+KN+78+St,+Kigali,+Rwanda"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#c9a86c] transition-colors"
+                  >
+                    {CONTACT_INFO.address}
+                  </a>
                 </p>
               </div>
+              
+              {/* WhatsApp - stays the same */}
               <a
                 href={`https://wa.me/${CONTACT_INFO.whatsapp}?text=${encodeURIComponent('Hello THE HURBERT! I would like to make a booking inquiry.')}`}
                 target="_blank"
@@ -1079,12 +1108,13 @@ export default function Booking() {
                             required
                             className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
                           >
-                            <option value="">Event Type *</option>
+                            <option value="" disabled hidden>Event Type *</option>
                             <option value="wedding">Wedding</option>
                             <option value="corporate">Corporate Meeting</option>
                             <option value="conference">Conference</option>
                             <option value="birthday">Birthday Party</option>
                             <option value="gala">Gala Dinner</option>
+                            <option value="virtual">Virtual/Online Event</option>
                           </select>
                           <input
                             type="text"
@@ -1103,6 +1133,7 @@ export default function Booking() {
                               name="eventStartDate"
                               value={eventForm.eventStartDate}
                               onChange={handleEventChange}
+                              min={todayDate}
                               required
                               className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
                             />
@@ -1114,6 +1145,7 @@ export default function Booking() {
                               name="eventEndDate"
                               value={eventForm.eventEndDate}
                               onChange={handleEventChange}
+                              min={todayDate}
                               required
                               className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
                             />
@@ -1152,6 +1184,9 @@ export default function Booking() {
                           styles={selectStyles}
                           closeMenuOnSelect={false}
                           blurInputOnSelect={false}
+                          isOptionSelected={(option, selectValue) => 
+                            selectValue.some((item: any) => item.value === option.value)
+                          }
                         />
                       </div>
 
@@ -1255,6 +1290,7 @@ export default function Booking() {
                               name="pickupDate"
                               value={carForm.pickupDate}
                               onChange={handleCarChange}
+                              min={todayDate}
                               required
                               className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
                             />
@@ -1279,6 +1315,7 @@ export default function Booking() {
                               name="returnDate"
                               value={carForm.returnDate}
                               onChange={handleCarChange}
+                              min={todayDate}
                               required
                               className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
                             />
@@ -1325,6 +1362,9 @@ export default function Booking() {
                           className="text-xs"
                           styles={selectStyles}
                           closeMenuOnSelect={false}
+                          isOptionSelected={(option, selectValue) => 
+                            selectValue.some((item: any) => item.value === option.value)
+                          }
                         />
                       </div>
 
@@ -1345,6 +1385,9 @@ export default function Booking() {
                           className="text-xs"
                           styles={selectStyles}
                           closeMenuOnSelect={false}
+                          isOptionSelected={(option, selectValue) => 
+                            selectValue.some((item: any) => item.value === option.value)
+                          }
                         />
                       </div>
 
@@ -1365,6 +1408,9 @@ export default function Booking() {
                           className="text-xs"
                           styles={selectStyles}
                           closeMenuOnSelect={false}
+                          isOptionSelected={(option, selectValue) => 
+                            selectValue.some((item: any) => item.value === option.value)
+                          }
                         />
                       </div>
 
@@ -1385,6 +1431,9 @@ export default function Booking() {
                           className="text-xs"
                           styles={selectStyles}
                           closeMenuOnSelect={false}
+                          isOptionSelected={(option, selectValue) => 
+                            selectValue.some((item: any) => item.value === option.value)
+                          }
                         />
                       </div>
 
@@ -1422,6 +1471,9 @@ export default function Booking() {
                           className="text-xs"
                           styles={selectStyles}
                           closeMenuOnSelect={false}
+                          isOptionSelected={(option, selectValue) => 
+                            selectValue.some((item: any) => item.value === option.value)
+                          }
                         />
                       </div>
 
@@ -1528,6 +1580,9 @@ export default function Booking() {
                           className="text-xs"
                           styles={selectStyles}
                           closeMenuOnSelect={false}
+                          isOptionSelected={(option, selectValue) => 
+                            selectValue.some((item: any) => item.value === option.value)
+                          }
                         />
                       </div>
 
@@ -1545,6 +1600,7 @@ export default function Booking() {
                               name="tourStartDate"
                               value={tourForm.tourStartDate}
                               onChange={handleTourChange}
+                              min={todayDate}
                               required
                               className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
                             />
@@ -1556,6 +1612,7 @@ export default function Booking() {
                               name="tourEndDate"
                               value={tourForm.tourEndDate}
                               onChange={handleTourChange}
+                              min={todayDate}
                               required
                               className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
                             />
@@ -1597,6 +1654,9 @@ export default function Booking() {
                           className="text-xs"
                           styles={selectStyles}
                           closeMenuOnSelect={false}
+                          isOptionSelected={(option, selectValue) => 
+                            selectValue.some((item: any) => item.value === option.value)
+                          }
                         />
                       </div>
 

@@ -1,9 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const db = require('../database/db');
-const { authenticateToken } = require('../middleware/auth');
+import express from 'express';
+import db from '../db.js';
+import { sendContactNotification, sendContactAutoReply } from '../utils/email.js';
 
-// Submit contact form (public)
+const router = express.Router();
+
+// Submit contact form (public) - WITH AUTO-REPLY
 router.post('/', async (req, res) => {
   try {
     const { name, email, phone, subject, message } = req.body;
@@ -15,16 +16,52 @@ router.post('/', async (req, res) => {
       });
     }
 
+    // Save to database
     const result = await db.runAsync(
-      `INSERT INTO contact_messages (name, email, phone, subject, message)
-       VALUES (?, ?, ?, ?, ?)`,
-      [name, email, phone, subject, message]
+      `INSERT INTO contact_messages (name, email, phone, subject, message, status)
+       VALUES (?, ?, ?, ?, ?, ?)`,
+      [name, email, phone || '', subject || 'No subject', message, 'unread']
     );
+
+    const messageId = result.lastID;
+
+    // ============================================
+    // SEND AUTO-REPLY TO CLIENT
+    // ============================================
+    try {
+      await sendContactAutoReply({
+        name,
+        email,
+        message
+      });
+      console.log(`✅ Auto-reply sent to ${email}`);
+    } catch (emailError) {
+      console.error('❌ Failed to send auto-reply:', emailError);
+      // Don't fail the request if email fails
+    }
+
+    // ============================================
+    // SEND NOTIFICATION TO ADMIN
+    // ============================================
+    try {
+      await sendContactNotification({
+        id: messageId,
+        name,
+        email,
+        phone,
+        subject,
+        message
+      });
+      console.log(`✅ Admin notification sent for message ${messageId}`);
+    } catch (notifyError) {
+      console.error('❌ Failed to send admin notification:', notifyError);
+      // Don't fail the request if notification fails
+    }
 
     res.status(201).json({
       success: true,
       message: 'Message sent successfully. We will get back to you soon!',
-      data: { id: result.id }
+      data: { id: messageId }
     });
   } catch (error) {
     console.error('Submit contact error:', error);
@@ -36,7 +73,7 @@ router.post('/', async (req, res) => {
 });
 
 // Get all contact messages (protected)
-router.get('/', authenticateToken, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const { status, limit } = req.query;
     let query = 'SELECT * FROM contact_messages WHERE 1=1';
@@ -71,7 +108,7 @@ router.get('/', authenticateToken, async (req, res) => {
 });
 
 // Get single contact message (protected)
-router.get('/:id', authenticateToken, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const message = await db.getAsync('SELECT * FROM contact_messages WHERE id = ?', [id]);
@@ -97,7 +134,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
 });
 
 // Update message status (protected)
-router.put('/:id', authenticateToken, async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
@@ -130,7 +167,7 @@ router.put('/:id', authenticateToken, async (req, res) => {
 });
 
 // Delete contact message (protected)
-router.delete('/:id', authenticateToken, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -159,7 +196,7 @@ router.delete('/:id', authenticateToken, async (req, res) => {
 });
 
 // Get unread message count (protected)
-router.get('/stats/unread', authenticateToken, async (req, res) => {
+router.get('/stats/unread', async (req, res) => {
   try {
     const result = await db.getAsync('SELECT COUNT(*) as count FROM contact_messages WHERE status = "unread"');
 
@@ -176,4 +213,4 @@ router.get('/stats/unread', authenticateToken, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

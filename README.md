@@ -8,7 +8,7 @@ A full-stack dynamic website for THE HURBERT, Rwanda's premier event management 
 - **Portfolio Showcase** – Events, car fleet, and tourism destinations
 - **Team Profiles** – Staff directory with detailed bios
 - **Partner Network** – Display company partners with working links
-- **Service Listings** – Event consultancy, production, car rental, destination management
+- **Service Listings** – Event consultancy, production, car rental, Tourism
 - **Booking System** – Service inquiry and booking form
 - **Admin Dashboard** – Full CRUD operations for all content
 - **Real-time Updates** – Changes reflect instantly without page reload

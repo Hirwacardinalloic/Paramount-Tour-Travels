@@ -17,6 +17,7 @@ import staffRoutes from './routes/staff.js';
 import bookingsRoutes from './routes/bookings.js';
 import dashboardRoutes from './routes/dashboard.js';
 import galleryRoutes from './routes/gallery.js';
+import contactRoutes from './routes/contact.js'; // ADD THIS LINE
 
 dotenv.config();
 
@@ -135,90 +136,6 @@ app.get('/api/customers', async (req, res) => {
 });
 
 // ============================================
-// CONTACT MESSAGES API
-// ============================================
-// Get all messages
-app.get('/api/contact', async (req, res) => {
-  try {
-    const messages = await db.allAsync(
-      'SELECT * FROM contact_messages ORDER BY created_at DESC'
-    );
-    res.json(messages);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Get single message
-app.get('/api/contact/:id', async (req, res) => {
-  try {
-    const message = await db.getAsync(
-      'SELECT * FROM contact_messages WHERE id = ?',
-      [req.params.id]
-    );
-    if (!message) {
-      return res.status(404).json({ error: 'Message not found' });
-    }
-    res.json(message);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Create message (from contact form)
-app.post('/api/contact', async (req, res) => {
-  try {
-    const { name, email, phone, subject, message } = req.body;
-    
-    const result = await db.runAsync(
-      `INSERT INTO contact_messages (name, email, phone, subject, message, status)
-       VALUES (?, ?, ?, ?, ?, ?)`,
-      [name, email, phone || '', subject || 'No subject', message, 'unread']
-    );
-    
-    res.json({ success: true, id: result.id });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Update message status
-app.put('/api/contact/:id', async (req, res) => {
-  try {
-    const { status } = req.body;
-    await db.runAsync(
-      'UPDATE contact_messages SET status = ? WHERE id = ?',
-      [status, req.params.id]
-    );
-    res.json({ success: true });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Delete message
-app.delete('/api/contact/:id', async (req, res) => {
-  try {
-    await db.runAsync('DELETE FROM contact_messages WHERE id = ?', [req.params.id]);
-    res.json({ success: true });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Get message stats
-app.get('/api/contact/stats/unread', async (req, res) => {
-  try {
-    const result = await db.getAsync(
-      "SELECT COUNT(*) as count FROM contact_messages WHERE status = 'unread'"
-    );
-    res.json({ unread: result.count });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// ============================================
 // ROUTES
 // ============================================
 app.use('/api/auth', authRoutes);
@@ -230,6 +147,7 @@ app.use('/api/staff', staffRoutes);
 app.use('/api/bookings', bookingsRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/gallery', galleryRoutes);
+app.use('/api/contact', contactRoutes); // ADD THIS LINE
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -260,5 +178,6 @@ app.listen(PORT, () => {
   console.log(`✅ API available at http://localhost:${PORT}/api`);
   console.log(`✅ Uploads available at http://localhost:${PORT}/uploads`);
   console.log(`✅ Gallery API available at http://localhost:${PORT}/api/gallery`);
+  console.log(`✅ Contact API available at http://localhost:${PORT}/api/contact`);
   console.log(`✅ Environment: ${process.env.NODE_ENV || 'development'}`);
 });
