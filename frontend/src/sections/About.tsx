@@ -1,17 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Volume2, VolumeX } from 'lucide-react';
 
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          // Show video when section becomes visible
           setShowVideo(true);
           observer.unobserve(entry.target);
         }
@@ -26,10 +28,31 @@ export default function About() {
     return () => observer.disconnect();
   }, []);
 
+  // Try to play video when it becomes available
+  useEffect(() => {
+    if (showVideo && videoRef.current && !videoError) {
+      videoRef.current.play().catch(err => {
+        console.log('Auto-play prevented:', err);
+      });
+    }
+  }, [showVideo, videoError]);
+
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleVideoError = () => {
+    console.error('Video failed to load');
+    setVideoError(true);
+  };
+
+  const toggleSound = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
     }
   };
 
@@ -134,7 +157,7 @@ export default function About() {
             </div>
           </div>
 
-          {/* Video Section - Auto-playing YouTube */}
+          {/* Video Section - Auto-playing company video with sound toggle */}
           <div
             className={`relative transition-all duration-1000 delay-300 ${
               isVisible
@@ -142,30 +165,44 @@ export default function About() {
                 : 'opacity-0 translate-x-12'
             }`}
           >
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video">
-              {showVideo ? (
-                <iframe
-                  width="100%"
-                  height="100%"
-                  // ============================================
-                  // TODO: Replace this YouTube video with your real company video
-                  // 1. Upload your video to YouTube or Vimeo
-                  // 2. Replace the video ID in the src below
-                  // 3. Keep ?autoplay=1&mute=1&loop=1&playlist=VIDEO_ID for auto-play
-                  // ============================================
-                  src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&loop=1&playlist=dQw4w9WgXcQ&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1"
-                  title="THE HURBERT Company Video"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="w-full h-full"
-                />
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video bg-gray-100 group">
+              {showVideo && !videoError ? (
+                <>
+                  <video
+                    ref={videoRef}
+                    autoPlay
+                    loop
+                    muted={isMuted}
+                    playsInline
+                    className="w-full h-full object-cover"
+                    onError={handleVideoError}
+                  >
+                    <source src="/videoHURBERT.MP4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  
+                  {/* Sound Toggle Button */}
+                  <button
+                    onClick={toggleSound}
+                    className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white p-2 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 focus:opacity-100"
+                    aria-label={isMuted ? "Unmute video" : "Mute video"}
+                  >
+                    {isMuted ? (
+                      <VolumeX className="w-5 h-5" />
+                    ) : (
+                      <Volume2 className="w-5 h-5" />
+                    )}
+                  </button>
+                </>
+              ) : videoError ? (
+                <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col items-center justify-center p-8 text-center">
+                  <p className="text-gray-500 mb-2">Video preview not available</p>
+                  <p className="text-gray-400 text-sm">Please contact us to see our company in action</p>
+                </div>
               ) : (
-                <img
-                  src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80"
-                  alt="THE HURBERT"
-                  className="w-full h-full object-cover"
-                />
+                <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                  <p className="text-gray-500">Loading video...</p>
+                </div>
               )}
 
               {/* Decorative Elements */}

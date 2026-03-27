@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Calendar, Car, MapPin, Send, CheckCircle, User, Mail, Phone, MessageSquare, Users, MapPinned, CalendarDays, Settings, Fuel, Briefcase, Globe, Award, Heart, Shield, FileText, X } from 'lucide-react';
+import { Calendar, Car, MapPin, CheckCircle, User, Mail, Phone, MessageSquare, Users, MapPinned, CalendarDays, Settings, Fuel, Briefcase, Globe, Award, Heart, Shield, FileText, X } from 'lucide-react';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import Select from 'react-select';
@@ -112,302 +112,209 @@ const CONTACT_INFO = {
 const termsContent = {
   event: {
     title: 'Event Management Terms and Conditions',
-    content: `THE HURBERT - Event Management Terms
+    content: `THE HURBERT - Event Management Terms (Rwanda)
 
 1. BOOKING CONFIRMATION
-   • Your booking is confirmed upon receipt of 50% deposit
-   • Full payment due 7 days before event date
-   • All bookings subject to availability
+   • A binding contract is formed upon confirmation of booking and receipt of deposit
+   • 50% non-refundable deposit required to secure your date
+   • Full payment due 5 days before event date
+   • All prices quoted in USD or RWF as per contract
 
-2. CANCELLATION POLICY
-   • Free cancellation up to 30 days before event
-   • 50% refund for cancellation 15-30 days before
-   • No refund for cancellation within 14 days
-   • Deposits are non-refundable after 14 days
+2. CANCELLATION POLICY (Based on Rwandan Civil Code)
+   • 60+ days before event: 50% of deposit refunded
+   • 30-59 days before event: 25% of deposit refunded
+   • 15-29 days before event: No refund of deposit
+   • 0-14 days before event: 100% of total contract value payable
+   • All refunds processed within 30 days
 
-3. SERVICES
-   • All services are subject to availability at time of booking
-   • Changes must be requested in writing 7 days in advance
-   • Additional charges may apply for overtime or last-minute changes
-   • Equipment specifications may vary based on availability
+3. FORCE MAJEURE (Act of God)
+   • In case of events beyond reasonable control (natural disasters, government restrictions, public health emergencies)
+   • Parties may reschedule without penalty within 12 months
+   • If rescheduling impossible, refunds issued minus non-recoverable costs
+   • Documentation of force majeure event required
 
-4. LIABILITY
-   • THE HURBERT carries full liability insurance
-   • Client responsible for venue rules compliance
-   • Force majeure clause applies for circumstances beyond control
-   • THE HURBERT not liable for third-party vendor issues
+4. LIABILITY AND INSURANCE
+   • THE HURBERT carries public liability insurance as required by Rwandan law
+   • Maximum liability limited to total contract value
+   • Client responsible for venue rules compliance and obtaining necessary permits
+   • Client responsible for security of personal belongings
+   • THE HURBERT not liable for third-party vendor performance
 
-5. PAYMENT
-   • Payments accepted via bank transfer, mobile money (Momo)
-   • All prices in USD or equivalent RWF at current exchange rate
-   • VAT (18%) included where applicable
+5. PAYMENT TERMS
+   • Payments accepted: Bank transfer, Mobile Money (MTN MoMo, Airtel Money), Cash
+   • All payments must be in RWF unless otherwise agreed
+   • VAT (18%) included where applicable as per Rwanda Revenue Authority
    • Late payments subject to 5% penalty per week
+   • Non-payment constitutes contract breach
 
 6. CLIENT RESPONSIBILITIES
-   • Provide accurate guest count 7 days prior
-   • Ensure venue access for setup
-   • Obtain necessary permits and licenses
-   • Provide dietary requirements 5 days in advance
+   • Final guest count required 10 days before event
+   • Ensure venue access for setup 4 hours before event
+   • Obtain all necessary permits and licenses (Rwanda National Police, RURA, etc.)
+   • Provide dietary requirements 7 days in advance
+   • Comply with all Rwandan laws and regulations during event
 
 7. POST-EVENT
-   • Feedback form will be sent within 3 days
-   • Photos/videos delivered within 14 days
-   • Equipment removal within agreed timeframe`,
+   • Feedback form sent within 3 days
+   • Photos/videos delivered within 21 days
+   • Equipment removal within agreed timeframe (overtime charges apply)
+   • Damage to equipment charged at replacement cost
+
+8. DISPUTE RESOLUTION
+   • Any disputes shall first be resolved through negotiation
+   • If unresolved, mediation through Rwanda Arbitration Center
+   • Governing law: Laws of the Republic of Rwanda
+   • Courts of Kigali have exclusive jurisdiction`,
   },
   car: {
     title: 'Car Rental Terms and Conditions',
-    content: `THE HURBERT - Car Rental Terms
+    content: `THE HURBERT - Car Rental Terms (Rwanda)
 
 1. RENTAL REQUIREMENTS
-   • Valid driver's license required (minimum 2 years)
+   • Valid Rwandan or International Driving Permit required (minimum 2 years)
    • Minimum age: 25 years
-   • International driving permit recommended for non-Rwandan licenses
-   • Passport or national ID required for verification
+   • National ID or Passport required for verification
+   • Security deposit required:
+     - Standard vehicles: 500,000 RWF
+     - Luxury vehicles: 1,000,000 RWF
+     - Buses: 1,500,000 RWF
+   • Deposit returned within 7 days after inspection
 
-2. INSURANCE & SECURITY
-   • Comprehensive third-party insurance included
-   • Security deposit required: $500 (standard) / $1000 (luxury)
-   • Excess liability: $500 per incident
-   • CDW (Collision Damage Waiver) optional at $15/day
+2. INSURANCE (As per Rwandan Law)
+   • Third-party liability insurance included (RC - Responsabilité Civile)
+   • Collision Damage Waiver (CDW) optional at 15,000 RWF/day
+   • Theft protection included
+   • Excess liability: 500,000 RWF per incident
+   • Client responsible for first 500,000 RWF of any damage
 
 3. FUEL POLICY
    • Vehicle provided with full tank
-   • Return with full tank or fuel charges apply ($2/L)
-   • Pre-paid fuel option available at $50 for 1/2 tank
+   • Return with full tank or fuel charges apply at 2,000 RWF/L
+   • Pre-paid fuel option available at 50,000 RWF for half tank
 
-4. MILEAGE
-   • Unlimited mileage for all vehicles
-   • Cross-border travel requires prior approval and additional fees
-   • GPS tracking for all vehicles
+4. MILEAGE AND TRAVEL
+   • Unlimited mileage within Rwanda
+   • Cross-border travel requires prior approval (additional fees apply)
+   • Permitted countries: Uganda, DRC, Burundi, Tanzania (with permits)
+   • Cross-border permit: 200,000 RWF + visa fees
+   • GPS tracking mandatory for all vehicles
 
 5. DRIVER SERVICE
-   • Professional drivers available at $30/day
+   • Professional drivers available at 30,000 RWF/day
    • Driver hours: 8:00 AM - 8:00 PM standard
-   • Overtime charges: $10/hour after 8:00 PM
-   • Driver accommodation required for multi-day trips
+   • Overtime: 5,000 RWF/hour after 8:00 PM
+   • Driver accommodation required for multi-day trips (client responsibility)
 
-6. CANCELLATION
-   • Free cancellation up to 48 hours before pickup
-   • 50% charge within 48 hours of pickup
+6. CANCELLATION AND REFUNDS
+   • Free cancellation up to 72 hours before pickup
+   • 50% charge within 72 hours of pickup
    • No-show: 100% charge
    • Early returns: No refund for unused days
+   • All cancellations must be in writing
 
-7. DAMAGE POLICY
-   • Report any damage immediately
-   • Customer responsible for damage during rental period
-   • Theft protection included with police report
-   • Interior smoking fine: $250
+7. DAMAGE AND ACCIDENTS
+   • Report any damage immediately (within 24 hours)
+   • Police report required for all accidents (Rwanda National Police)
+   • Client responsible for damage during rental period
+   • Interior smoking fine: 250,000 RWF
+   • Loss of keys: 150,000 RWF replacement fee
 
 8. ADDITIONAL DRIVERS
-   • Additional drivers allowed at $10/day
+   • Additional drivers allowed at 10,000 RWF/day
    • Must meet same requirements as primary driver
-   • Maximum 3 additional drivers per vehicle`,
+   • Maximum 3 additional drivers per vehicle
+   • All drivers must sign rental agreement
+
+9. RWANDA-SPECIFIC REGULATIONS
+   • Compliance with RURA (Rwanda Utilities Regulatory Authority) rules
+   • Seatbelts mandatory for all passengers
+   • No alcohol consumption while driving (zero tolerance)
+   • Speed limits strictly enforced
+   • Child seats mandatory for children under 5`,
   },
   tour: {
     title: 'Tourism Package Terms and Conditions',
-    content: `THE HURBERT - Tourism Terms
+    content: `THE HURBERT - Tourism Terms (Rwanda)
 
 1. PACKAGE INCLUSIONS
    • As specified in package description
-   • Entrance fees and permits included (including gorilla permits)
+   • All entrance fees and permits included (including gorilla permits)
    • Meals as specified in itinerary
-   • Accommodation as booked
-   • Professional English-speaking guide
-   • Ground transportation in private vehicle
+   • Accommodation as booked (star-rated hotels as per RDB classification)
+   • Professional English/French-speaking guide (RDB certified)
+   • Ground transportation in private vehicle with A/C
+   • Bottled water during tours
 
 2. EXCLUSIONS
    • International flights
-   • Travel insurance (STRONGLY recommended)
-   • Visa fees ($50 for single entry)
-   • Personal expenses (souvenirs, laundry, etc.)
-   • Tips and gratuities
+   • Travel insurance (MANDATORY for all tourists)
+   • Visa fees ($50 USD for single entry - subject to change)
+   • Personal expenses (souvenirs, laundry, telephone)
+   • Tips and gratuities (recommended: $10-20/day)
    • Alcoholic beverages
+   • COVID-19 testing requirements
 
-3. BOOKING & PAYMENT
-   • 30% deposit to confirm booking
-   • Balance due 30 days before travel
+3. BOOKING AND PAYMENT
+   • 30% deposit required to confirm booking
+   • Balance due 45 days before travel
    • Gorilla permits require FULL PAYMENT at time of booking
    • Permits are non-transferable and non-refundable
    • Group discounts available for 6+ pax
+   • All prices in USD or equivalent RWF (central bank rate)
 
-4. CANCELLATION POLICY
-   • 60+ days before departure: 90% refund
+4. RWANDA-SPECIFIC CANCELLATION POLICY
+   • 60+ days before departure: 75% refund
    • 30-59 days before departure: 50% refund
    • 15-29 days before departure: 25% refund
    • 0-14 days before departure: No refund
    • Gorilla permits: NON-REFUNDABLE under any circumstances
+   • Name changes on permits: $50 fee (subject to RDB policy)
 
-5. HEALTH & SAFETY
-   • Travel insurance with medical evacuation STRONGLY recommended
+5. HEALTH AND SAFETY (Rwanda Requirements)
+   • Travel insurance with medical evacuation MANDATORY
    • Yellow fever vaccination certificate REQUIRED for entry
-   • Malaria prophylaxis recommended
-   • COVID-19 requirements as per current regulations
-   • Inform us of any medical conditions in advance
+   • Malaria prophylaxis strongly recommended
+   • COVID-19 requirements as per current Rwanda Biomedical Centre guidelines
+   • Declare any medical conditions in writing
+   • Emergency evacuation insurance recommended
 
-6. ITINERARY CHANGES
-   • We reserve the right to modify due to circumstances
-   • Equivalent alternatives provided
-   • No refund for voluntary changes
-   • Weather-related changes accommodated where possible
-
-7. GORILLA TREKKING SPECIFIC
-   • Age limit: 15 years and above
-   • Physical fitness required (can take 2-6 hours)
-   • Porter service available at $20
+6. GORILLA TREKKING SPECIFIC
+   • Age limit: 15 years and above (strictly enforced by RDB)
+   • Physical fitness required (trekking can take 2-6 hours)
+   • Porter service available at $20 (supports local communities)
    • Maximum 1 hour with gorillas once located
    • No flash photography allowed
+   • Maintain 7 meters distance from gorillas
+   • No eating or drinking near gorillas
 
-8. RESPONSIBILITY
+7. ITINERARY CHANGES
+   • RDB reserves right to modify trekking groups
+   • Weather-related changes accommodated where possible
+   • Equivalent alternatives provided
+   • No refund for voluntary changes
+   • Force majeure handled as per Rwanda Tourism policy
+
+8. RESPONSIBILITY AND LIABILITY
    • THE HURBERT acts as intermediary for services
    • Not liable for acts of God, weather, political instability
-   • Clients responsible for valid passport and visas
-   • Baggage at owner's risk throughout tour`,
+   • Clients responsible for valid passport (6 months validity)
+   • Baggage at owner's risk throughout tour
+   • Compliance with Rwanda National Police and RDB regulations
+
+9. RWANDA TOURISM BOARD REGULATIONS
+   • All tours comply with RDB sustainable tourism guidelines
+   • Community benefit sharing included
+   • Environmental protection rules must be followed
+   • No single-use plastics in national parks
+   • Respect local customs and traditions
+
+10. EMERGENCY PROCEDURES
+    • 24/7 emergency contact provided
+    • Evacuation procedures explained
+    • Nearest medical facilities identified
+    • Embassy contact details provided
+    • Insurance claim assistance available`,
   },
-};
-
-// Helper functions to format messages
-const formatWhatsAppMessage = (data: any, bookingNumber: string) => {
-  let message = `*New Booking Request - THE HURBERT*\n\n`;
-  message += `*Booking Reference:* ${bookingNumber}\n`;
-  message += `*Service:* ${data.service_type}\n\n`;
-  message += `*Customer:* ${data.fullName}\n`;
-  message += `*Email:* ${data.email}\n`;
-  message += `*Phone:* ${data.phone || 'Not provided'}\n`;
-  
-  // Add service-specific details
-  if (data.service_id === 1) {
-    message += `\n*EVENT DETAILS*\n`;
-    message += `Event Type: ${data.eventType}\n`;
-    message += `Event Start Date: ${data.eventStartDate}\n`;
-    message += `Event End Date: ${data.eventEndDate}\n`;
-    message += `Guests: ${data.numberOfGuests}\n`;
-    message += `Venue: ${data.venuePreference || 'Not specified'}\n`;
-    if (data.selectedServices?.length) {
-      message += `\n*Services:*\n`;
-      data.selectedServices.forEach((s: string) => {
-        message += `• ${s}\n`;
-      });
-    }
-  } else if (data.service_id === 2) {
-    message += `\n*CAR RENTAL DETAILS*\n`;
-    message += `Pickup Date: ${data.pickupDate}\n`;
-    message += `Pickup Time: ${data.pickupTime}\n`;
-    message += `Return Date: ${data.returnDate}\n`;
-    message += `Return Time: ${data.returnTime}\n`;
-    message += `Location: ${data.pickupLocation}\n`;
-    if (data.selectedCarModels?.length) {
-      message += `\n*Car Models:*\n`;
-      data.selectedCarModels.forEach((m: string) => {
-        message += `• ${m}\n`;
-      });
-    }
-    if (data.selectedCarTypes?.length) {
-      message += `\n*Car Types:*\n`;
-      data.selectedCarTypes.forEach((t: string) => {
-        message += `• ${t}\n`;
-      });
-    }
-    message += `\nNumber of Cars: ${data.numberOfCars}\n`;
-    if (data.selectedServices?.length) {
-      message += `\n*Additional Services:*\n`;
-      data.selectedServices.forEach((s: string) => {
-        message += `• ${s}\n`;
-      });
-    }
-  } else if (data.service_id === 3) {
-    message += `\n*TOUR DETAILS*\n`;
-    if (data.selectedPackages?.length) {
-      message += `\n*Packages:*\n`;
-      data.selectedPackages.forEach((p: string) => {
-        message += `• ${p}\n`;
-      });
-    }
-    message += `\nTour Start Date: ${data.tourStartDate}\n`;
-    message += `Tour End Date: ${data.tourEndDate}\n`;
-    message += `Travelers: ${data.numberOfTravelers}\n`;
-    if (data.selectedServices?.length) {
-      message += `\n*Additional Services:*\n`;
-      data.selectedServices.forEach((s: string) => {
-        message += `• ${s}\n`;
-      });
-    }
-  }
-  
-  message += `\n*Message:* ${data.message || data.specialRequests || 'No additional message'}`;
-  
-  return message;
-};
-
-const formatEmailMessage = (data: any, bookingNumber: string) => {
-  let body = `NEW BOOKING REQUEST - ${data.service_type}\n`;
-  body += `Booking Reference: ${bookingNumber}\n\n`;
-  body += `CUSTOMER DETAILS:\n`;
-  body += `Name: ${data.fullName}\n`;
-  body += `Email: ${data.email}\n`;
-  body += `Phone: ${data.phone || 'Not provided'}\n\n`;
-
-  if (data.service_id === 1) {
-    body += `EVENT DETAILS:\n`;
-    body += `Event Type: ${data.eventType}\n`;
-    body += `Event Start Date: ${data.eventStartDate}\n`;
-    body += `Event End Date: ${data.eventEndDate}\n`;
-    body += `Number of Guests: ${data.numberOfGuests}\n`;
-    body += `Venue: ${data.venuePreference || 'Not specified'}\n`;
-    if (data.selectedServices?.length) {
-      body += `\nSelected Services:\n`;
-      data.selectedServices.forEach((s: string) => {
-        body += `• ${s}\n`;
-      });
-    }
-  } else if (data.service_id === 2) {
-    body += `CAR RENTAL DETAILS:\n`;
-    body += `Pickup Date: ${data.pickupDate}\n`;
-    body += `Pickup Time: ${data.pickupTime}\n`;
-    body += `Return Date: ${data.returnDate}\n`;
-    body += `Return Time: ${data.returnTime}\n`;
-    body += `Location: ${data.pickupLocation}\n`;
-    if (data.selectedCarModels?.length) {
-      body += `\nCar Models:\n`;
-      data.selectedCarModels.forEach((m: string) => {
-        body += `• ${m}\n`;
-      });
-    }
-    if (data.selectedCarTypes?.length) {
-      body += `\nCar Types:\n`;
-      data.selectedCarTypes.forEach((t: string) => {
-        body += `• ${t}\n`;
-      });
-    }
-    body += `\nNumber of Cars: ${data.numberOfCars}\n`;
-    if (data.selectedServices?.length) {
-      body += `\nAdditional Services:\n`;
-      data.selectedServices.forEach((s: string) => {
-        body += `• ${s}\n`;
-      });
-    }
-  } else if (data.service_id === 3) {
-    body += `TOUR DETAILS:\n`;
-    if (data.selectedPackages?.length) {
-      body += `\nTour Packages:\n`;
-      data.selectedPackages.forEach((p: string) => {
-        body += `• ${p}\n`;
-      });
-    }
-    body += `\nTour Start Date: ${data.tourStartDate}\n`;
-    body += `Tour End Date: ${data.tourEndDate}\n`;
-    body += `Travelers: ${data.numberOfTravelers}\n`;
-    if (data.selectedServices?.length) {
-      body += `\nAdditional Services:\n`;
-      data.selectedServices.forEach((s: string) => {
-        body += `• ${s}\n`;
-      });
-    }
-  }
-  
-  body += `\nAdditional Message:\n${data.message || data.specialRequests || 'No additional message'}\n\n`;
-  body += `---\nSent from THE HURBERT website.`;
-  
-  return body;
 };
 
 // Helper function to get today's date in YYYY-MM-DD format for min attribute
@@ -499,9 +406,6 @@ export default function Booking() {
     selectedServices: [] as string[],
     specialRequests: '',
   });
-
-  // Store submitted data for WhatsApp/Email
-  const [submittedData, setSubmittedData] = useState<any>({});
 
   // ============================================
   // VALIDATION FUNCTIONS
@@ -681,34 +585,98 @@ export default function Booking() {
 
     const serviceLabel = bookingTypes.find(t => t.id === selectedType)?.label || 'Booking';
     
+    // Generate booking number (this will be overridden by the backend)
+    const newBookingNumber = 'BOOK-' + Date.now().toString().slice(-8);
+    setBookingNumber(newBookingNumber);
+
     // Prepare data based on selected service
     let completeData: any = {
       service_type: serviceLabel,
       service_id: selectedType === 'car' ? 2 : selectedType === 'tour' ? 3 : 1,
+      bookingNumber: newBookingNumber,
     };
 
     if (selectedType === 'event') {
-      completeData = { ...completeData, ...eventForm };
+      completeData = { 
+        ...completeData, 
+        customerName: eventForm.fullName,
+        customerEmail: eventForm.email,
+        customerPhone: eventForm.phone,
+        eventType: eventForm.eventType,
+        startDate: eventForm.eventStartDate,
+        endDate: eventForm.eventEndDate,
+        guests: eventForm.numberOfGuests,
+        venuePreference: eventForm.venuePreference,
+        selectedServices: eventForm.selectedServices,
+        notes: eventForm.message,
+        totalPrice: 5000 // Base event price
+      };
     } else if (selectedType === 'car') {
-      completeData = { ...completeData, ...carForm };
+      // STEP 1: Log form data before sending
+      console.log('🔍 STEP 1 - Form data from state:', {
+        models: carForm.selectedCarModels,
+        types: carForm.selectedCarTypes,
+        transmissions: carForm.selectedTransmissions,
+        fuelTypes: carForm.selectedFuelTypes,
+        services: carForm.selectedServices
+      });
+      
+      completeData = { 
+        ...completeData, 
+        customerName: carForm.fullName,
+        customerEmail: carForm.email,
+        customerPhone: carForm.phone,
+        pickupDate: carForm.pickupDate,
+        pickupTime: carForm.pickupTime,
+        returnDate: carForm.returnDate,
+        returnTime: carForm.returnTime,
+        pickupLocation: carForm.pickupLocation,
+        selectedCarModels: carForm.selectedCarModels,
+        selectedCarTypes: carForm.selectedCarTypes,
+        selectedTransmissions: carForm.selectedTransmissions,
+        selectedFuelTypes: carForm.selectedFuelTypes,
+        carSelectedServices: carForm.selectedServices,
+        numberOfCars: carForm.numberOfCars,
+        notes: carForm.message,
+        totalPrice: 85 * (carForm.numberOfCars || 1)
+      };
+      
+      // STEP 2: Log what's being sent to email
+      console.log('🔍 STEP 2 - Data being sent to email:', {
+        selectedCarModels: completeData.selectedCarModels,
+        selectedCarTypes: completeData.selectedCarTypes,
+        selectedTransmissions: completeData.selectedTransmissions,
+        selectedFuelTypes: completeData.selectedFuelTypes,
+        carSelectedServices: completeData.carSelectedServices
+      });
+      
     } else if (selectedType === 'tour') {
-      completeData = { ...completeData, ...tourForm };
+      completeData = { 
+        ...completeData, 
+        customerName: tourForm.fullName,
+        customerEmail: tourForm.email,
+        customerPhone: tourForm.phone,
+        selectedPackages: tourForm.selectedPackages,
+        tourStartDate: tourForm.tourStartDate,
+        tourEndDate: tourForm.tourEndDate,
+        numberOfTravelers: tourForm.numberOfTravelers,
+        tourSelectedServices: tourForm.selectedServices,
+        specialRequests: tourForm.specialRequests,
+        totalPrice: 150 * (tourForm.numberOfTravelers || 1)
+      };
     }
 
-    setSubmittedData(completeData);
-
-    // ========================================
-    // SAVE TO DATABASE - ADMIN DASHBOARD
-    // ========================================
     try {
-      // First, create or find customer
+      // ========================================
+      // SAVE TO DATABASE - THIS WILL TRIGGER THE EMAILS FROM BACKEND
+      // ========================================
       const customerResponse = await fetch('http://localhost:5000/api/customers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: completeData.fullName,
-          email: completeData.email,
-          phone: completeData.phone || '',
+          name: completeData.customerName,
+          email: completeData.customerEmail,
+          phone: completeData.customerPhone || '',
           country: 'Rwanda'
         })
       });
@@ -716,46 +684,48 @@ export default function Booking() {
       const customerData = await customerResponse.json();
       const customerId = customerData.id || 1;
 
-      // Calculate price based on service type
-      let totalPrice = 0;
-      if (selectedType === 'event') {
-        totalPrice = 5000; // Base event price
-      } else if (selectedType === 'car') {
-        totalPrice = 85 * (carForm.numberOfCars || 1);
-      } else if (selectedType === 'tour') {
-        totalPrice = 150 * (tourForm.numberOfTravelers || 1);
-      }
-
-      const bookingData = {
+      // Prepare booking data for database
+      const bookingData: any = {
         customerId: customerId,
         serviceId: completeData.service_id,
-        startDate: selectedType === 'event' ? eventForm.eventStartDate : selectedType === 'car' ? carForm.pickupDate : tourForm.tourStartDate,
-        endDate: selectedType === 'event' ? eventForm.eventEndDate : selectedType === 'car' ? carForm.returnDate : tourForm.tourEndDate,
         guests: selectedType === 'event' ? eventForm.numberOfGuests : selectedType === 'tour' ? tourForm.numberOfTravelers : carForm.numberOfCars,
-        totalPrice: totalPrice,
+        totalPrice: completeData.totalPrice,
         status: 'pending',
         paymentStatus: 'unpaid',
-        notes: selectedType === 'event' ? eventForm.message : selectedType === 'car' ? carForm.message : tourForm.specialRequests,
-        ...(selectedType === 'car' && {
-          selectedCarModels: carForm.selectedCarModels,
-          selectedCarTypes: carForm.selectedCarTypes,
-          selectedTransmissions: carForm.selectedTransmissions,
-          selectedFuelTypes: carForm.selectedFuelTypes,
-          selectedServices: carForm.selectedServices,
-          pickupLocation: carForm.pickupLocation,
-          pickupTime: carForm.pickupTime,
-          returnTime: carForm.returnTime
-        }),
-        ...(selectedType === 'tour' && {
-          selectedPackages: tourForm.selectedPackages,
-          selectedServices: tourForm.selectedServices
-        }),
-        ...(selectedType === 'event' && {
-          eventType: eventForm.eventType,
-          venuePreference: eventForm.venuePreference,
-          selectedServices: eventForm.selectedServices
-        })
+        bookingNumber: newBookingNumber,
       };
+
+      // Add service-specific fields
+      if (selectedType === 'event') {
+        bookingData.startDate = eventForm.eventStartDate;
+        bookingData.endDate = eventForm.eventEndDate;
+        bookingData.eventType = eventForm.eventType;
+        bookingData.venuePreference = eventForm.venuePreference;
+        bookingData.selectedServices = eventForm.selectedServices;
+        bookingData.notes = eventForm.message;
+      } else if (selectedType === 'car') {
+        bookingData.pickupDate = carForm.pickupDate;
+        bookingData.pickupTime = carForm.pickupTime;
+        bookingData.returnDate = carForm.returnDate;
+        bookingData.returnTime = carForm.returnTime;
+        bookingData.pickupLocation = carForm.pickupLocation;
+        bookingData.selectedCarModels = carForm.selectedCarModels;
+        bookingData.selectedCarTypes = carForm.selectedCarTypes;
+        bookingData.selectedTransmissions = carForm.selectedTransmissions;
+        bookingData.selectedFuelTypes = carForm.selectedFuelTypes;
+        bookingData.carSelectedServices = carForm.selectedServices;
+        bookingData.numberOfCars = carForm.numberOfCars;
+        bookingData.notes = carForm.message;
+      } else if (selectedType === 'tour') {
+        bookingData.tourStartDate = tourForm.tourStartDate;
+        bookingData.tourEndDate = tourForm.tourEndDate;
+        bookingData.selectedPackages = tourForm.selectedPackages;
+        bookingData.tourSelectedServices = tourForm.selectedServices;
+        bookingData.numberOfTravelers = tourForm.numberOfTravelers;
+        bookingData.specialRequests = tourForm.specialRequests;
+      }
+
+      console.log('📤 Sending to database:', bookingData);
 
       const bookingResponse = await fetch('http://localhost:5000/api/bookings', {
         method: 'POST',
@@ -764,49 +734,15 @@ export default function Booking() {
       });
 
       const bookingResult = await bookingResponse.json();
-      const newBookingNumber = bookingResult.bookingNumber || 'REF-' + Date.now();
-
-      setBookingNumber(newBookingNumber);
-
-      // ========================================
-      // SEND TO WHATSAPP (Optional - will work when you set up)
-      // ========================================
-      try {
-        const whatsappMessage = formatWhatsAppMessage(completeData, newBookingNumber);
-        
-        await fetch('http://localhost:5000/api/send-whatsapp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            to: CONTACT_INFO.whatsapp,
-            message: whatsappMessage
-          })
-        });
-      } catch (whatsappError) {
-        console.error('WhatsApp send failed (optional):', whatsappError);
-        // Don't block submission if WhatsApp fails
+      
+      // Update with the actual booking number from backend
+      if (bookingResult.bookingNumber) {
+        setBookingNumber(bookingResult.bookingNumber);
       }
 
       // ========================================
-      // SEND TO EMAIL (Optional - will work when you set up)
+      // MANUAL EMAIL CALL REMOVED - Now emails are sent from backend only
       // ========================================
-      try {
-        const emailSubject = `New Booking Request - ${serviceLabel} - ${newBookingNumber}`;
-        const emailBody = formatEmailMessage(completeData, newBookingNumber);
-        
-        await fetch('http://localhost:5000/api/send-email', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            to: CONTACT_INFO.email,
-            subject: emailSubject,
-            body: emailBody
-          })
-        });
-      } catch (emailError) {
-        console.error('Email send failed (optional):', emailError);
-        // Don't block submission if email fails
-      }
 
       // ========================================
       // SHOW SUCCESS
@@ -953,15 +889,12 @@ export default function Booking() {
                 Need Immediate Assistance?
               </h4>
               <div className="space-y-2 text-xs">
-                {/* Phone - works with tel: */}
                 <p className="flex items-center gap-2">
                   <Phone className="w-4 h-4 text-[#c9a86c]" />
                   <a href={`tel:${CONTACT_INFO.phone}`} className="hover:text-[#c9a86c] transition-colors">
                     {CONTACT_INFO.phone}
                   </a>
                 </p>
-                
-                {/* Email - opens Gmail compose */}
                 <p className="flex items-center gap-2">
                   <Mail className="w-4 h-4 text-[#c9a86c]" />
                   <a 
@@ -973,8 +906,6 @@ export default function Booking() {
                     {CONTACT_INFO.email}
                   </a>
                 </p>
-                
-                {/* Address - opens Google Maps */}
                 <p className="flex items-center gap-2">
                   <MapPinned className="w-4 h-4 text-[#c9a86c]" />
                   <a 
@@ -988,16 +919,16 @@ export default function Booking() {
                 </p>
               </div>
               
-              {/* WhatsApp - stays the same */}
+              {/* WhatsApp Chat Link - Only for urgent inquiries, not for booking submission */}
               <a
-                href={`https://wa.me/${CONTACT_INFO.whatsapp}?text=${encodeURIComponent('Hello THE HURBERT! I would like to make a booking inquiry.')}`}
+                href={`https://wa.me/${CONTACT_INFO.whatsapp}?text=${encodeURIComponent('Hello THE HURBERT! I have an urgent inquiry about my booking.')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-3 w-full bg-green-500 text-white py-2 rounded-lg font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 hover:bg-green-600"
                 style={{ fontFamily: 'Montserrat, sans-serif' }}
               >
                 <MessageSquare className="w-4 h-4" />
-                Chat on WhatsApp
+                Urgent? Chat on WhatsApp
               </a>
             </div>
           </div>
@@ -1020,11 +951,6 @@ export default function Booking() {
                 </h3>
               </div>
 
-              {/* Hidden anchors for scrolling */}
-              <div id="event-booking" className="scroll-mt-24"></div>
-              <div id="car-booking" className="scroll-mt-24"></div>
-              <div id="tourism-booking" className="scroll-mt-24"></div>
-
               {submitSuccess ? (
                 <div className="text-center py-12 px-6">
                   <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
@@ -1041,12 +967,24 @@ export default function Booking() {
                   <p className="text-gray-600 text-xs mb-5">
                     We've received your request and will contact you shortly.
                   </p>
+                  
+                  {/* WhatsApp Link in Success Message for Urgent Inquiries */}
+                  <a
+                    href={`https://wa.me/${CONTACT_INFO.whatsapp}?text=${encodeURIComponent(`Hello THE HURBERT! I have an urgent question about my booking ${bookingNumber}.`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-green-600 transition-colors mb-3"
+                  >
+                    <MessageSquare className="w-3 h-3" />
+                    Urgent? Chat on WhatsApp
+                  </a>
+                  
                   <button
                     onClick={() => {
                       setSubmitSuccess(false);
                       setSelectedType('event');
                     }}
-                    className="text-[#c9a86c] text-xs hover:underline"
+                    className="block text-[#c9a86c] text-xs hover:underline mt-2"
                   >
                     Make another booking
                   </button>
@@ -1184,9 +1122,6 @@ export default function Booking() {
                           styles={selectStyles}
                           closeMenuOnSelect={false}
                           blurInputOnSelect={false}
-                          isOptionSelected={(option, selectValue) => 
-                            selectValue.some((item: any) => item.value === option.value)
-                          }
                         />
                       </div>
 
@@ -1200,7 +1135,7 @@ export default function Booking() {
                         className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c] resize-none"
                       />
 
-                      {/* Terms and Conditions - Above Submit Button */}
+                      {/* Terms and Conditions */}
                       <div className="mt-4 pt-3 border-t border-gray-200">
                         <div className="flex items-center justify-between mb-2">
                           <button
@@ -1362,9 +1297,6 @@ export default function Booking() {
                           className="text-xs"
                           styles={selectStyles}
                           closeMenuOnSelect={false}
-                          isOptionSelected={(option, selectValue) => 
-                            selectValue.some((item: any) => item.value === option.value)
-                          }
                         />
                       </div>
 
@@ -1385,9 +1317,6 @@ export default function Booking() {
                           className="text-xs"
                           styles={selectStyles}
                           closeMenuOnSelect={false}
-                          isOptionSelected={(option, selectValue) => 
-                            selectValue.some((item: any) => item.value === option.value)
-                          }
                         />
                       </div>
 
@@ -1408,9 +1337,6 @@ export default function Booking() {
                           className="text-xs"
                           styles={selectStyles}
                           closeMenuOnSelect={false}
-                          isOptionSelected={(option, selectValue) => 
-                            selectValue.some((item: any) => item.value === option.value)
-                          }
                         />
                       </div>
 
@@ -1431,9 +1357,6 @@ export default function Booking() {
                           className="text-xs"
                           styles={selectStyles}
                           closeMenuOnSelect={false}
-                          isOptionSelected={(option, selectValue) => 
-                            selectValue.some((item: any) => item.value === option.value)
-                          }
                         />
                       </div>
 
@@ -1471,9 +1394,6 @@ export default function Booking() {
                           className="text-xs"
                           styles={selectStyles}
                           closeMenuOnSelect={false}
-                          isOptionSelected={(option, selectValue) => 
-                            selectValue.some((item: any) => item.value === option.value)
-                          }
                         />
                       </div>
 
@@ -1487,7 +1407,7 @@ export default function Booking() {
                         className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
                       />
 
-                      {/* Terms and Conditions - Above Submit Button */}
+                      {/* Terms and Conditions */}
                       <div className="mt-4 pt-3 border-t border-gray-200">
                         <div className="flex items-center justify-between mb-2">
                           <button
@@ -1580,9 +1500,6 @@ export default function Booking() {
                           className="text-xs"
                           styles={selectStyles}
                           closeMenuOnSelect={false}
-                          isOptionSelected={(option, selectValue) => 
-                            selectValue.some((item: any) => item.value === option.value)
-                          }
                         />
                       </div>
 
@@ -1654,9 +1571,6 @@ export default function Booking() {
                           className="text-xs"
                           styles={selectStyles}
                           closeMenuOnSelect={false}
-                          isOptionSelected={(option, selectValue) => 
-                            selectValue.some((item: any) => item.value === option.value)
-                          }
                         />
                       </div>
 
@@ -1670,7 +1584,7 @@ export default function Booking() {
                         className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
                       />
 
-                      {/* Terms and Conditions - Above Submit Button */}
+                      {/* Terms and Conditions */}
                       <div className="mt-4 pt-3 border-t border-gray-200">
                         <div className="flex items-center justify-between mb-2">
                           <button

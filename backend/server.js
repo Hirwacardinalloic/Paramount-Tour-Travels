@@ -17,7 +17,15 @@ import staffRoutes from './routes/staff.js';
 import bookingsRoutes from './routes/bookings.js';
 import dashboardRoutes from './routes/dashboard.js';
 import galleryRoutes from './routes/gallery.js';
-import contactRoutes from './routes/contact.js'; // ADD THIS LINE
+import contactRoutes from './routes/contact.js';
+
+// Import email functions
+import { 
+  sendClientBookingConfirmation, 
+  sendAdminBookingNotification,
+  sendContactAutoReply,
+  sendContactNotification 
+} from './utils/email.js';
 
 dotenv.config();
 
@@ -136,6 +144,43 @@ app.get('/api/customers', async (req, res) => {
 });
 
 // ============================================
+// EMAIL API ENDPOINT - ADD THIS
+// ============================================
+app.post('/api/send-email', async (req, res) => {
+  try {
+    const bookingData = req.body;
+    console.log('📧 Sending emails for booking:', bookingData.bookingNumber);
+    console.log('📧 Booking data received:', JSON.stringify(bookingData, null, 2));
+    
+    // Send both emails
+    const clientResult = await sendClientBookingConfirmation(bookingData);
+    const adminResult = await sendAdminBookingNotification(bookingData);
+    
+    if (clientResult.success && adminResult.success) {
+      res.json({ 
+        success: true, 
+        message: 'Emails sent successfully',
+        client: clientResult,
+        admin: adminResult
+      });
+    } else {
+      res.status(500).json({ 
+        success: false, 
+        message: 'Partial email failure',
+        client: clientResult,
+        admin: adminResult
+      });
+    }
+  } catch (error) {
+    console.error('❌ Email sending failed:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error.message 
+    });
+  }
+});
+
+// ============================================
 // ROUTES
 // ============================================
 app.use('/api/auth', authRoutes);
@@ -147,7 +192,7 @@ app.use('/api/staff', staffRoutes);
 app.use('/api/bookings', bookingsRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/gallery', galleryRoutes);
-app.use('/api/contact', contactRoutes); // ADD THIS LINE
+app.use('/api/contact', contactRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -179,5 +224,6 @@ app.listen(PORT, () => {
   console.log(`✅ Uploads available at http://localhost:${PORT}/uploads`);
   console.log(`✅ Gallery API available at http://localhost:${PORT}/api/gallery`);
   console.log(`✅ Contact API available at http://localhost:${PORT}/api/contact`);
+  console.log(`✅ Email API available at http://localhost:${PORT}/api/send-email`);
   console.log(`✅ Environment: ${process.env.NODE_ENV || 'development'}`);
 });

@@ -1,6 +1,6 @@
 import express from 'express';
 import db from '../db.js';
-import { sendBookingConfirmation } from '../utils/email.js';
+import { sendClientBookingConfirmation, sendAdminBookingNotification } from '../utils/email.js';
 
 const router = express.Router();
 
@@ -79,14 +79,51 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST create booking - WITH AUTO-REPLY EMAIL
+// POST create booking - WITH AUTO-REPLY EMAILS
 router.post('/', async (req, res) => {
   try {
     const {
       customerId, serviceId, startDate, endDate,
       eventDate, guests, totalPrice, status,
-      paymentStatus, notes
+      paymentStatus, notes,
+      
+      // Event specific fields
+      eventType, 
+      venuePreference, 
+      selectedServices,
+      
+      // Car specific fields
+      pickupDate, 
+      pickupTime, 
+      returnDate, 
+      returnTime,
+      pickupLocation, 
+      selectedCarModels, 
+      selectedCarTypes,
+      selectedTransmissions, 
+      selectedFuelTypes, 
+      carSelectedServices,
+      numberOfCars,
+      
+      // Tour specific fields
+      selectedPackages, 
+      tourStartDate, 
+      tourEndDate,
+      numberOfTravelers, 
+      tourSelectedServices, 
+      specialRequests
     } = req.body;
+
+    console.log('📝 Booking request received:', {
+      serviceId,
+      eventType,
+      selectedServices,
+      startDate,
+      endDate,
+      tourStartDate,
+      tourEndDate,
+      selectedPackages
+    });
 
     // Generate booking number
     const date = new Date();
@@ -104,47 +141,132 @@ router.post('/', async (req, res) => {
         notes, createdAt, updatedAt
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`,
       [
-        bookingNumber, customerId, serviceId, startDate, endDate,
+        bookingNumber, customerId, serviceId, startDate || eventDate || tourStartDate, 
+        endDate || tourEndDate,
         eventDate, guests || 1, totalPrice || 0, status || 'pending',
         paymentStatus || 'unpaid', notes
       ]
     );
 
     // ============================================
-    // AUTO-REPLY EMAIL TO CLIENT
+    // GET CUSTOMER AND SERVICE DETAILS FOR EMAILS
     // ============================================
-    try {
-      // Get customer details for email
-      const customer = await db.getAsync(
-        'SELECT name, email FROM customers WHERE id = ?',
-        [customerId]
-      );
+    const customer = await db.getAsync(
+      'SELECT name, email, phone FROM customers WHERE id = ?',
+      [customerId]
+    );
 
-      // Get service details
-      const service = await db.getAsync(
-        'SELECT name, type FROM services WHERE id = ?',
-        [serviceId]
-      );
+    const service = await db.getAsync(
+      'SELECT name FROM services WHERE id = ?',
+      [serviceId]
+    );
 
-      // Send confirmation email (don't await - let it run in background)
-      sendBookingConfirmation({
-        customerName: customer.name,
-        customerEmail: customer.email,
-        bookingNumber,
-        serviceId,
-        serviceName: service.name,
-        serviceType: service.type,
-        startDate: startDate || eventDate,
-        endDate,
-        guests: guests || 1,
-        totalPrice: totalPrice || 0
-      }).catch(err => console.error('Background email error:', err));
+    // ============================================
+    // SEND CONFIRMATION TO CLIENT - WITH ALL FIELDS
+    // ============================================
+    const clientEmailData = {
+      customerName: customer.name,
+      customerEmail: customer.email,
+      bookingNumber,
+      serviceId,
+      serviceName: service.name,
+      eventType: eventType || '',
+      startDate: startDate || eventDate || tourStartDate,
+      endDate: endDate || tourEndDate,
+      guests: guests || numberOfTravelers || 1,
+      totalPrice: totalPrice || 0,
+      selectedServices: selectedServices || carSelectedServices || tourSelectedServices || [],
+      notes: notes || '',
+      
+      // Car specific
+      pickupDate,
+      pickupTime,
+      returnDate,
+      returnTime,
+      pickupLocation,
+      selectedCarModels: selectedCarModels || [],
+      selectedCarTypes: selectedCarTypes || [],
+      selectedTransmissions: selectedTransmissions || [],
+      selectedFuelTypes: selectedFuelTypes || [],
+      carSelectedServices: carSelectedServices || [],
+      numberOfCars: numberOfCars || 1,
+      
+      // Tour specific - FIXED: All fields included
+      tourStartDate,
+      tourEndDate,
+      selectedPackages: selectedPackages || [],
+      numberOfTravelers: numberOfTravelers || 1,
+      tourSelectedServices: tourSelectedServices || [],
+      specialRequests: specialRequests || '',
+      
+      // Event specific
+      venuePreference
+    };
 
-      console.log(`✅ Auto-reply email triggered for booking ${bookingNumber}`);
-    } catch (emailError) {
-      // Log email error but don't fail the booking
-      console.error('❌ Failed to trigger auto-reply email:', emailError);
-    }
+    console.log('📧 Sending client email with data:', {
+      serviceId,
+      eventType: clientEmailData.eventType,
+      selectedServices: clientEmailData.selectedServices,
+      tourPackages: clientEmailData.selectedPackages,
+      specialRequests: clientEmailData.specialRequests
+    });
+
+    await sendClientBookingConfirmation(clientEmailData).catch(err => 
+      console.error('Client email error:', err)
+    );
+
+    // ============================================
+    // SEND DETAILED NOTIFICATION TO ADMIN - WITH ALL FIELDS
+    // ============================================
+    const adminEmailData = {
+      customerName: customer.name,
+      customerEmail: customer.email,
+      customerPhone: customer.phone,
+      bookingNumber,
+      serviceId,
+      serviceName: service.name,
+      startDate: startDate || eventDate || tourStartDate,
+      endDate: endDate || tourEndDate,
+      guests: guests || numberOfTravelers || 1,
+      totalPrice: totalPrice || 0,
+      notes: notes || '',
+      
+      // Event specific fields
+      eventType,
+      venuePreference,
+      selectedServices: selectedServices || [],
+      
+      // Car specific fields
+      pickupDate,
+      pickupTime,
+      returnDate,
+      returnTime,
+      pickupLocation,
+      selectedCarModels: selectedCarModels || [],
+      selectedCarTypes: selectedCarTypes || [],
+      selectedTransmissions: selectedTransmissions || [],
+      selectedFuelTypes: selectedFuelTypes || [],
+      carSelectedServices: carSelectedServices || [],
+      numberOfCars: numberOfCars || 1,
+      
+      // Tour specific fields - FIXED: All fields included
+      tourStartDate,
+      tourEndDate,
+      selectedPackages: selectedPackages || [],
+      tourSelectedServices: tourSelectedServices || [],
+      numberOfTravelers: numberOfTravelers || 1,
+      specialRequests: specialRequests || ''
+    };
+
+    console.log('📧 Sending admin email with tour data:', {
+      selectedPackages: adminEmailData.selectedPackages,
+      specialRequests: adminEmailData.specialRequests,
+      numberOfTravelers: adminEmailData.numberOfTravelers
+    });
+
+    await sendAdminBookingNotification(adminEmailData).catch(err => 
+      console.error('Admin email error:', err)
+    );
 
     res.json({ 
       success: true, 
@@ -153,6 +275,7 @@ router.post('/', async (req, res) => {
       message: 'Booking created successfully'
     });
   } catch (error) {
+    console.error('Error saving booking:', error);
     res.status(500).json({ error: error.message });
   }
 });
