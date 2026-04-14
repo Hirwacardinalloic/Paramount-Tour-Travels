@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 
 const navItems = [
@@ -6,24 +7,23 @@ const navItems = [
   { label: 'About us', href: '#about' },
   {
     label: 'Services',
-    href: '#services',
+    href: '#destinations',
     children: [
-      { label: 'Events Planning', href: '#services' },
-      { label: 'Event Production', href: '#services' },
-      { label: 'Car Rental', href: '#services' },
-      { label: 'Tourism', href: '#services' },
+      { label: 'Destinations', href: '/portfolio?tab=destination' },
+      { label: 'Flight Tickets', href: '/portfolio?tab=flight' },
+      { label: 'Accommodation', href: '/portfolio?tab=accommodation' },
+      { label: 'Car Rental', href: '/portfolio?tab=car' },
     ],
   },
-  { label: 'Portfolio', href: '#portfolio' },
+  { label: 'Tours & Safari', href: '/tours' },
   { label: 'Contact us', href: '#contact' },
 ];
 
 // Keep social links for mobile menu
 const socialLinks = [
-  { name: 'Facebook', url: 'https://www.facebook.com/hirwa.cardinalloic', icon: 'facebook' },
-  { name: 'Twitter', url: 'https://x.com/CardinalHirwa', icon: 'twitter' },
-  { name: 'Instagram', url: 'https://www.instagram.com/_hirwa1/', icon: 'instagram' },
-  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/cardinal-loic-hirwa-48502b242/', icon: 'linkedin' },
+  { name: 'Facebook', url: 'https://www.facebook.com/ParamountAdventureAndTravels/', icon: 'facebook' },
+  { name: 'Instagram', url: 'https://www.instagram.com/paramountadventureandtravels/', icon: 'instagram' },
+  { name: 'Tripadvisor', url: 'https://www.tripadvisor.com/Attraction_Review-g293829-d28097489-Reviews-Paramount_Adventure_And_Travels-Kigali_Kigali_Province.html', icon: 'plane' },
 ];
 
 export default function Header() {
@@ -31,6 +31,9 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isHome = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,9 +45,28 @@ export default function Header() {
   }, []);
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (href.startsWith('/')) {
+      // It's a route, use navigate
+      navigate(href);
+    } else {
+      // It's a hash link
+      if (window.location.pathname !== '/') {
+        // Not on home page, navigate back home with the hash
+        navigate(`/${href}`);
+        // Wait for navigation to complete, then scroll
+        setTimeout(() => {
+          const element = document.querySelector(href);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      } else {
+        // Already on home page, scroll to section
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
     }
     setIsMobileMenuOpen(false);
     setActiveDropdown(null);
@@ -52,9 +74,13 @@ export default function Header() {
   };
 
   const scrollToBooking = () => {
-    const element = document.querySelector('#booking');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (window.location.pathname !== '/') {
+      navigate('/#booking');
+    } else {
+      const element = document.querySelector('#booking');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
     setIsMobileMenuOpen(false);
   };
@@ -63,9 +89,9 @@ export default function Header() {
     setMobileDropdownOpen(mobileDropdownOpen === label ? null : label);
   };
 
-  // Open THE HURBERT exact location in Google Maps
+  // Open Paramount exact location in Google Maps
   const openCompanyLocation = () => {
-    window.open('https://maps.google.com/?q=1+KN+78+St,+Kigali,+Rwanda', '_blank');
+    window.open('https://maps.google.com/?q=Town+centre+Building+(TCB)+GOB-013D,+Nyarugenge,+Kigali+Rwanda', '_blank');
   };
 
   return (
@@ -88,8 +114,8 @@ export default function Header() {
             className="transition-all duration-300 hover:scale-105"
           >
             <img
-              src="/theHubert.png"
-              alt="THE HURBERT"
+              src="/ParamountLogo.png"
+              alt="Paramount Adventure and Travels"
               className={`h-12 md:h-14 w-auto object-contain transition-all duration-300 ${
                 isScrolled ? 'brightness-75' : 'brightness-100'
               }`}
@@ -111,9 +137,9 @@ export default function Header() {
                     e.preventDefault();
                     scrollToSection(item.href);
                   }}
-                  className={`flex items-center gap-1 text-sm font-medium uppercase tracking-wider transition-all duration-300 hover:text-[#c9a86c] ${
-                    isScrolled ? 'text-black' : 'text-white'
-                  }`}
+                  className={`flex items-center gap-1 text-sm font-medium uppercase tracking-wider transition-all duration-300 ${
+                    isScrolled || !isHome ? 'text-black' : 'text-white'
+                  } hover:text-[#2e8b11]`}
                   style={{ fontFamily: 'Montserrat, sans-serif' }}
                 >
                   {item.label}
@@ -122,21 +148,23 @@ export default function Header() {
 
                 {/* Desktop Dropdown Menu */}
                 {item.children && activeDropdown === item.label && (
-                  <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-xl overflow-hidden animate-fade-in">
-                    {item.children.map((child) => (
-                      <a
-                        key={child.label}
-                        href={child.href}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          scrollToSection(child.href);
-                        }}
-                        className="block px-5 py-3 text-sm text-black hover:bg-[#c9a86c] hover:text-white transition-colors duration-200"
-                        style={{ fontFamily: 'Montserrat, sans-serif' }}
-                      >
-                        {child.label}
-                      </a>
-                    ))}
+                  <div className="absolute top-full left-0 pt-4 w-56 animate-fade-in">
+                    <div className="bg-white rounded-lg shadow-xl overflow-hidden border border-gray-100">
+                      {item.children.map((child) => (
+                        <a
+                          key={child.label}
+                          href={child.href}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            scrollToSection(child.href);
+                          }}
+                          className="block px-5 py-3 text-sm text-black hover:bg-[#2e8b11] hover:text-white transition-colors duration-200"
+                          style={{ fontFamily: 'Montserrat, sans-serif' }}
+                        >
+                          {child.label}
+                        </a>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
@@ -148,13 +176,13 @@ export default function Header() {
             {/* Rectangle Location Button with Flag */}
             <button
               onClick={openCompanyLocation}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-300 hover:scale-105 hover:border-[#c9a86c] ${
-                isScrolled 
-                  ? 'border-gray-300 text-black hover:bg-gray-50' 
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-300 hover:scale-105 hover:border-[#2e8b11] ${
+                isScrolled || !isHome
+                  ? 'border-gray-300 text-black hover:bg-gray-50'
                   : 'border-white/50 text-white hover:bg-white/10'
               }`}
-              aria-label="View THE HURBERT office location"
-              title="1 KN 78 St, Kigali - Click to open in Google Maps"
+              aria-label="View Paramount office location"
+              title="Town centre Building, Kigali - Click to open in Google Maps"
             >
               <img 
                 src="/flags/rwanda-flag.png" 
@@ -170,7 +198,7 @@ export default function Header() {
             {/* Book Now Button */}
             <button
               onClick={scrollToBooking}
-              className="bg-[#c9a86c] text-white px-5 py-2 rounded-lg text-sm font-semibold uppercase tracking-wider hover:bg-black transition-all duration-300 hover:scale-105 shadow-md"
+              className="bg-[#2e8b11] text-white px-5 py-2 rounded-lg text-sm font-semibold uppercase tracking-wider hover:bg-black transition-all duration-300 hover:scale-105 shadow-md"
               style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
               Book Now
@@ -181,7 +209,7 @@ export default function Header() {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={`lg:hidden p-2 transition-colors duration-300 ${
-              isScrolled ? 'text-black' : 'text-white'
+              isScrolled || !isHome ? 'text-black' : 'text-white'
             }`}
             aria-label="Toggle menu"
           >
@@ -201,7 +229,7 @@ export default function Header() {
                   <div>
                     <button
                       onClick={() => toggleMobileDropdown(item.label)}
-                      className="w-full flex items-center justify-between text-black font-medium uppercase tracking-wider py-2 hover:text-[#c9a86c] transition-colors"
+                      className="w-full flex items-center justify-between text-black font-medium uppercase tracking-wider py-2 hover:text-[#2e8b11] transition-colors"
                       style={{ fontFamily: 'Montserrat, sans-serif' }}
                     >
                       <span>{item.label}</span>
@@ -227,7 +255,7 @@ export default function Header() {
                               e.preventDefault();
                               scrollToSection(child.href);
                             }}
-                            className="block text-gray-600 text-sm py-2 hover:text-[#c9a86c] transition-colors"
+                            className="block text-gray-600 text-sm py-2 hover:text-[#2e8b11] transition-colors"
                           >
                             {child.label}
                           </a>
@@ -243,7 +271,7 @@ export default function Header() {
                       e.preventDefault();
                       scrollToSection(item.href);
                     }}
-                    className="block text-black font-medium uppercase tracking-wider py-2 hover:text-[#c9a86c] transition-colors"
+                    className="block text-black font-medium uppercase tracking-wider py-2 hover:text-[#2e8b11] transition-colors"
                     style={{ fontFamily: 'Montserrat, sans-serif' }}
                   >
                     {item.label}
@@ -256,7 +284,7 @@ export default function Header() {
             <div className="pt-4">
               <button
                 onClick={scrollToBooking}
-                className="w-full bg-[#c9a86c] text-white px-5 py-3 rounded-lg font-semibold uppercase tracking-wider hover:bg-black transition-colors"
+                className="w-full bg-[#2e8b11] text-white px-5 py-3 rounded-lg font-semibold uppercase tracking-wider hover:bg-black transition-colors"
                 style={{ fontFamily: 'Montserrat, sans-serif' }}
               >
                 Book Now
@@ -271,7 +299,7 @@ export default function Header() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 text-black hover:bg-[#c9a86c] hover:text-white transition-all duration-300"
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 text-black hover:bg-[#2e8b11] hover:text-white transition-all duration-300"
                   aria-label={social.name}
                 >
                   <SocialIcon name={social.icon} className="w-5 h-5" />

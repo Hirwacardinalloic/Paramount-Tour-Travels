@@ -107,7 +107,7 @@ export default function AdminDashboard() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="relative">
-          <div className="w-16 h-16 border-4 border-[#c9a86c] border-t-transparent rounded-full animate-spin" />
+          <div className="w-16 h-16 border-4 border-[#2f8eb2] border-t-transparent rounded-full animate-spin" />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="w-8 h-8 bg-gray-50 rounded-full" />
           </div>
@@ -137,7 +137,7 @@ export default function AdminDashboard() {
               onClick={() => setTimeRange(range)}
               className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition-colors ${
                 timeRange === range
-                  ? 'bg-[#c9a86c] text-black'
+                  ? 'bg-[#2f8eb2] text-black'
                   : 'text-gray-600 hover:bg-gray-100'
               }`}
             >
@@ -340,7 +340,7 @@ export default function AdminDashboard() {
             </h3>
             <button
               onClick={() => navigate('/admin/bookings')}
-              className="text-sm text-[#c9a86c] hover:text-black font-medium transition-colors flex items-center gap-1"
+              className="text-sm text-[#2f8eb2] hover:text-black font-medium transition-colors flex items-center gap-1"
             >
               View all
               <ArrowRight className="w-4 h-4" />
@@ -357,9 +357,9 @@ export default function AdminDashboard() {
                 >
                   {/* Icon */}
                   <div className="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center flex-shrink-0">
-                    {booking.serviceType === 'event' && <Calendar className="w-6 h-6 text-[#c9a86c]" />}
-                    {booking.serviceType === 'car' && <Car className="w-6 h-6 text-[#c9a86c]" />}
-                    {booking.serviceType === 'tour' && <MapPin className="w-6 h-6 text-[#c9a86c]" />}
+                    {booking.serviceType === 'event' && <Calendar className="w-6 h-6 text-[#2f8eb2]" />}
+                    {booking.serviceType === 'car' && <Car className="w-6 h-6 text-[#2f8eb2]" />}
+                    {booking.serviceType === 'tour' && <MapPin className="w-6 h-6 text-[#2f8eb2]" />}
                   </div>
 
                   {/* Details */}
@@ -392,7 +392,7 @@ export default function AdminDashboard() {
 
                   {/* Arrow */}
                   <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ArrowRight className="w-5 h-5 text-[#c9a86c]" />
+                    <ArrowRight className="w-5 h-5 text-[#2f8eb2]" />
                   </div>
                 </div>
               ))
@@ -405,7 +405,7 @@ export default function AdminDashboard() {
                 <p className="text-gray-500 text-sm mb-6">Your first booking will appear here</p>
                 <button
                   onClick={() => navigate('/admin/bookings/new')}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#c9a86c] text-black rounded-lg font-semibold hover:bg-black hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#2f8eb2] text-black rounded-lg font-semibold hover:bg-black hover:text-white transition-colors"
                 >
                   <UserPlus className="w-4 h-4" />
                   Create Booking
@@ -430,7 +430,7 @@ export default function AdminDashboard() {
           <div className="flex flex-wrap gap-3">
             <button
               onClick={() => navigate('/admin/events/new')}
-              className="px-5 py-2.5 bg-[#c9a86c] text-black rounded-lg font-semibold text-sm hover:bg-white transition-colors flex items-center gap-2"
+              className="px-5 py-2.5 bg-[#2f8eb2] text-black rounded-lg font-semibold text-sm hover:bg-white transition-colors flex items-center gap-2"
             >
               <Calendar className="w-4 h-4" />
               Add Event

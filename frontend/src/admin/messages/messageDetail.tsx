@@ -85,7 +85,7 @@ export default function MessageDetail() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-4 border-[#c9a86c] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-[#2f8eb2] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -140,7 +140,7 @@ export default function MessageDetail() {
               <Mail className="w-5 h-5 text-gray-400" />
               <div>
                 <p className="text-sm text-gray-500">Email</p>
-                <a href={`mailto:${message.email}`} className="font-medium text-[#c9a86c] hover:text-black">
+                <a href={`mailto:${message.email}`} className="font-medium text-[#2f8eb2] hover:text-black">
                   {message.email}
                 </a>
               </div>

@@ -206,7 +206,7 @@ export default function AdminBookings() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-4 border-[#c9a86c] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-[#2f8eb2] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -246,7 +246,7 @@ export default function AdminBookings() {
           </button>
           <button
             onClick={() => navigate('/admin/bookings/new')}
-            className="px-4 py-2 bg-[#c9a86c] text-black rounded-lg hover:bg-black hover:text-white transition-colors flex items-center gap-2"
+            className="px-4 py-2 bg-[#2f8eb2] text-black rounded-lg hover:bg-black hover:text-white transition-colors flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
             New Booking
@@ -264,7 +264,7 @@ export default function AdminBookings() {
               placeholder="Search bookings..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+              className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
             />
           </div>
           
@@ -273,7 +273,7 @@ export default function AdminBookings() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent appearance-none bg-white"
+              className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent appearance-none bg-white"
             >
               <option value="">All Status</option>
               <option value="pending">Pending</option>
@@ -288,7 +288,7 @@ export default function AdminBookings() {
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent appearance-none bg-white"
+              className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent appearance-none bg-white"
             >
               <option value="">All Services</option>
               <option value="event">Events</option>
@@ -302,14 +302,14 @@ export default function AdminBookings() {
               type="date"
               value={dateRange.start}
               onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
-              className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+              className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
               placeholder="From"
             />
             <input
               type="date"
               value={dateRange.end}
               onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
-              className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+              className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
               placeholder="To"
             />
           </div>
@@ -324,7 +324,7 @@ export default function AdminBookings() {
               else { setSortBy('date'); setSortOrder('desc'); }
             }}
             className={`px-3 py-1 rounded-lg text-sm flex items-center gap-1 ${
-              sortBy === 'date' ? 'bg-[#c9a86c] text-black' : 'bg-gray-100 text-gray-700'
+              sortBy === 'date' ? 'bg-[#2f8eb2] text-black' : 'bg-gray-100 text-gray-700'
             }`}
           >
             Date
@@ -336,7 +336,7 @@ export default function AdminBookings() {
               else { setSortBy('name'); setSortOrder('asc'); }
             }}
             className={`px-3 py-1 rounded-lg text-sm flex items-center gap-1 ${
-              sortBy === 'name' ? 'bg-[#c9a86c] text-black' : 'bg-gray-100 text-gray-700'
+              sortBy === 'name' ? 'bg-[#2f8eb2] text-black' : 'bg-gray-100 text-gray-700'
             }`}
           >
             Name
@@ -348,7 +348,7 @@ export default function AdminBookings() {
               else { setSortBy('price'); setSortOrder('desc'); }
             }}
             className={`px-3 py-1 rounded-lg text-sm flex items-center gap-1 ${
-              sortBy === 'price' ? 'bg-[#c9a86c] text-black' : 'bg-gray-100 text-gray-700'
+              sortBy === 'price' ? 'bg-[#2f8eb2] text-black' : 'bg-gray-100 text-gray-700'
             }`}
           >
             Price
@@ -368,7 +368,7 @@ export default function AdminBookings() {
                     type="checkbox"
                     checked={selectedBookings.length === filteredBookings.length && filteredBookings.length > 0}
                     onChange={handleSelectAll}
-                    className="w-4 h-4 text-[#c9a86c] rounded focus:ring-[#c9a86c]"
+                    className="w-4 h-4 text-[#2f8eb2] rounded focus:ring-[#2f8eb2]"
                   />
                 </th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
@@ -406,7 +406,7 @@ export default function AdminBookings() {
                         type="checkbox"
                         checked={selectedBookings.includes(booking.id)}
                         onChange={() => handleSelect(booking.id)}
-                        className="w-4 h-4 text-[#c9a86c] rounded focus:ring-[#c9a86c]"
+                        className="w-4 h-4 text-[#2f8eb2] rounded focus:ring-[#2f8eb2]"
                       />
                     </td>
                     <td className="px-6 py-4">
@@ -507,7 +507,7 @@ export default function AdminBookings() {
                       <p className="text-sm text-gray-500 mb-6">Try adjusting your filters or create a new booking</p>
                       <button
                         onClick={() => navigate('/admin/bookings/new')}
-                        className="px-6 py-3 bg-[#c9a86c] text-black rounded-lg font-semibold hover:bg-black hover:text-white transition-colors"
+                        className="px-6 py-3 bg-[#2f8eb2] text-black rounded-lg font-semibold hover:bg-black hover:text-white transition-colors"
                       >
                         Create First Booking
                       </button>
@@ -528,7 +528,7 @@ export default function AdminBookings() {
             <button className="px-3 py-1 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">
               Previous
             </button>
-            <button className="px-3 py-1 bg-[#c9a86c] text-black rounded-lg text-sm">
+            <button className="px-3 py-1 bg-[#2f8eb2] text-black rounded-lg text-sm">
               1
             </button>
             <button className="px-3 py-1 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">

@@ -29,7 +29,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser({
         id: 1,
         username: 'admin',
-        email: 'admin@thehurbert.com',
+        email: 'info@paramountadventureandtravels.com',
         role: 'admin'
       });
     }

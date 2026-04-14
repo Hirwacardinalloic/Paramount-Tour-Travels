@@ -102,9 +102,9 @@ const tourServicesOptions = [
 
 // Contact Information
 const CONTACT_INFO = {
-  phone: '0782169162',
-  whatsapp: '250782169162',
-  email: 'thehurbertltd@gmail.com',
+  phone: '0782501110',
+  whatsapp: '250782501110',
+  email: 'info@paramountadventureandtravels.com',
   address: '1 KN 78 St, Kigali',
 };
 
@@ -112,11 +112,11 @@ const CONTACT_INFO = {
 const termsContent = {
   event: {
     title: 'Event Management Terms and Conditions',
-    content: `THE HURBERT - Event Management Terms (Rwanda)
+    content: `Paramount Adventure and Travels - Event Management Terms (Rwanda)
 
 1. BOOKING CONFIRMATION
    • A binding contract is formed upon confirmation of booking and receipt of deposit
-   • 50% non-refundable deposit required to secure your date
+   • 50% non-refundable deposit to secure your date
    • Full payment due 5 days before event date
    • All prices quoted in USD or RWF as per contract
 
@@ -131,14 +131,14 @@ const termsContent = {
    • In case of events beyond reasonable control (natural disasters, government restrictions, public health emergencies)
    • Parties may reschedule without penalty within 12 months
    • If rescheduling impossible, refunds issued minus non-recoverable costs
-   • Documentation of force majeure event required
+   • Documentation of force majeure event
 
 4. LIABILITY AND INSURANCE
-   • THE HURBERT carries public liability insurance as required by Rwandan law
+   • Paramount Adventure and Travels carries public liability insurance as by Rwandan law
    • Maximum liability limited to total contract value
    • Client responsible for venue rules compliance and obtaining necessary permits
    • Client responsible for security of personal belongings
-   • THE HURBERT not liable for third-party vendor performance
+   • Paramount Adventure and Travels not liable for third-party vendor performance
 
 5. PAYMENT TERMS
    • Payments accepted: Bank transfer, Mobile Money (MTN MoMo, Airtel Money), Cash
@@ -148,7 +148,7 @@ const termsContent = {
    • Non-payment constitutes contract breach
 
 6. CLIENT RESPONSIBILITIES
-   • Final guest count required 10 days before event
+   • Final guest count 10 days before event
    • Ensure venue access for setup 4 hours before event
    • Obtain all necessary permits and licenses (Rwanda National Police, RURA, etc.)
    • Provide dietary requirements 7 days in advance
@@ -168,13 +168,13 @@ const termsContent = {
   },
   car: {
     title: 'Car Rental Terms and Conditions',
-    content: `THE HURBERT - Car Rental Terms (Rwanda)
+    content: `Paramount Adventure and Travels - Car Rental Terms (Rwanda)
 
 1. RENTAL REQUIREMENTS
-   • Valid Rwandan or International Driving Permit required (minimum 2 years)
+   • Valid Rwandan or International Driving Permit (minimum 2 years)
    • Minimum age: 25 years
-   • National ID or Passport required for verification
-   • Security deposit required:
+   • National ID or Passport for verification
+   • Security deposit:
      - Standard vehicles: 500,000 RWF
      - Luxury vehicles: 1,000,000 RWF
      - Buses: 1,500,000 RWF
@@ -203,7 +203,7 @@ const termsContent = {
    • Professional drivers available at 30,000 RWF/day
    • Driver hours: 8:00 AM - 8:00 PM standard
    • Overtime: 5,000 RWF/hour after 8:00 PM
-   • Driver accommodation required for multi-day trips (client responsibility)
+   • Driver accommodation for multi-day trips (client responsibility)
 
 6. CANCELLATION AND REFUNDS
    • Free cancellation up to 72 hours before pickup
@@ -214,7 +214,7 @@ const termsContent = {
 
 7. DAMAGE AND ACCIDENTS
    • Report any damage immediately (within 24 hours)
-   • Police report required for all accidents (Rwanda National Police)
+   • Police report for all accidents (Rwanda National Police)
    • Client responsible for damage during rental period
    • Interior smoking fine: 250,000 RWF
    • Loss of keys: 150,000 RWF replacement fee
@@ -234,7 +234,7 @@ const termsContent = {
   },
   tour: {
     title: 'Tourism Package Terms and Conditions',
-    content: `THE HURBERT - Tourism Terms (Rwanda)
+    content: `Paramount Adventure and Travels - Tourism Terms (Rwanda)
 
 1. PACKAGE INCLUSIONS
    • As specified in package description
@@ -255,7 +255,7 @@ const termsContent = {
    • COVID-19 testing requirements
 
 3. BOOKING AND PAYMENT
-   • 30% deposit required to confirm booking
+   • 30% deposit to confirm booking
    • Balance due 45 days before travel
    • Gorilla permits require FULL PAYMENT at time of booking
    • Permits are non-transferable and non-refundable
@@ -280,7 +280,7 @@ const termsContent = {
 
 6. GORILLA TREKKING SPECIFIC
    • Age limit: 15 years and above (strictly enforced by RDB)
-   • Physical fitness required (trekking can take 2-6 hours)
+   • Physical fitness (trekking can take 2-6 hours)
    • Porter service available at $20 (supports local communities)
    • Maximum 1 hour with gorillas once located
    • No flash photography allowed
@@ -295,7 +295,7 @@ const termsContent = {
    • Force majeure handled as per Rwanda Tourism policy
 
 8. RESPONSIBILITY AND LIABILITY
-   • THE HURBERT acts as intermediary for services
+   • Paramount Adventure and Travels acts as intermediary for services
    • Not liable for acts of God, weather, political instability
    • Clients responsible for valid passport (6 months validity)
    • Baggage at owner's risk throughout tour
@@ -768,20 +768,20 @@ export default function Booking() {
       fontSize: '0.75rem',
       boxShadow: 'none',
       '&:hover': {
-        borderColor: '#c9a86c',
+        borderColor: '#2f8eb2',
       },
       '&:focus': {
-        borderColor: '#c9a86c',
-        boxShadow: '0 0 0 1px #c9a86c',
+        borderColor: '#2f8eb2',
+        boxShadow: '0 0 0 1px #2f8eb2',
       },
     }),
     option: (provided: any, state: any) => ({
       ...provided,
       fontSize: '0.75rem',
-      backgroundColor: state.isSelected ? '#c9a86c' : state.isFocused ? '#fef3e2' : 'white',
+      backgroundColor: state.isSelected ? '#2f8eb2' : state.isFocused ? '#fef3e2' : 'white',
       color: state.isSelected ? 'white' : 'black',
       '&:hover': {
-        backgroundColor: state.isSelected ? '#c9a86c' : '#fef3e2',
+        backgroundColor: state.isSelected ? '#2f8eb2' : '#fef3e2',
       },
     }),
     multiValue: (provided: any) => ({
@@ -792,13 +792,13 @@ export default function Booking() {
     multiValueLabel: (provided: any) => ({
       ...provided,
       fontSize: '0.7rem',
-      color: '#c9a86c',
+      color: '#2f8eb2',
     }),
     multiValueRemove: (provided: any) => ({
       ...provided,
-      color: '#c9a86c',
+      color: '#2f8eb2',
       '&:hover': {
-        backgroundColor: '#c9a86c',
+        backgroundColor: '#2f8eb2',
         color: 'white',
       },
     }),
@@ -808,14 +808,14 @@ export default function Booking() {
     <section
       id="booking"
       ref={sectionRef}
-      className="relative w-full py-24 lg:py-32 bg-gray-50 overflow-hidden"
+      className="relative w-full py-24 lg:py-32 bg-[#f8fafc] overflow-hidden"
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, #c9a86c 1px, transparent 0)`,
+            backgroundImage: `radial-gradient(circle at 2px 2px, #2f8eb2 1px, transparent 0)`,
             backgroundSize: '50px 50px',
           }}
         />
@@ -832,7 +832,7 @@ export default function Booking() {
             }`}
           >
             <span
-              className="text-[#c9a86c] text-sm font-semibold uppercase tracking-[0.3em] mb-4 block"
+              className="text-[#2f8eb2] text-sm font-semibold uppercase tracking-[0.3em] mb-4 block"
               style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
               Book Now
@@ -857,13 +857,13 @@ export default function Booking() {
                     key={type.id}
                     className={`p-4 rounded-xl border-2 transition-all duration-300 cursor-pointer ${
                       selectedType === type.id
-                        ? 'border-[#c9a86c] bg-[#c9a86c]/5'
-                        : 'border-gray-200 bg-white hover:border-[#c9a86c]/50 hover:shadow-md'
+                        ? 'border-[#2f8eb2] bg-[#2f8eb2]/5'
+                        : 'border-gray-200 bg-white hover:border-[#2f8eb2]/50 hover:shadow-md'
                     }`}
                     onClick={() => setSelectedType(type.id)}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-[#c9a86c] flex items-center justify-center shadow-md">
+                      <div className="w-10 h-10 rounded-lg bg-[#2f8eb2] flex items-center justify-center shadow-md">
                         <Icon className="w-5 h-5 text-white" />
                       </div>
                       <div className="flex-1">
@@ -871,9 +871,9 @@ export default function Booking() {
                           {type.label}
                         </h3>
                       </div>
-                      <div className="w-5 h-5 rounded-full border-2 border-[#c9a86c] flex items-center justify-center">
+                      <div className="w-5 h-5 rounded-full border-2 border-[#2f8eb2] flex items-center justify-center">
                         {selectedType === type.id && (
-                          <div className="w-2.5 h-2.5 rounded-full bg-[#c9a86c]" />
+                          <div className="w-2.5 h-2.5 rounded-full bg-[#2f8eb2]" />
                         )}
                       </div>
                     </div>
@@ -885,34 +885,34 @@ export default function Booking() {
             {/* Contact Info */}
             <div className="p-5 bg-gradient-to-br from-gray-100 to-white rounded-xl text-black border border-gray-200">
               <h4 className="font-semibold mb-3 flex items-center gap-2 text-sm" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                <Award className="w-4 h-4 text-[#c9a86c]" />
+                <Award className="w-4 h-4 text-[#2f8eb2]" />
                 Need Immediate Assistance?
               </h4>
               <div className="space-y-2 text-xs">
                 <p className="flex items-center gap-2">
-                  <Phone className="w-4 h-4 text-[#c9a86c]" />
-                  <a href={`tel:${CONTACT_INFO.phone}`} className="hover:text-[#c9a86c] transition-colors">
+                  <Phone className="w-4 h-4 text-[#2f8eb2]" />
+                  <a href={`tel:${CONTACT_INFO.phone}`} className="hover:text-[#2f8eb2] transition-colors">
                     {CONTACT_INFO.phone}
                   </a>
                 </p>
                 <p className="flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-[#c9a86c]" />
+                  <Mail className="w-4 h-4 text-[#2f8eb2]" />
                   <a 
                     href={`https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_INFO.email}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-[#c9a86c] transition-colors"
+                    className="hover:text-[#2f8eb2] transition-colors"
                   >
                     {CONTACT_INFO.email}
                   </a>
                 </p>
                 <p className="flex items-center gap-2">
-                  <MapPinned className="w-4 h-4 text-[#c9a86c]" />
+                  <MapPinned className="w-4 h-4 text-[#2f8eb2]" />
                   <a 
                     href="https://maps.google.com/?q=1+KN+78+St,+Kigali,+Rwanda"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-[#c9a86c] transition-colors"
+                    className="hover:text-[#2f8eb2] transition-colors"
                   >
                     {CONTACT_INFO.address}
                   </a>
@@ -921,7 +921,7 @@ export default function Booking() {
               
               {/* WhatsApp Chat Link - Only for urgent inquiries, not for booking submission */}
               <a
-                href={`https://wa.me/${CONTACT_INFO.whatsapp}?text=${encodeURIComponent('Hello THE HURBERT! I have an urgent inquiry about my booking.')}`}
+                href={`https://wa.me/${CONTACT_INFO.whatsapp}?text=${encodeURIComponent('Hello Paramount Adventure and Travels! I have an urgent inquiry about my booking.')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-3 w-full bg-green-500 text-white py-2 rounded-lg font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 hover:bg-green-600"
@@ -943,7 +943,7 @@ export default function Booking() {
           >
             <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
               {/* Form Header */}
-              <div className="bg-[#c9a86c] px-6 py-4">
+              <div className="bg-[#2f8eb2] px-6 py-4">
                 <h3 className="text-lg font-bold text-white" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                   {selectedType === 'event' && 'Event Management'}
                   {selectedType === 'car' && 'Car Rental'}
@@ -970,7 +970,7 @@ export default function Booking() {
                   
                   {/* WhatsApp Link in Success Message for Urgent Inquiries */}
                   <a
-                    href={`https://wa.me/${CONTACT_INFO.whatsapp}?text=${encodeURIComponent(`Hello THE HURBERT! I have an urgent question about my booking ${bookingNumber}.`)}`}
+                    href={`https://wa.me/${CONTACT_INFO.whatsapp}?text=${encodeURIComponent(`Hello Paramount Adventure and Travels! I have an urgent question about my booking ${bookingNumber}.`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-green-600 transition-colors mb-3"
@@ -984,7 +984,7 @@ export default function Booking() {
                       setSubmitSuccess(false);
                       setSelectedType('event');
                     }}
-                    className="block text-[#c9a86c] text-xs hover:underline mt-2"
+                    className="block text-[#2f8eb2] text-xs hover:underline mt-2"
                   >
                     Make another booking
                   </button>
@@ -996,7 +996,7 @@ export default function Booking() {
                       {/* Personal Information */}
                       <div className="space-y-3">
                         <h4 className="font-medium text-black flex items-center gap-2 text-xs border-b border-gray-100 pb-1">
-                          <User className="w-3 h-3 text-[#c9a86c]" />
+                          <User className="w-3 h-3 text-[#2f8eb2]" />
                           Your Information
                         </h4>
                         <div className="grid grid-cols-2 gap-3">
@@ -1007,7 +1007,7 @@ export default function Booking() {
                             onChange={handleEventChange}
                             placeholder="Full Name *"
                             required
-                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c] focus:border-transparent"
+                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2] focus:border-transparent"
                           />
                           <input
                             type="email"
@@ -1016,17 +1016,16 @@ export default function Booking() {
                             onChange={handleEventChange}
                             placeholder="Email *"
                             required
-                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c] focus:border-transparent"
+                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2] focus:border-transparent"
                           />
                         </div>
                         <PhoneInput
                           country={'rw'}
                           value={eventForm.phone}
                           onChange={(value, country) => handlePhoneChange(value, country, 'event')}
-                          inputClass="!w-full !pl-10 !py-2 !text-xs !border-gray-200 !rounded-lg focus:!ring-1 focus:!ring-[#c9a86c]"
+                          inputClass="!w-full !pl-10 !py-2 !text-xs !border-gray-200 !rounded-lg focus:!ring-1 focus:!ring-[#2f8eb2]"
                           buttonClass="!border-gray-200 !rounded-l-lg"
                           placeholder="Phone number *"
-                          required
                           enableSearch={true}
                           searchPlaceholder="Search country..."
                         />
@@ -1035,7 +1034,7 @@ export default function Booking() {
                       {/* Event Details */}
                       <div className="space-y-3">
                         <h4 className="font-medium text-black flex items-center gap-2 text-xs border-b border-gray-100 pb-1">
-                          <Calendar className="w-3 h-3 text-[#c9a86c]" />
+                          <Calendar className="w-3 h-3 text-[#2f8eb2]" />
                           Event Details
                         </h4>
                         <div className="grid grid-cols-2 gap-3">
@@ -1044,7 +1043,7 @@ export default function Booking() {
                             value={eventForm.eventType}
                             onChange={handleEventChange}
                             required
-                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                           >
                             <option value="" disabled hidden>Event Type *</option>
                             <option value="wedding">Wedding</option>
@@ -1060,7 +1059,7 @@ export default function Booking() {
                             value={eventForm.venuePreference}
                             onChange={handleEventChange}
                             placeholder="Venue (optional)"
-                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                           />
                         </div>
                         <div className="grid grid-cols-2 gap-3">
@@ -1073,7 +1072,7 @@ export default function Booking() {
                               onChange={handleEventChange}
                               min={todayDate}
                               required
-                              className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                              className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                             />
                           </div>
                           <div>
@@ -1084,8 +1083,8 @@ export default function Booking() {
                               value={eventForm.eventEndDate}
                               onChange={handleEventChange}
                               min={todayDate}
-                              required
-                              className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                              inputProps={{ required: true }}
+                              className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                             />
                           </div>
                         </div>
@@ -1099,7 +1098,7 @@ export default function Booking() {
                             placeholder="Number of Guests *"
                             required
                             min="1"
-                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                           />
                         </div>
                       </div>
@@ -1107,7 +1106,7 @@ export default function Booking() {
                       {/* Services Selection - Multi-select dropdown */}
                       <div className="space-y-3">
                         <h4 className="font-medium text-black flex items-center gap-2 text-xs border-b border-gray-100 pb-1">
-                          <Briefcase className="w-3 h-3 text-[#c9a86c]" />
+                          <Briefcase className="w-3 h-3 text-[#2f8eb2]" />
                           Services You Need (Select multiple)
                         </h4>
                         <Select
@@ -1132,7 +1131,7 @@ export default function Booking() {
                         onChange={handleEventChange}
                         rows={2}
                         placeholder="Additional information..."
-                        className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c] resize-none"
+                        className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2] resize-none"
                       />
 
                       {/* Terms and Conditions */}
@@ -1141,7 +1140,7 @@ export default function Booking() {
                           <button
                             type="button"
                             onClick={() => setShowTerms(true)}
-                            className="text-xs text-[#c9a86c] hover:underline flex items-center gap-1"
+                            className="text-xs text-[#2f8eb2] hover:underline flex items-center gap-1"
                           >
                             <FileText className="w-3 h-3" />
                             View Terms and Conditions
@@ -1153,7 +1152,7 @@ export default function Booking() {
                             checked={agreeTerms}
                             onChange={(e) => setAgreeTerms(e.target.checked)}
                             required
-                            className="w-3 h-3 text-[#c9a86c] rounded border-gray-300 focus:ring-[#c9a86c]"
+                            className="w-3 h-3 text-[#2f8eb2] rounded border-gray-300 focus:ring-[#2f8eb2]"
                           />
                           <span className="text-xs text-gray-600">
                             I agree to the Terms and Conditions *
@@ -1164,7 +1163,7 @@ export default function Booking() {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full bg-[#c9a86c] text-white py-2.5 rounded-lg font-semibold text-xs uppercase tracking-wider hover:bg-black transition-colors disabled:opacity-50"
+                        className="w-full bg-[#2f8eb2] text-white py-2.5 rounded-lg font-semibold text-xs uppercase tracking-wider hover:bg-black transition-colors disabled:opacity-50"
                       >
                         {isSubmitting ? 'Processing...' : 'Submit Booking'}
                       </button>
@@ -1176,7 +1175,7 @@ export default function Booking() {
                       {/* Personal Information */}
                       <div className="space-y-3">
                         <h4 className="font-medium text-black flex items-center gap-2 text-xs border-b border-gray-100 pb-1">
-                          <User className="w-3 h-3 text-[#c9a86c]" />
+                          <User className="w-3 h-3 text-[#2f8eb2]" />
                           Your Information
                         </h4>
                         <div className="grid grid-cols-2 gap-3">
@@ -1187,7 +1186,7 @@ export default function Booking() {
                             onChange={handleCarChange}
                             placeholder="Full Name *"
                             required
-                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                           />
                           <input
                             type="email"
@@ -1196,17 +1195,17 @@ export default function Booking() {
                             onChange={handleCarChange}
                             placeholder="Email *"
                             required
-                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                           />
                         </div>
                         <PhoneInput
                           country={'rw'}
                           value={carForm.phone}
                           onChange={(value, country) => handlePhoneChange(value, country, 'car')}
-                          inputClass="!w-full !pl-10 !py-2 !text-xs !border-gray-200 !rounded-lg focus:!ring-1 focus:!ring-[#c9a86c]"
+                          inputClass="!w-full !pl-10 !py-2 !text-xs !border-gray-200 !rounded-lg focus:!ring-1 focus:!ring-[#2f8eb2]"
                           buttonClass="!border-gray-200 !rounded-l-lg"
                           placeholder="Phone number *"
-                          required
+                          inputProps={{ required: true }}
                           enableSearch={true}
                         />
                       </div>
@@ -1214,7 +1213,7 @@ export default function Booking() {
                       {/* Pickup & Return Details */}
                       <div className="space-y-3">
                         <h4 className="font-medium text-black flex items-center gap-2 text-xs border-b border-gray-100 pb-1">
-                          <CalendarDays className="w-3 h-3 text-[#c9a86c]" />
+                          <CalendarDays className="w-3 h-3 text-[#2f8eb2]" />
                           Pickup & Return Details
                         </h4>
                         <div className="grid grid-cols-2 gap-3">
@@ -1227,7 +1226,7 @@ export default function Booking() {
                               onChange={handleCarChange}
                               min={todayDate}
                               required
-                              className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                              className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                             />
                           </div>
                           <div>
@@ -1238,7 +1237,7 @@ export default function Booking() {
                               value={carForm.pickupTime}
                               onChange={handleCarChange}
                               required
-                              className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                              className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                             />
                           </div>
                         </div>
@@ -1252,7 +1251,7 @@ export default function Booking() {
                               onChange={handleCarChange}
                               min={todayDate}
                               required
-                              className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                              className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                             />
                           </div>
                           <div>
@@ -1263,7 +1262,7 @@ export default function Booking() {
                               value={carForm.returnTime}
                               onChange={handleCarChange}
                               required
-                              className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                              className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                             />
                           </div>
                         </div>
@@ -1274,7 +1273,7 @@ export default function Booking() {
                             name="pickupLocation"
                             value={carForm.pickupLocation}
                             onChange={handleCarChange}
-                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                             placeholder="e.g., Kigali International Airport"
                           />
                         </div>
@@ -1283,7 +1282,7 @@ export default function Booking() {
                       {/* Car Models - Multi-select */}
                       <div className="space-y-2">
                         <h4 className="font-medium text-black flex items-center gap-2 text-xs">
-                          <Car className="w-3 h-3 text-[#c9a86c]" />
+                          <Car className="w-3 h-3 text-[#2f8eb2]" />
                           Car Models (Select multiple)
                         </h4>
                         <Select
@@ -1303,7 +1302,7 @@ export default function Booking() {
                       {/* Car Types - Multi-select */}
                       <div className="space-y-2">
                         <h4 className="font-medium text-black flex items-center gap-2 text-xs">
-                          <Car className="w-3 h-3 text-[#c9a86c]" />
+                          <Car className="w-3 h-3 text-[#2f8eb2]" />
                           Car Types (Select multiple)
                         </h4>
                         <Select
@@ -1323,7 +1322,7 @@ export default function Booking() {
                       {/* Transmission Types - Multi-select */}
                       <div className="space-y-2">
                         <h4 className="font-medium text-black flex items-center gap-2 text-xs">
-                          <Settings className="w-3 h-3 text-[#c9a86c]" />
+                          <Settings className="w-3 h-3 text-[#2f8eb2]" />
                           Transmission (Select multiple)
                         </h4>
                         <Select
@@ -1343,7 +1342,7 @@ export default function Booking() {
                       {/* Fuel Types - Multi-select */}
                       <div className="space-y-2">
                         <h4 className="font-medium text-black flex items-center gap-2 text-xs">
-                          <Fuel className="w-3 h-3 text-[#c9a86c]" />
+                          <Fuel className="w-3 h-3 text-[#2f8eb2]" />
                           Fuel Types (Select multiple)
                         </h4>
                         <Select
@@ -1363,7 +1362,7 @@ export default function Booking() {
                       {/* Number of Cars */}
                       <div className="space-y-2">
                         <h4 className="font-medium text-black flex items-center gap-2 text-xs">
-                          <Car className="w-3 h-3 text-[#c9a86c]" />
+                          <Car className="w-3 h-3 text-[#2f8eb2]" />
                           Number of Cars *
                         </h4>
                         <input
@@ -1373,14 +1372,14 @@ export default function Booking() {
                           onChange={handleCarChange}
                           min="1"
                           required
-                          className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                          className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                         />
                       </div>
 
                       {/* Additional Services - Multi-select */}
                       <div className="space-y-2">
                         <h4 className="font-medium text-black flex items-center gap-2 text-xs">
-                          <Shield className="w-3 h-3 text-[#c9a86c]" />
+                          <Shield className="w-3 h-3 text-[#2f8eb2]" />
                           Additional Services (Select multiple)
                         </h4>
                         <Select
@@ -1404,7 +1403,7 @@ export default function Booking() {
                         onChange={handleCarChange}
                         rows={2}
                         placeholder="Special requests..."
-                        className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                        className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                       />
 
                       {/* Terms and Conditions */}
@@ -1413,7 +1412,7 @@ export default function Booking() {
                           <button
                             type="button"
                             onClick={() => setShowTerms(true)}
-                            className="text-xs text-[#c9a86c] hover:underline flex items-center gap-1"
+                            className="text-xs text-[#2f8eb2] hover:underline flex items-center gap-1"
                           >
                             <FileText className="w-3 h-3" />
                             View Terms and Conditions
@@ -1425,7 +1424,7 @@ export default function Booking() {
                             checked={agreeTerms}
                             onChange={(e) => setAgreeTerms(e.target.checked)}
                             required
-                            className="w-3 h-3 text-[#c9a86c] rounded border-gray-300 focus:ring-[#c9a86c]"
+                            className="w-3 h-3 text-[#2f8eb2] rounded border-gray-300 focus:ring-[#2f8eb2]"
                           />
                           <span className="text-xs text-gray-600">
                             I agree to the Terms and Conditions *
@@ -1436,7 +1435,7 @@ export default function Booking() {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full bg-[#c9a86c] text-white py-2.5 rounded-lg font-semibold text-xs uppercase tracking-wider hover:bg-black"
+                        className="w-full bg-[#2f8eb2] text-white py-2.5 rounded-lg font-semibold text-xs uppercase tracking-wider hover:bg-black"
                       >
                         {isSubmitting ? 'Processing...' : 'Submit Booking'}
                       </button>
@@ -1448,7 +1447,7 @@ export default function Booking() {
                       {/* Personal Information */}
                       <div className="space-y-3">
                         <h4 className="font-medium text-black flex items-center gap-2 text-xs border-b border-gray-100 pb-1">
-                          <User className="w-3 h-3 text-[#c9a86c]" />
+                          <User className="w-3 h-3 text-[#2f8eb2]" />
                           Your Information
                         </h4>
                         <div className="grid grid-cols-2 gap-3">
@@ -1459,7 +1458,7 @@ export default function Booking() {
                             onChange={handleTourChange}
                             placeholder="Full Name *"
                             required
-                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                           />
                           <input
                             type="email"
@@ -1468,17 +1467,17 @@ export default function Booking() {
                             onChange={handleTourChange}
                             placeholder="Email *"
                             required
-                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                            className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                           />
                         </div>
                         <PhoneInput
                           country={'rw'}
                           value={tourForm.phone}
                           onChange={(value, country) => handlePhoneChange(value, country, 'tour')}
-                          inputClass="!w-full !pl-10 !py-2 !text-xs !border-gray-200 !rounded-lg focus:!ring-1 focus:!ring-[#c9a86c]"
+                          inputClass="!w-full !pl-10 !py-2 !text-xs !border-gray-200 !rounded-lg focus:!ring-1 focus:!ring-[#2f8eb2]"
                           buttonClass="!border-gray-200 !rounded-l-lg"
                           placeholder="Phone number *"
-                          required
+                          inputProps={{ required: true }}
                           enableSearch={true}
                         />
                       </div>
@@ -1486,7 +1485,7 @@ export default function Booking() {
                       {/* Tour Packages - Multi-select */}
                       <div className="space-y-2">
                         <h4 className="font-medium text-black flex items-center gap-2 text-xs">
-                          <Globe className="w-3 h-3 text-[#c9a86c]" />
+                          <Globe className="w-3 h-3 text-[#2f8eb2]" />
                           Tour Packages (Select at least one) *
                         </h4>
                         <Select
@@ -1506,7 +1505,7 @@ export default function Booking() {
                       {/* Travel Dates */}
                       <div className="space-y-2">
                         <h4 className="font-medium text-black flex items-center gap-2 text-xs">
-                          <CalendarDays className="w-3 h-3 text-[#c9a86c]" />
+                          <CalendarDays className="w-3 h-3 text-[#2f8eb2]" />
                           Travel Dates *
                         </h4>
                         <div className="grid grid-cols-2 gap-3">
@@ -1519,7 +1518,7 @@ export default function Booking() {
                               onChange={handleTourChange}
                               min={todayDate}
                               required
-                              className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                              className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                             />
                           </div>
                           <div>
@@ -1531,7 +1530,7 @@ export default function Booking() {
                               onChange={handleTourChange}
                               min={todayDate}
                               required
-                              className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                              className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                             />
                           </div>
                         </div>
@@ -1540,7 +1539,7 @@ export default function Booking() {
                       {/* Number of Travelers */}
                       <div className="space-y-2">
                         <h4 className="font-medium text-black flex items-center gap-2 text-xs">
-                          <Users className="w-3 h-3 text-[#c9a86c]" />
+                          <Users className="w-3 h-3 text-[#2f8eb2]" />
                           Number of Travelers *
                         </h4>
                         <input
@@ -1550,14 +1549,14 @@ export default function Booking() {
                           onChange={handleTourChange}
                           min="1"
                           required
-                          className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                          className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                         />
                       </div>
 
                       {/* Additional Services - Multi-select */}
                       <div className="space-y-2">
                         <h4 className="font-medium text-black flex items-center gap-2 text-xs">
-                          <Heart className="w-3 h-3 text-[#c9a86c]" />
+                          <Heart className="w-3 h-3 text-[#2f8eb2]" />
                           Additional Services (Select multiple)
                         </h4>
                         <Select
@@ -1581,7 +1580,7 @@ export default function Booking() {
                         onChange={handleTourChange}
                         rows={2}
                         placeholder="Special requests..."
-                        className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#c9a86c]"
+                        className="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#2f8eb2]"
                       />
 
                       {/* Terms and Conditions */}
@@ -1590,7 +1589,7 @@ export default function Booking() {
                           <button
                             type="button"
                             onClick={() => setShowTerms(true)}
-                            className="text-xs text-[#c9a86c] hover:underline flex items-center gap-1"
+                            className="text-xs text-[#2f8eb2] hover:underline flex items-center gap-1"
                           >
                             <FileText className="w-3 h-3" />
                             View Terms and Conditions
@@ -1602,7 +1601,7 @@ export default function Booking() {
                             checked={agreeTerms}
                             onChange={(e) => setAgreeTerms(e.target.checked)}
                             required
-                            className="w-3 h-3 text-[#c9a86c] rounded border-gray-300 focus:ring-[#c9a86c]"
+                            className="w-3 h-3 text-[#2f8eb2] rounded border-gray-300 focus:ring-[#2f8eb2]"
                           />
                           <span className="text-xs text-gray-600">
                             I agree to the Terms and Conditions *
@@ -1613,7 +1612,7 @@ export default function Booking() {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full bg-[#c9a86c] text-white py-2.5 rounded-lg font-semibold text-xs uppercase tracking-wider hover:bg-black"
+                        className="w-full bg-[#2f8eb2] text-white py-2.5 rounded-lg font-semibold text-xs uppercase tracking-wider hover:bg-black"
                       >
                         {isSubmitting ? 'Processing...' : 'Submit Booking'}
                       </button>
@@ -1630,7 +1629,7 @@ export default function Booking() {
       {showTerms && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="bg-white rounded-xl max-w-2xl max-h-[80vh] overflow-hidden">
-            <div className="bg-[#c9a86c] px-6 py-4 flex justify-between items-center">
+            <div className="bg-[#2f8eb2] px-6 py-4 flex justify-between items-center">
               <h3 className="text-white font-bold">
                 {selectedType === 'event' && termsContent.event.title}
                 {selectedType === 'car' && termsContent.car.title}
@@ -1651,7 +1650,7 @@ export default function Booking() {
             <div className="px-6 py-4 border-t flex justify-end">
               <button
                 onClick={() => setShowTerms(false)}
-                className="bg-[#c9a86c] text-white px-4 py-2 rounded-lg text-sm hover:bg-black transition-colors"
+                className="bg-[#2f8eb2] text-white px-4 py-2 rounded-lg text-sm hover:bg-black transition-colors"
               >
                 Close
               </button>

@@ -58,7 +58,7 @@ export default function TourismList() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-4 border-[#c9a86c] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-[#2f8eb2] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -75,7 +75,7 @@ export default function TourismList() {
         </div>
         <button
           onClick={() => navigate('/admin/tourism/new')}
-          className="inline-flex items-center gap-2 bg-[#c9a86c] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-all"
+          className="inline-flex items-center gap-2 bg-[#2f8eb2] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-all"
         >
           <Plus className="w-5 h-5" />
           Add New Destination
@@ -91,7 +91,7 @@ export default function TourismList() {
             placeholder="Search destinations..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+            className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
           />
         </div>
       </div>
@@ -119,7 +119,7 @@ export default function TourismList() {
                 </span>
               </div>
               <div className="absolute top-2 left-2">
-                <span className="px-3 py-1 bg-[#c9a86c] text-white text-xs font-semibold rounded-full">
+                <span className="px-3 py-1 bg-[#2f8eb2] text-white text-xs font-semibold rounded-full">
                   {dest.category}
                 </span>
               </div>
@@ -130,11 +130,11 @@ export default function TourismList() {
               
               <div className="space-y-2 text-sm text-gray-600 mb-4">
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-[#c9a86c]" />
+                  <MapPin className="w-4 h-4 text-[#2f8eb2]" />
                   <span>{dest.location}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-[#c9a86c]" />
+                  <Clock className="w-4 h-4 text-[#2f8eb2]" />
                   <span>Best: {dest.bestTime}</span>
                 </div>
               </div>

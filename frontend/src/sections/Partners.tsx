@@ -71,7 +71,7 @@ export default function Partners() {
         <div style={{
           width: '2rem',
           height: '2rem',
-          border: '4px solid #c9a86c',
+          border: '4px solid #2f8eb2',
           borderTopColor: 'transparent',
           borderRadius: '50%',
           animation: 'spin 1s linear infinite',
@@ -97,7 +97,7 @@ export default function Partners() {
         marginBottom: '4rem'
       }}>
         <span style={{
-          color: '#c9a86c',
+          color: '#2f8eb2',
           fontSize: '0.875rem',
           fontWeight: 600,
           textTransform: 'uppercase',
@@ -118,7 +118,7 @@ export default function Partners() {
         <div style={{
           width: '5rem',
           height: '0.25rem',
-          backgroundColor: '#c9a86c',
+          backgroundColor: '#2f8eb2',
           margin: '0 auto',
           borderRadius: '0.25rem'
         }} />
@@ -212,7 +212,7 @@ export default function Partners() {
             }}
             onMouseEnter={(e) => {
               if (partner.website && partner.website !== '#') {
-                e.currentTarget.style.color = '#c9a86c';
+                e.currentTarget.style.color = '#2f8eb2';
               }
             }}
             onMouseLeave={(e) => {

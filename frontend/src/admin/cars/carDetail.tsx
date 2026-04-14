@@ -50,7 +50,7 @@ export default function CarDetail() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-4 border-[#c9a86c] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-[#2f8eb2] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -83,7 +83,7 @@ export default function CarDetail() {
         </div>
         <button
           onClick={() => navigate(`/admin/cars/${id}/edit`)}
-          className="inline-flex items-center gap-2 bg-[#c9a86c] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-colors"
+          className="inline-flex items-center gap-2 bg-[#2f8eb2] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-colors"
         >
           <Edit className="w-5 h-5" />
           Edit Car
@@ -105,7 +105,7 @@ export default function CarDetail() {
             </span>
           </div>
           <div className="absolute bottom-4 left-4">
-            <span className="px-4 py-2 bg-[#c9a86c] text-white text-xl font-bold rounded-lg">
+            <span className="px-4 py-2 bg-[#2f8eb2] text-white text-xl font-bold rounded-lg">
               {car.price}
             </span>
           </div>
@@ -116,22 +116,22 @@ export default function CarDetail() {
           {/* Quick Specs */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <Car className="w-6 h-6 text-[#c9a86c] mx-auto mb-2" />
+              <Car className="w-6 h-6 text-[#2f8eb2] mx-auto mb-2" />
               <p className="text-sm text-gray-500">Transmission</p>
               <p className="font-semibold">{car.transmission}</p>
             </div>
             <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <Fuel className="w-6 h-6 text-[#c9a86c] mx-auto mb-2" />
+              <Fuel className="w-6 h-6 text-[#2f8eb2] mx-auto mb-2" />
               <p className="text-sm text-gray-500">Fuel</p>
               <p className="font-semibold">{car.fuel}</p>
             </div>
             <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <Gauge className="w-6 h-6 text-[#c9a86c] mx-auto mb-2" />
+              <Gauge className="w-6 h-6 text-[#2f8eb2] mx-auto mb-2" />
               <p className="text-sm text-gray-500">Mileage</p>
               <p className="font-semibold">{car.mileage}</p>
             </div>
             <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <Star className="w-6 h-6 text-[#c9a86c] mx-auto mb-2" />
+              <Star className="w-6 h-6 text-[#2f8eb2] mx-auto mb-2" />
               <p className="text-sm text-gray-500">Features</p>
               <p className="font-semibold text-sm">{car.features}</p>
             </div>

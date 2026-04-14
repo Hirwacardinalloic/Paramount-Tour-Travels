@@ -96,14 +96,14 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="relative w-full py-24 lg:py-32 bg-white overflow-hidden"
+      className="relative w-full py-12 lg:py-16 bg-white overflow-hidden"
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, #c9a86c 1px, transparent 0)`,
+            backgroundImage: `radial-gradient(circle at 2px 2px, #2f8eb2 1px, transparent 0)`,
             backgroundSize: '40px 40px',
           }}
         />
@@ -122,7 +122,7 @@ export default function About() {
             {/* Section Label */}
             <div className="mb-6">
               <span
-                className="block text-[#c9a86c] text-sm font-semibold uppercase tracking-[0.3em] mb-2"
+                className="block text-[#2f8eb2] text-sm font-semibold uppercase tracking-[0.3em] mb-2"
                 style={{ fontFamily: 'Montserrat, sans-serif' }}
               >
                 WHO
@@ -144,10 +144,10 @@ export default function About() {
                     : 'opacity-0 translate-y-6'
                 }`}
               >
-                THE HURBERT is a value-driven business company specializing in
-                the production and management of world-class events. With years
-                of experience in the industry, we have established ourselves as
-                the premier event management company in Rwanda.
+                Paramount Adventure and Travels is a value-driven business company specializing in
+                Curated Tours, Air Ticketing, Corporate Travel, Accommodation and
+                Premium Car Rentals. We are committed to
+                delivering professional and reliable services across the region.
               </p>
               <p
                 className={`transition-all duration-700 delay-300 ${
@@ -184,7 +184,7 @@ export default function About() {
             >
               <button
                 onClick={() => scrollToSection('#booking')}
-                className="group inline-flex items-center gap-3 bg-[#c9a86c] text-white px-8 py-4 font-semibold text-sm uppercase tracking-wider rounded transition-all duration-300 hover:bg-black hover:text-white"
+                className="group inline-flex items-center gap-3 bg-[#2f8eb2] text-white px-8 py-4 font-semibold text-sm uppercase tracking-wider rounded transition-all duration-300 hover:bg-black hover:text-white"
                 style={{ fontFamily: 'Montserrat, sans-serif' }}
               >
                 Book Now
@@ -259,15 +259,15 @@ export default function About() {
                 ) : (
                   <div className="w-full h-full bg-black flex items-center justify-center">
                     <div className="animate-pulse flex flex-col items-center">
-                      <div className="w-12 h-12 border-4 border-[#c9a86c] border-t-transparent rounded-full animate-spin mb-3"></div>
+                      <div className="w-12 h-12 border-4 border-[#2f8eb2] border-t-transparent rounded-full animate-spin mb-3"></div>
                       <p className="text-gray-400 text-sm">Loading video...</p>
                     </div>
                   </div>
                 )}
 
                 {/* Decorative Elements */}
-                <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-[#c9a86c]/20 rounded-full blur-2xl pointer-events-none" />
-                <div className="absolute -top-4 -left-4 w-24 h-24 bg-[#c9a86c]/10 rounded-full blur-xl pointer-events-none" />
+                <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-[#2f8eb2]/20 rounded-full blur-2xl pointer-events-none" />
+                <div className="absolute -top-4 -left-4 w-24 h-24 bg-[#2f8eb2]/10 rounded-full blur-xl pointer-events-none" />
               </div>
             </div>
           </div>

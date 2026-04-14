@@ -4,27 +4,35 @@ import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 const slides = [
   {
     id: 1,
-    subtitle: 'EVENTS',
-    title: 'Creating Unforgettable Experiences',
-    description: 'From corporate gatherings to grand celebrations, we bring your vision to life with precision and creativity.',
-    image: './norrsken.png',
-    link: '#services',
+    subtitle: 'DESTINATIONS',
+    title: 'Explore Breathtaking Destinations',
+    description: 'We curate tailored getaways and guided tours across Rwanda and the region for every kind of traveler.',
+    image: './kivu.png',
+    link: '#destinations',
   },
   {
     id: 2,
+    subtitle: 'FLIGHT TICKETS',
+    title: 'Seamless Worldwide Travel',
+    description: 'Book domestic and international flights with competitive rates and comprehensive support to get you wherever you need to go.',
+    image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&q=80',
+    link: '#destinations',
+  },
+  {
+    id: 3,
+    subtitle: 'ACCOMMODATION',
+    title: 'Your Perfect Home Away From Home',
+    description: 'Find the finest hotels, luxury resorts, and cozy eco-lodges deep in nature.',
+    image: './tourism.png',
+    link: '#destinations',
+  },
+  {
+    id: 4,
     subtitle: 'CAR RENTAL',
     title: 'Premium Vehicles for Every Journey',
     description: 'Luxury cars and professional drivers to ensure you travel in comfort and style across Rwanda.',
     image: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1920&q=80',
-    link: '#services',
-  },
-  {
-    id: 3,
-    subtitle: 'TOURISM',
-    title: 'Discover the Beauty of Rwanda',
-    description: 'Explore the Land of a Thousand Hills with our curated Tourism services.',
-    image: './kivu.png',
-    link: '#services',
+    link: '#destinations',
   },
 ];
 
@@ -70,10 +78,12 @@ export default function Hero() {
               : 'opacity-0 scale-105'
           }`}
         >
-          {/* Background Image with Ken Burns effect */}
+          {/* Background Image with Dynamic Ken Burns effect */}
           <div
-            className={`absolute inset-0 transition-transform duration-[8000ms] ${
-              index === currentSlide ? 'scale-110' : 'scale-100'
+            className={`absolute inset-0 origin-center transition-all ease-out duration-[20000ms] ${
+              index === currentSlide 
+                ? 'scale-125 -translate-x-[2%] translate-y-[1%]' 
+                : 'scale-105 translate-x-0 translate-y-0'
             }`}
           >
             <img
@@ -105,7 +115,7 @@ export default function Hero() {
                   <>
                     {/* Subtitle */}
                     <p
-                      className="text-[#c9a86c] text-sm md:text-base font-semibold uppercase tracking-[0.3em] mb-4 animate-slide-up"
+                      className="text-[#2e8b11] text-sm md:text-base font-semibold uppercase tracking-[0.3em] mb-4 animate-slide-up"
                       style={{
                         fontFamily: 'Montserrat, sans-serif',
                         animationDelay: '0.2s',
@@ -150,7 +160,7 @@ export default function Hero() {
                     >
                       <button
                         onClick={() => scrollToSection(slide.link)}
-                        className="group inline-flex items-center gap-3 border-2 border-white text-white px-8 py-4 font-semibold text-sm uppercase tracking-wider rounded transition-all duration-300 hover:bg-[#c9a86c] hover:border-[#c9a86c] hover:text-black"
+                        className="group inline-flex items-center gap-3 border-2 border-white text-white px-8 py-4 font-semibold text-sm uppercase tracking-wider rounded transition-all duration-300 hover:bg-[#2e8b11] hover:border-[#2e8b11] hover:text-black"
                         style={{ fontFamily: 'Montserrat, sans-serif' }}
                       >
                         Learn more
@@ -170,7 +180,7 @@ export default function Hero() {
         <button
           onClick={prevSlide}
           disabled={isAnimating}
-          className="pointer-events-auto w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white transition-all duration-300 hover:bg-[#c9a86c] hover:border-[#c9a86c] hover:text-black hover:scale-110 disabled:opacity-50"
+          className="pointer-events-auto w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white transition-all duration-300 hover:bg-[#2e8b11] hover:border-[#2e8b11] hover:text-black hover:scale-110 disabled:opacity-50"
           aria-label="Previous slide"
         >
           <ChevronLeft className="w-6 h-6" />
@@ -178,7 +188,7 @@ export default function Hero() {
         <button
           onClick={nextSlide}
           disabled={isAnimating}
-          className="pointer-events-auto w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white transition-all duration-300 hover:bg-[#c9a86c] hover:border-[#c9a86c] hover:text-black hover:scale-110 disabled:opacity-50"
+          className="pointer-events-auto w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white transition-all duration-300 hover:bg-[#2e8b11] hover:border-[#2e8b11] hover:text-black hover:scale-110 disabled:opacity-50"
           aria-label="Next slide"
         >
           <ChevronRight className="w-6 h-6" />
@@ -199,7 +209,7 @@ export default function Hero() {
             }}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
               index === currentSlide
-                ? 'bg-[#c9a86c] w-10'
+                ? 'bg-[#2e8b11] w-10'
                 : 'bg-white/50 hover:bg-white/80'
             }`}
             aria-label={`Go to slide ${index + 1}`}
@@ -212,3 +222,4 @@ export default function Hero() {
     </section>
   );
 }
+

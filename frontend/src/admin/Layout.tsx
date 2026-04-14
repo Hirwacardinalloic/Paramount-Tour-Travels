@@ -17,18 +17,22 @@ import {
   Settings,
   Home,
   Bell,
-  Search
+  Search,
+  Plane,
+  Building,
+  Globe
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 const sidebarItems = [
   { label: 'Dashboard', icon: LayoutDashboard, href: '/admin/dashboard' },
   { label: 'Bookings', icon: BookOpen, href: '/admin/bookings' },
-  { label: 'Events', icon: Calendar, href: '/admin/events' },
-  { label: 'Cars', icon: Car, href: '/admin/cars' },
-  { label: 'Tourism', icon: MapPin, href: '/admin/tourism' },
+  { label: 'Tours & Safaris', icon: MapPin, href: '/admin/tourism' },
+  { label: 'Destinations', icon: Globe, href: '/admin/destinations' },
+  { label: 'Flight Tickets', icon: Plane, href: '/admin/flights' },
+  { label: 'Accommodation', icon: Building, href: '/admin/accommodations' },
+  { label: 'Car Rental', icon: Car, href: '/admin/cars' },
   { label: 'Partners', icon: Briefcase, href: '/admin/partners' },
-  { label: 'Staff', icon: Users, href: '/admin/staff' },
   { label: 'Messages', icon: MessageSquare, href: '/admin/messages' },
   { label: 'Settings', icon: Settings, href: '/admin/settings' },
 ];
@@ -57,10 +61,10 @@ export default function AdminLayout() {
         {/* Logo */}
         <div className="h-20 flex items-center justify-center border-b border-white/10">
           <Link to="/admin/dashboard" className="flex items-center gap-2">
-            <img src="/theHubert.png" alt="THE HURBERT" className="h-8 w-auto" />
+            <img src="/ParamountLogo.png" alt="Paramount Adventure and Travels" className="h-8 w-auto" />
             {isSidebarOpen && (
               <span className="font-bold text-lg" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                <span className="text-[#c9a86c]">Admin</span>
+                <span className="text-[#2f8eb2]">Admin</span>
               </span>
             )}
           </Link>
@@ -77,7 +81,7 @@ export default function AdminLayout() {
                 to={item.href}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                   isActive
-                    ? 'bg-[#c9a86c] text-black'
+                    ? 'bg-[#2f8eb2] text-black'
                     : 'text-gray-400 hover:bg-white/10 hover:text-white'
                 }`}
               >
@@ -95,7 +99,7 @@ export default function AdminLayout() {
         {/* User Info */}
         <div className="p-4 border-t border-white/10">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#c9a86c] flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 rounded-full bg-[#2f8eb2] flex items-center justify-center flex-shrink-0">
               <User className="w-5 h-5 text-black" />
             </div>
             {isSidebarOpen && (
@@ -104,7 +108,7 @@ export default function AdminLayout() {
                   {user?.username || 'Admin'}
                 </p>
                 <p className="text-xs text-gray-400 truncate">
-                  {user?.email || 'admin@thehurbert.com'}
+                  {user?.email || 'info@paramountadventureandtravels.com'}
                 </p>
               </div>
             )}
@@ -122,9 +126,9 @@ export default function AdminLayout() {
           <aside className="fixed inset-y-0 left-0 w-64 bg-gradient-to-b from-gray-900 to-black text-white z-50 lg:hidden">
             <div className="h-20 flex items-center justify-between px-4 border-b border-white/10">
               <Link to="/admin/dashboard" className="flex items-center gap-2">
-                <img src="/theHubert.png" alt="THE HURBERT" className="h-8 w-auto" />
+                <img src="/ParamountLogo.png" alt="Paramount Adventure and Travels" className="h-8 w-auto" />
                 <span className="font-bold text-lg" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                  <span className="text-[#c9a86c]">Admin</span>
+                  <span className="text-[#2f8eb2]">Admin</span>
                 </span>
               </Link>
               <button
@@ -146,7 +150,7 @@ export default function AdminLayout() {
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                       isActive
-                        ? 'bg-[#c9a86c] text-black'
+                        ? 'bg-[#2f8eb2] text-black'
                         : 'text-gray-400 hover:bg-white/10 hover:text-white'
                     }`}
                   >
@@ -207,12 +211,12 @@ export default function AdminLayout() {
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
                 className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
               >
-                <div className="w-8 h-8 rounded-full bg-[#c9a86c] flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-[#2f8eb2] flex items-center justify-center">
                   <User className="w-4 h-4 text-black" />
                 </div>
                 <div className="hidden md:block text-left">
                   <p className="text-sm font-medium text-gray-700">{user?.username || 'Admin'}</p>
-                  <p className="text-xs text-gray-500">{user?.email || 'admin@thehurbert.com'}</p>
+                  <p className="text-xs text-gray-500">{user?.email || 'info@paramountadventureandtravels.com'}</p>
                 </div>
                 <ChevronDown className="w-4 h-4 text-gray-500" />
               </button>
@@ -221,7 +225,7 @@ export default function AdminLayout() {
                 <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-100 py-2 animate-fade-in z-50">
                   <div className="px-4 py-3 border-b border-gray-100">
                     <p className="text-sm font-medium text-gray-900">{user?.username || 'Admin'}</p>
-                    <p className="text-xs text-gray-500">{user?.email || 'admin@thehurbert.com'}</p>
+                    <p className="text-xs text-gray-500">{user?.email || 'info@paramountadventureandtravels.com'}</p>
                   </div>
                   
                   <Link

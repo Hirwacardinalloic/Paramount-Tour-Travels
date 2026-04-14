@@ -65,7 +65,7 @@ export default function CarsList() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-4 border-[#c9a86c] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-[#2f8eb2] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -82,7 +82,7 @@ export default function CarsList() {
         </div>
         <button
           onClick={() => navigate('/admin/cars/new')}
-          className="inline-flex items-center gap-2 bg-[#c9a86c] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-all"
+          className="inline-flex items-center gap-2 bg-[#2f8eb2] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-all"
         >
           <Plus className="w-5 h-5" />
           Add New Car
@@ -98,7 +98,7 @@ export default function CarsList() {
             placeholder="Search cars..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+            className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
           />
         </div>
       </div>
@@ -122,7 +122,7 @@ export default function CarsList() {
                 </span>
               </div>
               <div className="absolute top-2 left-2">
-                <span className="px-3 py-1 bg-[#c9a86c] text-white text-xs font-semibold rounded-full">
+                <span className="px-3 py-1 bg-[#2f8eb2] text-white text-xs font-semibold rounded-full">
                   {car.price}
                 </span>
               </div>
@@ -132,7 +132,7 @@ export default function CarsList() {
               <h3 className="font-bold text-lg mb-2">{car.title}</h3>
               
               <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
-                <Star className="w-4 h-4 text-[#c9a86c]" />
+                <Star className="w-4 h-4 text-[#2f8eb2]" />
                 <span>{car.features}</span>
               </div>
 

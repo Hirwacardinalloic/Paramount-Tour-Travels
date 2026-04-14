@@ -56,7 +56,7 @@ export default function StaffList() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-4 border-[#c9a86c] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-[#2f8eb2] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -73,7 +73,7 @@ export default function StaffList() {
         </div>
         <button
           onClick={() => navigate('/admin/staff/new')}
-          className="inline-flex items-center gap-2 bg-[#c9a86c] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-all"
+          className="inline-flex items-center gap-2 bg-[#2f8eb2] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-all"
         >
           <Plus className="w-5 h-5" />
           Add New Staff
@@ -89,7 +89,7 @@ export default function StaffList() {
             placeholder="Search team members..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+            className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
           />
         </div>
       </div>
@@ -123,7 +123,7 @@ export default function StaffList() {
             
             <div className="p-4">
               <h3 className="font-bold text-lg mb-1">{member.name}</h3>
-              <p className="text-[#c9a86c] font-medium text-sm mb-3">{member.role}</p>
+              <p className="text-[#2f8eb2] font-medium text-sm mb-3">{member.role}</p>
               
               <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
                 <Mail className="w-4 h-4" />
@@ -159,7 +159,7 @@ export default function StaffList() {
             <p className="text-gray-500 mb-6">Add your first staff member to get started</p>
             <button
               onClick={() => navigate('/admin/staff/new')}
-              className="inline-flex items-center gap-2 bg-[#c9a86c] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-colors"
+              className="inline-flex items-center gap-2 bg-[#2f8eb2] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-colors"
             >
               <Plus className="w-5 h-5" />
               Add First Staff

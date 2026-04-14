@@ -102,7 +102,7 @@ export default function MessagesList() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-4 border-[#c9a86c] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-[#2f8eb2] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -129,7 +129,7 @@ export default function MessagesList() {
               placeholder="Search messages..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+              className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
             />
           </div>
           
@@ -138,7 +138,7 @@ export default function MessagesList() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent appearance-none bg-white"
+              className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent appearance-none bg-white"
             >
               <option value="">All Status</option>
               <option value="unread">Unread</option>
@@ -168,8 +168,8 @@ export default function MessagesList() {
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-start gap-4">
                     {/* Avatar */}
-                    <div className="w-12 h-12 rounded-full bg-[#c9a86c]/10 flex items-center justify-center flex-shrink-0">
-                      <User className="w-6 h-6 text-[#c9a86c]" />
+                    <div className="w-12 h-12 rounded-full bg-[#2f8eb2]/10 flex items-center justify-center flex-shrink-0">
+                      <User className="w-6 h-6 text-[#2f8eb2]" />
                     </div>
                     
                     {/* Content */}

@@ -66,7 +66,7 @@ export default function Staff() {
       position: absolute;
       inset: 0;
       opacity: 0.05;
-      background-image: radial-gradient(circle at 2px 2px, #c9a86c 1px, transparent 0);
+      background-image: radial-gradient(circle at 2px 2px, #2f8eb2 1px, transparent 0);
       background-size: 50px 50px;
       pointer-events: none;
     }
@@ -84,7 +84,7 @@ export default function Staff() {
     }
 
     .staff-subtitle {
-      color: #c9a86c;
+      color: #2f8eb2;
       font-size: 0.875rem;
       font-weight: 600;
       text-transform: uppercase;
@@ -103,7 +103,7 @@ export default function Staff() {
     .staff-divider {
       width: 5rem;
       height: 0.25rem;
-      background-color: #c9a86c;
+      background-color: #2f8eb2;
       margin: 0 auto;
       border-radius: 9999px;
     }
@@ -161,7 +161,7 @@ export default function Staff() {
     }
 
     .staff-role {
-      color: #c9a86c;
+      color: #2f8eb2;
       font-size: 0.875rem;
       font-weight: 500;
     }
@@ -208,7 +208,7 @@ export default function Staff() {
     }
 
     .modal-close:hover {
-      background-color: #c9a86c;
+      background-color: #2f8eb2;
     }
 
     .modal-content {
@@ -249,12 +249,12 @@ export default function Staff() {
 
     .modal-contact-link:hover {
       background-color: #f3f4f6;
-      color: #c9a86c;
+      color: #2f8eb2;
     }
 
     .modal-button {
       width: 100%;
-      background-color: #c9a86c;
+      background-color: #2f8eb2;
       color: white;
       padding: 1rem;
       border-radius: 0.5rem;
@@ -297,7 +297,7 @@ export default function Staff() {
         <div style={{
           width: '2rem',
           height: '2rem',
-          border: '4px solid #c9a86c',
+          border: '4px solid #2f8eb2',
           borderTopColor: 'transparent',
           borderRadius: '50%',
           animation: 'spin 1s linear infinite',
@@ -431,7 +431,7 @@ export default function Staff() {
                       {selectedStaff.name}
                     </h2>
                     <p style={{
-                      color: '#c9a86c',
+                      color: '#2f8eb2',
                       fontSize: 'clamp(1rem, 3vw, 1.125rem)',
                       fontWeight: 500,
                       textShadow: '1px 1px 2px rgba(0,0,0,0.5)'

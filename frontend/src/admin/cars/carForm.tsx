@@ -213,7 +213,7 @@ export default function CarForm() {
               value={formData.title}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
               placeholder="e.g., Toyota RAV4"
             />
           </div>
@@ -228,7 +228,7 @@ export default function CarForm() {
               value={formData.category}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
               placeholder="e.g., SUV, Sedan, Bus"
             />
           </div>
@@ -246,7 +246,7 @@ export default function CarForm() {
               value={formData.price}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
               placeholder="e.g., $85/day"
             />
           </div>
@@ -260,7 +260,7 @@ export default function CarForm() {
               name="features"
               value={formData.features}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
               placeholder="e.g., 5 seats • AC • GPS"
             />
           </div>
@@ -277,7 +277,7 @@ export default function CarForm() {
             onChange={handleChange}
             required
             rows={3}
-            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
             placeholder="Describe the car..."
           />
         </div>
@@ -292,7 +292,7 @@ export default function CarForm() {
               name="transmission"
               value={formData.transmission}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
             >
               <option value="Automatic">Automatic</option>
               <option value="Manual">Manual</option>
@@ -307,7 +307,7 @@ export default function CarForm() {
               name="fuel"
               value={formData.fuel}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
             >
               <option value="Petrol">Petrol</option>
               <option value="Diesel">Diesel</option>
@@ -325,7 +325,7 @@ export default function CarForm() {
               name="mileage"
               value={formData.mileage}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
               placeholder="e.g., Unlimited"
             />
           </div>
@@ -342,7 +342,7 @@ export default function CarForm() {
               name="image"
               value={formData.image}
               onChange={handleChange}
-              className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+              className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
               placeholder="Image URL or upload"
             />
             <div className="relative">
@@ -451,7 +451,7 @@ export default function CarForm() {
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
           >
             <option value="available">Available</option>
             <option value="booked">Booked</option>
@@ -471,7 +471,7 @@ export default function CarForm() {
           <button
             type="submit"
             disabled={isLoading}
-            className="inline-flex items-center gap-2 bg-[#c9a86c] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-colors disabled:opacity-50"
+            className="inline-flex items-center gap-2 bg-[#2f8eb2] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-colors disabled:opacity-50"
           >
             <Save className="w-5 h-5" />
             {isLoading ? 'Saving...' : id ? 'Update Car' : 'Save Car'}

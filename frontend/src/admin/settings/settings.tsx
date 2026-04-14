@@ -48,7 +48,7 @@ export default function Settings() {
 
   const [formData, setFormData] = useState<SettingsFormData>({
     username: user?.username || 'admin',
-    email: user?.email || 'admin@thehurbert.com',
+    email: user?.email || 'info@paramountadventureandtravels.com',
     fullName: 'Administrator',
     currentPassword: '',
     newPassword: '',
@@ -206,7 +206,7 @@ export default function Settings() {
           onClick={() => setActiveTab('profile')}
           className={`px-6 py-3 font-semibold text-sm uppercase tracking-wider transition-all relative ${
             activeTab === 'profile'
-              ? 'text-[#c9a86c] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#c9a86c]'
+              ? 'text-[#2f8eb2] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#2f8eb2]'
               : 'text-gray-500 hover:text-gray-700'
           }`}
         >
@@ -220,7 +220,7 @@ export default function Settings() {
           onClick={() => setActiveTab('password')}
           className={`px-6 py-3 font-semibold text-sm uppercase tracking-wider transition-all relative ${
             activeTab === 'password'
-              ? 'text-[#c9a86c] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#c9a86c]'
+              ? 'text-[#2f8eb2] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#2f8eb2]'
               : 'text-gray-500 hover:text-gray-700'
           }`}
         >
@@ -234,7 +234,7 @@ export default function Settings() {
           onClick={() => setActiveTab('preferences')}
           className={`px-6 py-3 font-semibold text-sm uppercase tracking-wider transition-all relative ${
             activeTab === 'preferences'
-              ? 'text-[#c9a86c] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#c9a86c]'
+              ? 'text-[#2f8eb2] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#2f8eb2]'
               : 'text-gray-500 hover:text-gray-700'
           }`}
         >
@@ -264,7 +264,7 @@ export default function Settings() {
                   name="username"
                   value={formData.username}
                   onChange={handleChange}
-                  className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+                  className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
                 />
               </div>
             </div>
@@ -280,7 +280,7 @@ export default function Settings() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+                  className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
                 />
               </div>
             </div>
@@ -294,7 +294,7 @@ export default function Settings() {
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
               />
             </div>
           </div>
@@ -303,7 +303,7 @@ export default function Settings() {
             <button
               type="submit"
               disabled={isLoading}
-              className="inline-flex items-center gap-2 bg-[#c9a86c] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-colors disabled:opacity-50"
+              className="inline-flex items-center gap-2 bg-[#2f8eb2] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-colors disabled:opacity-50"
             >
               <Save className="w-5 h-5" />
               {isLoading ? 'Saving...' : 'Save Changes'}
@@ -332,7 +332,7 @@ export default function Settings() {
                   value={formData.currentPassword}
                   onChange={handleChange}
                   required
-                  className="w-full pl-12 pr-12 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+                  className="w-full pl-12 pr-12 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
                 />
                 <button
                   type="button"
@@ -356,7 +356,7 @@ export default function Settings() {
                   value={formData.newPassword}
                   onChange={handleChange}
                   required
-                  className="w-full pl-12 pr-12 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+                  className="w-full pl-12 pr-12 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
                 />
                 <button
                   type="button"
@@ -383,7 +383,7 @@ export default function Settings() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
-                  className="w-full pl-12 pr-12 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+                  className="w-full pl-12 pr-12 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
                 />
                 <button
                   type="button"
@@ -400,7 +400,7 @@ export default function Settings() {
             <button
               type="submit"
               disabled={isLoading}
-              className="inline-flex items-center gap-2 bg-[#c9a86c] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-colors disabled:opacity-50"
+              className="inline-flex items-center gap-2 bg-[#2f8eb2] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-colors disabled:opacity-50"
             >
               <Save className="w-5 h-5" />
               {isLoading ? 'Updating...' : 'Update Password'}
@@ -425,7 +425,7 @@ export default function Settings() {
                 name="language"
                 value={formData.language}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
               >
                 <option value="en">English</option>
                 <option value="fr">Français</option>
@@ -440,7 +440,7 @@ export default function Settings() {
               <div className="grid grid-cols-3 gap-3">
                 <label className={`flex items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer transition-colors ${
                   formData.theme === 'light' 
-                    ? 'border-[#c9a86c] bg-[#c9a86c]/10' 
+                    ? 'border-[#2f8eb2] bg-[#2f8eb2]/10' 
                     : 'border-gray-200 hover:border-gray-300'
                 }`}>
                   <input
@@ -457,7 +457,7 @@ export default function Settings() {
 
                 <label className={`flex items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer transition-colors ${
                   formData.theme === 'dark' 
-                    ? 'border-[#c9a86c] bg-[#c9a86c]/10' 
+                    ? 'border-[#2f8eb2] bg-[#2f8eb2]/10' 
                     : 'border-gray-200 hover:border-gray-300'
                 }`}>
                   <input
@@ -474,7 +474,7 @@ export default function Settings() {
 
                 <label className={`flex items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer transition-colors ${
                   formData.theme === 'system' 
-                    ? 'border-[#c9a86c] bg-[#c9a86c]/10' 
+                    ? 'border-[#2f8eb2] bg-[#2f8eb2]/10' 
                     : 'border-gray-200 hover:border-gray-300'
                 }`}>
                   <input
@@ -498,7 +498,7 @@ export default function Settings() {
                   name="notifications"
                   checked={formData.notifications}
                   onChange={handleChange}
-                  className="w-5 h-5 text-[#c9a86c] rounded focus:ring-[#c9a86c]"
+                  className="w-5 h-5 text-[#2f8eb2] rounded focus:ring-[#2f8eb2]"
                 />
                 <div>
                   <p className="font-medium text-gray-700">Push Notifications</p>
@@ -512,7 +512,7 @@ export default function Settings() {
                   name="emailNotifications"
                   checked={formData.emailNotifications}
                   onChange={handleChange}
-                  className="w-5 h-5 text-[#c9a86c] rounded focus:ring-[#c9a86c]"
+                  className="w-5 h-5 text-[#2f8eb2] rounded focus:ring-[#2f8eb2]"
                 />
                 <div>
                   <p className="font-medium text-gray-700">Email Notifications</p>
@@ -526,7 +526,7 @@ export default function Settings() {
             <button
               type="submit"
               disabled={isLoading}
-              className="inline-flex items-center gap-2 bg-[#c9a86c] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-colors disabled:opacity-50"
+              className="inline-flex items-center gap-2 bg-[#2f8eb2] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-colors disabled:opacity-50"
             >
               <Save className="w-5 h-5" />
               {isLoading ? 'Saving...' : 'Save Preferences'}

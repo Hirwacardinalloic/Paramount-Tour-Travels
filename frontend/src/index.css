@@ -6,34 +6,36 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
+    --background: 198 44% 97%;
+    --foreground: 210 12% 12%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
-    --primary: 50 93% 64%;
-    --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 0%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 40%;
-    --accent: 50 93% 64%;
-    --accent-foreground: 0 0% 0%;
-    --destructive: 0 84.2% 60.2%;
+    --card-foreground: 210 14% 18%;
+    --popover: 210 18% 98%;
+    --popover-foreground: 210 14% 18%;
+    --primary: 197 59% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 196 50% 92%;
+    --secondary-foreground: 210 14% 18%;
+    --muted: 206 18% 92%;
+    --muted-foreground: 210 14% 35%;
+    --accent: 197 59% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 4 85% 58%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 88%;
-    --input: 0 0% 88%;
-    --ring: 50 93% 64%;
+    --border: 205 24% 84%;
+    --input: 206 22% 92%;
+    --ring: 197 59% 45%;
     --radius: 0.5rem;
     
     /* Brand Colors */
-    --brand-yellow: #f9dc4a;
-    --brand-black: #000000;
+    --brand-primary: #2f8eb2;
+    --brand-primary-dark: #1f6f95;
+    --brand-primary-soft: #e8f3f8;
+    --brand-black: #0f172a;
     --brand-white: #ffffff;
-    --brand-gray: #666666;
-    --brand-light-gray: #f5f5f5;
-    --brand-border: #e0e0e0;
+    --brand-gray: #64748b;
+    --brand-light-gray: #f8fafc;
+    --brand-border: #d6e4eb;
     
     /* Animation Easings */
     --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -55,7 +57,7 @@
   }
   
   body {
-    @apply bg-white text-black antialiased;
+    @apply bg-[#f8fafc] text-slate-900 antialiased;
     font-family: 'Open Sans', sans-serif;
   }
   
@@ -66,28 +68,28 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-[#f9dc4a] text-black px-8 py-4 font-semibold text-sm uppercase tracking-wider rounded transition-all duration-300;
+    @apply bg-[#2f8eb2] text-white px-8 py-4 font-semibold text-sm uppercase tracking-wider rounded transition-all duration-300;
   }
   
   .btn-primary:hover {
-    @apply bg-[#e5c73a] scale-[1.02];
+    @apply bg-[#1f6f95] scale-[1.02];
   }
   
   .btn-outline {
-    @apply border-2 border-[#f9dc4a] text-[#f9dc4a] px-8 py-4 font-semibold text-sm uppercase tracking-wider rounded transition-all duration-300 bg-transparent;
+    @apply border-2 border-[#2f8eb2] text-[#2f8eb2] px-8 py-4 font-semibold text-sm uppercase tracking-wider rounded transition-all duration-300 bg-transparent;
   }
   
   .btn-outline:hover {
-    @apply bg-[#f9dc4a] text-black;
+    @apply bg-[#2f8eb2] text-white;
   }
   
   .section-title {
-    @apply font-bold text-black;
+    @apply font-bold text-slate-900;
     font-family: 'Montserrat', sans-serif;
   }
   
   .section-label {
-    @apply text-sm uppercase tracking-widest text-[#f9dc4a] font-semibold;
+    @apply text-sm uppercase tracking-widest text-[#2f8eb2] font-semibold;
     font-family: 'Montserrat', sans-serif;
   }
 }
@@ -176,16 +178,16 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #f9dc4a;
+  background: #2f8eb2;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #e5c73a;
+  background: #1f6f95;
 }
 
 /* Selection color */
 ::selection {
-  background: #f9dc4a;
-  color: black;
+  background: #2f8eb2;
+  color: white;
 }

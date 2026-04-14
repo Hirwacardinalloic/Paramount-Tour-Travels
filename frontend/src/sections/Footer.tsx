@@ -1,33 +1,33 @@
-import { Mail, Phone, MapPin, ArrowUp, MapPinned } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowUp, MapPinned, Plane } from 'lucide-react';
 
 // Contact Information
 const CONTACT_INFO = {
-  phone: '0782169162',
-  whatsapp: '250782169162',
-  email: 'thehurbertltd@gmail.com',
-  address: '1 KN 78 St, Kigali',
+  phone: '+250 782 501 110',
+  whatsapp: '250782501110',
+  email: 'info@paramountadventureandtravels.com',
+  address: 'Town centre Building (TCB) GOB-013D',
+  city: 'Nyarugenge, Kigali Rwanda',
 };
 
 const socialLinks = [
-  { name: 'Facebook', icon: 'facebook', url: 'https://www.facebook.com/hirwa.cardinalloic' },
-  { name: 'Twitter', icon: 'twitter', url: 'https://x.com/CardinalHirwa' },
-  { name: 'Instagram', icon: 'instagram', url: 'https://www.instagram.com/_hirwa1/' },
-  { name: 'LinkedIn', icon: 'linkedin', url: 'https://www.linkedin.com/in/cardinal-loic-hirwa-48502b242/' },
+  { name: 'Facebook', icon: 'facebook', url: 'https://www.facebook.com/ParamountAdventureAndTravels/' },
+  { name: 'Instagram', icon: 'instagram', url: 'https://www.instagram.com/paramountadventureandtravels/' },
+  { name: 'Tripadvisor', icon: 'plane', url: 'https://www.tripadvisor.com/Attraction_Review-g293829-d28097489-Reviews-Paramount_Adventure_And_Travels-Kigali_Kigali_Province.html' },
 ];
 
 const quickLinks = [
   { label: 'Home', href: '#home' },
   { label: 'About Us', href: '#about' },
   { label: 'Services', href: '#services' },
-  { label: 'Portfolio', href: '#portfolio' },
+  { label: 'Curated Experiences', href: '#portfolio' },
   { label: 'Contact', href: '#contact' },
 ];
 
-const services = [
-  { label: 'Events Planning', href: '#services' },
-  { label: 'Event Production', href: '#services' },
-  { label: 'Car Rental', href: '#services' },
-  { label: 'Tourism', href: '#services' },
+const destinations = [
+  { label: 'Rwanda', href: '#destinations' },
+  { label: 'Uganda', href: '#destinations' },
+  { label: 'Kenya', href: '#destinations' },
+  { label: 'Tanzania', href: '#destinations' },
 ];
 
 export default function Footer() {
@@ -43,17 +43,17 @@ export default function Footer() {
   };
 
   const openWhatsApp = () => {
-    const message = encodeURIComponent('Hello THE HURBERT! I would like to inquire about your services.');
+    const message = encodeURIComponent('Hello Paramount Adventure and Travels! I would like to inquire about your services.');
     window.open(`https://wa.me/${CONTACT_INFO.whatsapp}?text=${message}`, '_blank');
   };
 
   return (
     <footer className="relative w-full bg-black text-white overflow-hidden">
       {/* Gold Accent Line */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#c9a86c] to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#2f8eb2] to-transparent" />
 
       {/* Main Footer Content */}
-      <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-20 py-16 lg:py-20">
+      <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-20 py-16 lg:py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Brand Column */}
           <div className="lg:col-span-1">
@@ -66,15 +66,13 @@ export default function Footer() {
               className="inline-block mb-6"
             >
               <img
-                src="/theHubert.png"
-                alt="THE HURBERT"
-                className="h-16 w-auto object-contain brightness-150"
+                src="/ParamountLogo.png"
+                alt="Paramount Adventure and Travels"
+                className="h-14 w-auto brightness-0 invert opacity-90 transition-opacity hover:opacity-100"
               />
             </a>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
-              Rwanda's premier event management company, specializing in
-              world-class events, car rental services, and destination
-              management.
+              Your gateway to unforgettable experiences in Rwanda and beyond. With our expert guidance and personalized approach, we ensure every step of your adventure is seamlessly planned.
             </p>
 
             {/* Social Links */}
@@ -85,7 +83,7 @@ export default function Footer() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-all duration-300 hover:bg-[#c9a86c] hover:text-black hover:scale-110"
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-all duration-300 hover:bg-[#2f8eb2] hover:text-black hover:scale-110"
                   aria-label={social.name}
                 >
                   <SocialIcon name={social.icon} className="w-5 h-5" />
@@ -111,9 +109,9 @@ export default function Footer() {
                       e.preventDefault();
                       scrollToSection(link.href);
                     }}
-                    className="text-gray-400 text-sm hover:text-[#c9a86c] transition-colors duration-300 inline-flex items-center gap-2 group"
+                    className="text-gray-400 text-sm hover:text-[#2f8eb2] transition-colors duration-300 inline-flex items-center gap-2 group"
                   >
-                    <span className="w-0 h-px bg-[#c9a86c] transition-all duration-300 group-hover:w-4" />
+                    <span className="w-0 h-px bg-[#2f8eb2] transition-all duration-300 group-hover:w-4" />
                     {link.label}
                   </a>
                 </li>
@@ -127,21 +125,21 @@ export default function Footer() {
               className="text-lg font-semibold mb-6 text-white"
               style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
-              Our Services
+              Destinations
             </h4>
             <ul className="space-y-3">
-              {services.map((service) => (
-                <li key={service.label}>
+              {destinations.map((destination) => (
+                <li key={destination.label}>
                   <a
-                    href={service.href}
+                    href={destination.href}
                     onClick={(e) => {
                       e.preventDefault();
-                      scrollToSection(service.href);
+                      scrollToSection(destination.href);
                     }}
-                    className="text-gray-400 text-sm hover:text-[#c9a86c] transition-colors duration-300 inline-flex items-center gap-2 group"
+                    className="text-gray-400 text-sm hover:text-[#2f8eb2] transition-colors duration-300 inline-flex items-center gap-2 group"
                   >
-                    <span className="w-0 h-px bg-[#c9a86c] transition-all duration-300 group-hover:w-4" />
-                    {service.label}
+                    <span className="w-0 h-px bg-[#2f8eb2] transition-all duration-300 group-hover:w-4" />
+                    {destination.label}
                   </a>
                 </li>
               ))}
@@ -160,24 +158,24 @@ export default function Footer() {
               <li>
                 <a
                   href={`mailto:${CONTACT_INFO.email}`}
-                  className="text-gray-400 text-sm hover:text-[#c9a86c] transition-colors duration-300 flex items-start gap-3"
+                  className="text-gray-400 text-sm hover:text-[#2f8eb2] transition-colors duration-300 flex items-start gap-3"
                 >
-                  <Mail className="w-5 h-5 text-[#c9a86c] flex-shrink-0 mt-0.5" />
+                  <Mail className="w-5 h-5 text-[#2f8eb2] flex-shrink-0 mt-0.5" />
                   {CONTACT_INFO.email}
                 </a>
               </li>
               <li>
                 <button
                   onClick={openWhatsApp}
-                  className="text-gray-400 text-sm hover:text-[#c9a86c] transition-colors duration-300 flex items-start gap-3 text-left"
+                  className="text-gray-400 text-sm hover:text-[#2f8eb2] transition-colors duration-300 flex items-start gap-3 text-left"
                 >
-                  <Phone className="w-5 h-5 text-[#c9a86c] flex-shrink-0 mt-0.5" />
+                  <Phone className="w-5 h-5 text-[#2f8eb2] flex-shrink-0 mt-0.5" />
                   {CONTACT_INFO.phone} (WhatsApp)
                 </button>
               </li>
               <li className="flex items-start gap-3 text-gray-400 text-sm">
-                <MapPinned className="w-5 h-5 text-[#c9a86c] flex-shrink-0 mt-0.5" />
-                {CONTACT_INFO.address}
+                <MapPinned className="w-5 h-5 text-[#2f8eb2] flex-shrink-0 mt-0.5" />
+                {CONTACT_INFO.address}, {CONTACT_INFO.city}
               </li>
             </ul>
           </div>
@@ -188,19 +186,19 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-20 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-gray-500 text-sm text-center md:text-left">
-              © {new Date().getFullYear()} THE HURBERT. All rights reserved.
+            <p className="text-gray-400 text-sm text-center md:text-left">
+              © {new Date().getFullYear()} Paramount Adventure and Travels. All rights reserved.
             </p>
             <div className="flex items-center gap-6">
               <a
                 href="#"
-                className="text-gray-500 text-sm hover:text-[#c9a86c] transition-colors duration-300"
+                className="text-gray-500 text-sm hover:text-[#2f8eb2] transition-colors duration-300"
               >
                 Privacy Policy
               </a>
               <a
                 href="#"
-                className="text-gray-500 text-sm hover:text-[#c9a86c] transition-colors duration-300"
+                className="text-gray-500 text-sm hover:text-[#2f8eb2] transition-colors duration-300"
               >
                 Terms of Service
               </a>
@@ -212,7 +210,7 @@ export default function Footer() {
       {/* Scroll to Top Button */}
       <button
         onClick={scrollToTop}
-        className="fixed bottom-8 right-24 w-12 h-12 bg-[#c9a86c] rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-40"
+        className="fixed bottom-8 right-24 w-12 h-12 bg-[#2f8eb2] rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-40"
         aria-label="Scroll to top"
       >
         <ArrowUp className="w-5 h-5 text-white" />
@@ -251,3 +249,4 @@ function SocialIcon({ name, className }: { name: string; className?: string }) {
       return null;
   }
 }
+

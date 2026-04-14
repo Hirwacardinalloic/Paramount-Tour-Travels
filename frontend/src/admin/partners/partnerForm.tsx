@@ -126,7 +126,7 @@ export default function PartnerForm() {
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
             placeholder="e.g., Norrsken, Kivu Noire, Zaria Court"
           />
         </div>
@@ -143,7 +143,7 @@ export default function PartnerForm() {
               name="website"
               value={formData.website}
               onChange={handleChange}
-              className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+              className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
               placeholder="https://..."
             />
           </div>
@@ -160,7 +160,7 @@ export default function PartnerForm() {
               name="logo"
               value={formData.logo}
               onChange={handleChange}
-              className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+              className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
               placeholder="Logo URL or upload"
             />
             <div className="relative">
@@ -219,7 +219,7 @@ export default function PartnerForm() {
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent"
           >
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
@@ -238,7 +238,7 @@ export default function PartnerForm() {
           <button
             type="submit"
             disabled={isLoading}
-            className="inline-flex items-center gap-2 bg-[#c9a86c] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-colors disabled:opacity-50"
+            className="inline-flex items-center gap-2 bg-[#2f8eb2] text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-colors disabled:opacity-50"
           >
             <Save className="w-5 h-5" />
             {isLoading ? 'Saving...' : id ? 'Update Partner' : 'Save Partner'}

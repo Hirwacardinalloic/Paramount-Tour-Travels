@@ -30,21 +30,19 @@ export interface Car {
 }
 
 export interface Tour {
-  id: number;
-  title: string;
+  id: string;
+  name: string;
   description: string;
-  destination: string;
+  location: string;
   duration: string;
   price: number;
-  image_url: string;
-  itinerary: string;
-  inclusions: string;
-  exclusions: string;
-  max_participants: number;
-  status: string;
-  featured: boolean;
-  created_at: string;
-  updated_at: string;
+  images: string[];
+  highlights: string[];
+  itinerary: { day: number; title: string; description: string }[];
+  included: string[];
+  excluded: string[];
+  mapEmbedUrl?: string;
+  groupPrices?: { minPeople: number; maxPeople: number; pricePerPerson: number }[];
 }
 
 export interface Booking {

@@ -5,11 +5,11 @@ import 'react-phone-input-2/lib/style.css';
 
 // Contact Information
 const CONTACT_INFO = {
-  phone: '0782169162',
-  whatsapp: '250782169162',
-  email: 'thehurbertltd@gmail.com',
-  address: '1 KN 78 St, Kigali',
-  mapLink: 'https://maps.google.com/?q=1+KN+78+St,+Kigali,+Rwanda',
+  phone: '0782501110',
+  whatsapp: '250782501110',
+  email: 'info@paramountadventureandtravels.com',
+  address: 'Town centre Building (TCB) GOB-013D, Nyarugenge, Kigali',
+  mapLink: 'https://maps.google.com/?q=Town+centre+Building+(TCB)+GOB-013D,+Nyarugenge,+Kigali',
 };
 
 const contactInfo = [
@@ -86,8 +86,8 @@ export default function Contact() {
 
   // Function to open Gmail compose for direct email
   const openGmailCompose = () => {
-    const subject = encodeURIComponent('Inquiry from THE HURBERT Website');
-    const body = encodeURIComponent('Hello THE HURBERT team,\n\nI would like to inquire about your services.\n\nThank you.');
+    const subject = encodeURIComponent('Inquiry from Paramount Adventure and Travels Website');
+    const body = encodeURIComponent('Hello Paramount Adventure and Travels team,\n\nI would like to inquire about your services.\n\nThank you.');
     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_INFO.email}&su=${subject}&body=${body}`;
     window.open(gmailUrl, '_blank');
   };
@@ -95,7 +95,7 @@ export default function Contact() {
   // Format email message for admin notification
   const formatAdminEmailMessage = (data: any) => {
     return `
-CONTACT FORM MESSAGE - THE HURBERT
+CONTACT FORM MESSAGE - Paramount Adventure and Travels
 
 FROM:
 Name: ${data.name}
@@ -109,7 +109,7 @@ MESSAGE:
 ${data.message || 'No message provided'}
 
 ---
-This message was sent from THE HURBERT contact form.
+This message was sent from Paramount Adventure and Travels contact form.
     `;
   };
 
@@ -118,15 +118,15 @@ This message was sent from THE HURBERT contact form.
     return `
 Dear ${data.name},
 
-Thank you for contacting THE HURBERT! We have received your message and appreciate you reaching out to us.
+Thank you for contacting Paramount Adventure and Travels! We have received your message and appreciate you reaching out to us.
 
 We will review your inquiry and get back to you within 24 hours during business days.
 
-For urgent matters, please contact us via WhatsApp at +250 782 169 162.
+For urgent matters, please contact us via WhatsApp at +250 782 501 110.
 
 Best regards,
-The THE HURBERT Team
-www.thehurbert.com
+The Paramount Adventure and Travels Team
+www.paramountadventureandtravels.com
     `;
   };
 
@@ -184,7 +184,7 @@ www.thehurbert.com
       // ========================================
       const autoReplyData = {
         to: formData.email,
-        subject: 'Thank you for contacting THE HURBERT',
+        subject: 'Thank you for contacting Paramount Adventure and Travels',
         body: formatAutoReplyMessage(formData)
       };
 
@@ -225,12 +225,12 @@ www.thehurbert.com
     <section
       id="contact"
       ref={sectionRef}
-      className="relative w-full py-24 lg:py-32 bg-white overflow-hidden"
+      className="relative w-full py-12 lg:py-16 bg-white overflow-hidden"
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-[#c9a86c] rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#c9a86c] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-0 w-96 h-96 bg-[#2f8eb2] rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#2f8eb2] rounded-full blur-3xl" />
       </div>
 
       <div className="relative w-full px-4 sm:px-6 lg:px-12 xl:px-20">
@@ -243,7 +243,7 @@ www.thehurbert.com
           }`}
         >
           <span
-            className="text-[#c9a86c] text-sm font-semibold uppercase tracking-[0.3em] mb-4 block"
+            className="text-[#2f8eb2] text-sm font-semibold uppercase tracking-[0.3em] mb-4 block"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             Get in Touch
@@ -255,7 +255,7 @@ www.thehurbert.com
             Contact Us
           </h2>
           <div className="flex justify-center mt-4">
-            <div className="w-20 h-1 bg-[#c9a86c] rounded-full" />
+            <div className="w-20 h-1 bg-[#2f8eb2] rounded-full" />
           </div>
         </div>
 
@@ -279,11 +279,11 @@ www.thehurbert.com
                 const Icon = item.icon;
                 const CardContent = (
                   <div
-                    className={`p-6 bg-gray-50 rounded-xl transition-all duration-300 hover:bg-[#c9a86c]/10 hover:shadow-lg group ${item.link || item.isEmail ? 'cursor-pointer' : ''}`}
+                    className={`p-6 bg-gray-50 rounded-xl transition-all duration-300 hover:bg-[#2f8eb2]/10 hover:shadow-lg group ${item.link || item.isEmail ? 'cursor-pointer' : ''}`}
                     style={{ transitionDelay: `${200 + index * 100}ms` }}
                     onClick={item.isEmail ? openGmailCompose : undefined}
                   >
-                    <div className="w-12 h-12 rounded-full bg-[#c9a86c] flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110">
+                    <div className="w-12 h-12 rounded-full bg-[#2f8eb2] flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110">
                       <Icon className="w-6 h-6 text-white" />
                     </div>
                     <h4
@@ -292,7 +292,7 @@ www.thehurbert.com
                     >
                       {item.title}
                     </h4>
-                    <p className="text-gray-600 text-sm hover:text-[#c9a86c] transition-colors">
+                    <p className="text-gray-600 text-sm hover:text-[#2f8eb2] transition-colors">
                       {item.content}
                     </p>
                   </div>
@@ -333,7 +333,7 @@ www.thehurbert.com
                     Get instant responses to your queries via WhatsApp at {CONTACT_INFO.phone}.
                   </p>
                   <a
-                    href={`https://wa.me/${CONTACT_INFO.whatsapp}?text=${encodeURIComponent('Hello THE HURBERT! I would like to inquire about your services.')}`}
+                    href={`https://wa.me/${CONTACT_INFO.whatsapp}?text=${encodeURIComponent('Hello Paramount Adventure and Travels! I would like to inquire about your services.')}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-green-500 text-white px-6 py-3 rounded-lg font-semibold text-sm uppercase tracking-wider transition-all duration-300 hover:bg-green-600"
@@ -398,7 +398,7 @@ www.thehurbert.com
                   
                   <button
                     onClick={resetForm}
-                    className="text-gray-500 text-sm hover:text-[#c9a86c] transition-colors"
+                    className="text-gray-500 text-sm hover:text-[#2f8eb2] transition-colors"
                   >
                     Send another message
                   </button>
@@ -417,7 +417,7 @@ www.thehurbert.com
                         value={formData.name}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent transition-all duration-300 bg-white"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent transition-all duration-300 bg-white"
                         placeholder="John Doe"
                       />
                     </div>
@@ -431,7 +431,7 @@ www.thehurbert.com
                         value={formData.email}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent transition-all duration-300 bg-white"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent transition-all duration-300 bg-white"
                         placeholder="john@example.com"
                       />
                     </div>
@@ -446,7 +446,7 @@ www.thehurbert.com
                       country={'rw'}
                       value={formData.phone}
                       onChange={handlePhoneChange}
-                      inputClass="!w-full !pl-12 !py-3 !border-gray-200 !rounded-lg focus:!ring-2 focus:!ring-[#c9a86c] focus:!border-transparent !bg-white"
+                      inputClass="!w-full !pl-12 !py-3 !border-gray-200 !rounded-lg focus:!ring-2 focus:!ring-[#2f8eb2] focus:!border-transparent !bg-white"
                       buttonClass="!border-gray-200 !rounded-l-lg hover:!bg-gray-50"
                       placeholder="Enter phone number"
                       enableSearch={true}
@@ -464,7 +464,7 @@ www.thehurbert.com
                       name="subject"
                       value={formData.subject}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent transition-all duration-300 bg-white"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent transition-all duration-300 bg-white"
                       placeholder="How can we help?"
                     />
                   </div>
@@ -480,7 +480,7 @@ www.thehurbert.com
                       onChange={handleInputChange}
                       required
                       rows={5}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#c9a86c] focus:border-transparent transition-all duration-300 bg-white resize-none"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2] focus:border-transparent transition-all duration-300 bg-white resize-none"
                       placeholder="Tell us about your project or inquiry..."
                     />
                   </div>
@@ -489,7 +489,7 @@ www.thehurbert.com
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-[#c9a86c] text-white py-4 rounded-lg font-semibold text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-[#2f8eb2] text-white py-4 rounded-lg font-semibold text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ fontFamily: 'Montserrat, sans-serif' }}
                   >
                     {isSubmitting ? (
@@ -517,7 +517,7 @@ www.thehurbert.com
 
       {/* Floating WhatsApp Button */}
       <a
-        href={`https://wa.me/${CONTACT_INFO.whatsapp}?text=${encodeURIComponent('Hello THE HURBERT! I would like to inquire about your services.')}`}
+        href={`https://wa.me/${CONTACT_INFO.whatsapp}?text=${encodeURIComponent('Hello Paramount Adventure and Travels! I would like to inquire about your services.')}`}
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-8 right-8 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50"
