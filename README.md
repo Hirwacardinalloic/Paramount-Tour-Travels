@@ -1,6 +1,6 @@
-# THE HURBERT - Event Management & Services Website
+# Paramount Adventure and Travels - Adventure & Travel Services Website
 
-A full-stack dynamic website for THE HURBERT, Rwanda's premier event management company. The platform showcases portfolio, staff, partners, and services with a complete admin dashboard for content management.
+A full-stack dynamic website for Paramount Adventure and Travels, Rwanda's premier adventure and travel company. The platform showcases portfolio, staff, partners, and services with a complete admin dashboard for content management.
 
 ## ✨ Features
 
@@ -41,9 +41,9 @@ src/
 👨‍💼 Admin Access
 URL: /admin/login
 
-Manage: Events, Cars, Tourism, Staff, Partners
+Manage: TOURS & SAFARIS , Cars, Accommodation, flight tickets, Partners
 
 All changes appear instantly on public site
 
 📄 License
-© 2026 THE HURBERT. All rights reserved.
+© 2026 Paramount Adventure and Travels. All rights reserved.
