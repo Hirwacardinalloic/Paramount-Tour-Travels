@@ -8,12 +8,12 @@ async function resetPassword() {
     
     const result = await db.runAsync(
       `UPDATE admin_users SET password_hash = ? WHERE email = ?`,
-      [hashedPassword, 'admin@thehurbert.com']
+      [hashedPassword, 'info@paramountadventureandtravels.com']
     );
     
     if (result.changes > 0) {
       console.log('✅ Password reset successfully!');
-      console.log('📧 Email: admin@thehurbert.com');
+      console.log('📧 Email: info@paramountadventureandtravels.com');
       console.log(`🔑 New password: ${newPassword}`);
     } else {
       console.log('❌ Admin user not found');

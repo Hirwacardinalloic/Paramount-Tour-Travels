@@ -51,28 +51,36 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const {
-      title, category, location, duration, bestTime,
-      bestSeason, description, activities, highlights,
+      name, category, location, duration, bestTime,
+      price, description, longDescription, highlights, itinerary,
+      included, excluded, importantInfo, images, groupSize,
       image, status
     } = req.body;
 
     const result = await db.runAsync(
       `INSERT INTO tourism (
-        title, category, location, duration, bestTime,
-        bestSeason, description, activities, highlights,
+        name, title, category, location, duration, bestTime,
+        price, description, longDescription, highlights, itinerary,
+        included, excluded, importantInfo, images, groupSize,
         image, status, created_at, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`,
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`,
       [
-        title, category, location, duration, bestTime,
-        bestSeason, description, JSON.stringify(activities || []),
-        JSON.stringify(highlights || []), image, status || 'active'
+        name, name, category, location, duration, bestTime,
+        price, description, longDescription,
+        JSON.stringify(highlights || []),
+        JSON.stringify(itinerary || []),
+        JSON.stringify(included || []),
+        JSON.stringify(excluded || []),
+        JSON.stringify(importantInfo || []),
+        JSON.stringify(images || []),
+        groupSize, image, status || 'active'
       ]
     );
 
-    res.json({ 
-      success: true, 
+    res.json({
+      success: true,
       id: result.id,
-      message: 'Destination added successfully'
+      message: 'Tour added successfully'
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -83,27 +91,35 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const {
-      title, category, location, duration, bestTime,
-      bestSeason, description, activities, highlights,
+      name, category, location, duration, bestTime,
+      price, description, longDescription, highlights, itinerary,
+      included, excluded, importantInfo, images, groupSize,
       image, status
     } = req.body;
 
     await db.runAsync(
       `UPDATE tourism SET
-        title = ?, category = ?, location = ?, duration = ?, bestTime = ?,
-        bestSeason = ?, description = ?, activities = ?, highlights = ?,
+        name = ?, title = ?, category = ?, location = ?, duration = ?, bestTime = ?,
+        price = ?, description = ?, longDescription = ?, highlights = ?, itinerary = ?,
+        included = ?, excluded = ?, importantInfo = ?, images = ?, groupSize = ?,
         image = ?, status = ?, updated_at = CURRENT_TIMESTAMP
       WHERE id = ?`,
       [
-        title, category, location, duration, bestTime,
-        bestSeason, description, JSON.stringify(activities || []),
-        JSON.stringify(highlights || []), image, status, req.params.id
+        name, name, category, location, duration, bestTime,
+        price, description, longDescription,
+        JSON.stringify(highlights || []),
+        JSON.stringify(itinerary || []),
+        JSON.stringify(included || []),
+        JSON.stringify(excluded || []),
+        JSON.stringify(importantInfo || []),
+        JSON.stringify(images || []),
+        groupSize, image, status, req.params.id
       ]
     );
 
-    res.json({ 
-      success: true, 
-      message: 'Destination updated successfully'
+    res.json({
+      success: true,
+      message: 'Tour updated successfully'
     });
   } catch (error) {
     res.status(500).json({ error: error.message });

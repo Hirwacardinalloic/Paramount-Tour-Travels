@@ -14,13 +14,13 @@ if (!fs.existsSync(dbDir)) {
   fs.mkdirSync(dbDir, { recursive: true });
 }
 
-const dbPath = path.join(dbDir, 'thehurbert.db');
+const dbPath = path.join(dbDir, 'paramountadventureandtravels.db');
 
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error('❌ Error opening database:', err.message);
   } else {
-    console.log('✅ Connected to thehurbert.db');
+    console.log('✅ Connected to paramountadventureandtravels.db');
     initializeDatabase();
   }
 });
@@ -229,9 +229,112 @@ async function initializeDatabase() {
     console.log('✅ Contact messages table created');
 
     // ============================================
+    // 11. TESTIMONIALS TABLE
+    // ============================================
+    await db.runAsync(`
+      CREATE TABLE IF NOT EXISTS testimonials (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        location TEXT,
+        title TEXT,
+        review TEXT NOT NULL,
+        rating INTEGER DEFAULT 5 CHECK(rating >= 1 AND rating <= 5),
+        status TEXT DEFAULT 'approved',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    console.log('✅ Testimonials table created');
+
+    // ============================================
+    // 12. DESTINATIONS TABLE
+    // ============================================
+    await db.runAsync(`
+      CREATE TABLE IF NOT EXISTS destinations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        category TEXT,
+        location TEXT,
+        duration TEXT,
+        bestTime TEXT,
+        bestSeason TEXT,
+        description TEXT,
+        activities TEXT,
+        itinerary TEXT,
+        included TEXT,
+        excluded TEXT,
+        price TEXT,
+        images TEXT,
+        image TEXT,
+        status TEXT DEFAULT 'active',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    console.log('✅ Destinations table created');
+
+    const destinationTableInfo = await db.allAsync(`PRAGMA table_info(destinations)`);
+    const destColumns = destinationTableInfo.map((col) => col.name);
+
+    if (!destColumns.includes('itinerary')) {
+      await db.runAsync(`ALTER TABLE destinations ADD COLUMN itinerary TEXT`);
+    }
+    if (!destColumns.includes('included')) {
+      await db.runAsync(`ALTER TABLE destinations ADD COLUMN included TEXT`);
+    }
+    if (!destColumns.includes('excluded')) {
+      await db.runAsync(`ALTER TABLE destinations ADD COLUMN excluded TEXT`);
+    }
+    if (!destColumns.includes('price')) {
+      await db.runAsync(`ALTER TABLE destinations ADD COLUMN price TEXT`);
+    }
+    if (!destColumns.includes('images')) {
+      await db.runAsync(`ALTER TABLE destinations ADD COLUMN images TEXT`);
+    }
+
+    // ============================================
+    // 12. FLIGHT TICKETS TABLE
+    // ============================================
+    await db.runAsync(`
+      CREATE TABLE IF NOT EXISTS flight_tickets (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        airline TEXT NOT NULL,
+        route TEXT NOT NULL,
+        flightClass TEXT,
+        price TEXT,
+        description TEXT,
+        image TEXT,
+        status TEXT DEFAULT 'active',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    console.log('✅ Flight tickets table created');
+
+    // ============================================
+    // 13. ACCOMMODATIONS TABLE
+    // ============================================
+    await db.runAsync(`
+      CREATE TABLE IF NOT EXISTS accommodations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        type TEXT,
+        location TEXT,
+        pricePerNight TEXT,
+        amenities TEXT,
+        description TEXT,
+        image TEXT,
+        status TEXT DEFAULT 'active',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    console.log('✅ Accommodations table created');
+
+    // ============================================
     // CREATE DEFAULT ADMIN USER
     // ============================================
-    const adminEmail = 'admin@thehurbert.com';
+    const adminEmail = 'info@paramountadventureandtravels.com';
     const existingAdmin = await db.getAsync(
       'SELECT id FROM admin_users WHERE email = ?',
       [adminEmail]

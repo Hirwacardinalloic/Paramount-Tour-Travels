@@ -16,23 +16,28 @@ console.log('EMAIL_USER:', process.env.EMAIL_USER ? '✅ Found' : '❌ Missing')
 console.log('EMAIL_PASSWORD:', process.env.EMAIL_PASSWORD ? '✅ Found' : '❌ Missing');
 console.log('EMAIL_FROM:', process.env.EMAIL_FROM ? '✅ Found' : '❌ Missing');
 
-// Create transporter
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD
-  }
-});
+// Create transporter only if credentials are provided
+let transporter = null;
+if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
+  transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD
+    }
+  });
 
-// Verify connection configuration
-transporter.verify((error, success) => {
-  if (error) {
-    console.error('❌ Email configuration error:', error);
-  } else {
-    console.log('✅ Email server is ready to send messages');
-  }
-});
+  // Verify connection configuration
+  transporter.verify((error, success) => {
+    if (error) {
+      console.error('❌ Email configuration error:', error);
+    } else {
+      console.log('✅ Email server is ready to send messages');
+    }
+  });
+} else {
+  console.log('⚠️  Email credentials not configured. Email functionality disabled.');
+}
 
 // Format dates
 const formatDate = (dateString) => {
@@ -72,6 +77,11 @@ const displayArray = (arr) => {
 // ============================================
 export const sendClientBookingConfirmation = async (bookingData) => {
   try {
+    if (!transporter) {
+      console.log('⚠️ Email not configured, skipping client booking confirmation');
+      return { success: false, error: 'Email not configured' };
+    }
+
     console.log('📧 Client Email - Full booking data:', JSON.stringify(bookingData, null, 2));
 
     const {
@@ -302,12 +312,12 @@ export const sendClientBookingConfirmation = async (bookingData) => {
       <body>
         <div class="container">
           <div class="header">
-            <h1>THE HURBERT</h1>
+            <h1>Paramount Adventure and Travels</h1>
             <p>Booking Confirmation</p>
           </div>
           <div class="content">
             <p>Dear <strong>${customerName}</strong>,</p>
-            <p>Thank you for choosing THE HURBERT! We have received your booking request.</p>
+            <p>Thank you for choosing Paramount Adventure and Travels! We have received your booking request.</p>
             
             <div class="booking-reference">
               <strong>Booking Reference:</strong> ${bookingNumber}
@@ -333,16 +343,16 @@ export const sendClientBookingConfirmation = async (bookingData) => {
               <p><strong>What's Next?</strong></p>
               <p>Our team will review your request and contact you within <strong>24 hours</strong> to confirm availability and discuss details.</p>
               <p>If you have any questions in the meantime, please don't hesitate to reach out:</p>
-              <p>📞 <strong>Phone/WhatsApp:</strong> +250 782 169 162</p>
-              <p>📧 <strong>Email:</strong> thehurbertltd@gmail.com</p>
+              <p>📞 <strong>Phone/WhatsApp:</strong> +250 782 501 110</p>
+              <p>📧 <strong>Email:</strong> info@paramountadventureandtravels.com</p>
             </div>
             
             <p>We look forward to creating an unforgettable experience for you!</p>
-            <p>Best regards,<br>The THE HURBERT Team</p>
+            <p>Best regards,<br>The Paramount Adventure and Travels Team</p>
           </div>
           <div class="footer">
-            <p>&copy; ${new Date().getFullYear()} THE HURBERT. All rights reserved.</p>
-            <p>1 KN 78 St, Kigali, Rwanda</p>
+            <p>&copy; ${new Date().getFullYear()} Paramount Adventure and Travels. All rights reserved.</p>
+            <p>Town centre Building (TCB)GOB-013D, Nyarugenge, Kigali Rwanda</p>
           </div>
         </div>
       </body>
@@ -350,11 +360,11 @@ export const sendClientBookingConfirmation = async (bookingData) => {
     `;
 
     const text = `
-      THE HURBERT - Booking Confirmation
+      Paramount Adventure and Travels - Booking Confirmation
       
       Dear ${customerName},
       
-      Thank you for choosing THE HURBERT! We have received your booking request.
+      Thank you for choosing Paramount Adventure and Travels! We have received your booking request.
       
       Booking Reference: ${bookingNumber}
       
@@ -369,17 +379,17 @@ export const sendClientBookingConfirmation = async (bookingData) => {
       Our team will review your request and contact you within 24 hours to confirm availability and discuss details.
       
       If you have any questions, please don't hesitate to reach out:
-      📞 Phone/WhatsApp: +250 782 169 162
-      📧 Email: thehurbertltd@gmail.com
+      📞 Phone/WhatsApp: +250 782 501 110
+      📧 Email: info@paramountadventureandtravels.com
       
       We look forward to creating an unforgettable experience for you!
       
       Best regards,
-      The THE HURBERT Team
+      The Paramount Adventure and Travels Team
       
       ---
-      1 KN 78 St, Kigali, Rwanda
-      © ${new Date().getFullYear()} THE HURBERT. All rights reserved.
+      Town centre Building (TCB)GOB-013D, Nyarugenge, Kigali Rwanda
+      © ${new Date().getFullYear()} Paramount Adventure and Travels. All rights reserved.
     `;
 
     const mailOptions = {
@@ -405,6 +415,11 @@ export const sendClientBookingConfirmation = async (bookingData) => {
 // ============================================
 export const sendAdminBookingNotification = async (bookingData) => {
   try {
+    if (!transporter) {
+      console.log('⚠️ Email not configured, skipping admin booking notification');
+      return { success: false, error: 'Email not configured' };
+    }
+
     console.log('📧 Admin Email - Full booking data received:', JSON.stringify(bookingData, null, 2));
 
     const {
@@ -686,6 +701,11 @@ export const sendAdminBookingNotification = async (bookingData) => {
 // Send contact auto-reply to client
 export const sendContactAutoReply = async (contactData) => {
   try {
+    if (!transporter) {
+      console.log('⚠️ Email not configured, skipping contact auto-reply');
+      return { success: false, error: 'Email not configured' };
+    }
+
     const { name, email, message } = contactData;
 
     const html = `
@@ -788,6 +808,11 @@ export const sendContactAutoReply = async (contactData) => {
 // Send contact notification to admin
 export const sendContactNotification = async (contactData) => {
   try {
+    if (!transporter) {
+      console.log('⚠️ Email not configured, skipping contact notification');
+      return { success: false, error: 'Email not configured' };
+    }
+
     const { name, email, phone, subject, message, id } = contactData;
 
     const html = `

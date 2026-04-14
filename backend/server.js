@@ -9,15 +9,18 @@ import db from './db.js';
 
 // Import routes
 import authRoutes from './routes/auth.js';
-import eventsRoutes from './routes/events.js';
 import carsRoutes from './routes/cars.js';
 import tourismRoutes from './routes/tourism.js';
 import partnersRoutes from './routes/partners.js';
-import staffRoutes from './routes/staff.js';
+// import staffRoutes from './routes/staff.js';
+import destinationsRoutes from './routes/destinations.js';
+import flightsRoutes from './routes/flights.js';
+import accommodationsRoutes from './routes/accommodations.js';
 import bookingsRoutes from './routes/bookings.js';
 import dashboardRoutes from './routes/dashboard.js';
 import galleryRoutes from './routes/gallery.js';
 import contactRoutes from './routes/contact.js';
+import testimonialsRoutes from './routes/testimonials.js';
 
 // Import email functions
 import { 
@@ -184,15 +187,18 @@ app.post('/api/send-email', async (req, res) => {
 // ROUTES
 // ============================================
 app.use('/api/auth', authRoutes);
-app.use('/api/events', eventsRoutes);
 app.use('/api/cars', carsRoutes);
 app.use('/api/tourism', tourismRoutes);
 app.use('/api/partners', partnersRoutes);
-app.use('/api/staff', staffRoutes);
+// app.use('/api/staff', staffRoutes);
+app.use('/api/destinations', destinationsRoutes);
+app.use('/api/flights', flightsRoutes);
+app.use('/api/accommodations', accommodationsRoutes);
 app.use('/api/bookings', bookingsRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/gallery', galleryRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/testimonials', testimonialsRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
