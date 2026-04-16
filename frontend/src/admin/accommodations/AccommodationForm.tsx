@@ -132,7 +132,19 @@ export default function AccommodationForm() {
            </div>
            {formData.image && <img src={formData.image} className="mt-4 h-32 rounded-lg object-contain" alt="preview" />}
         </div>
-        <div className="flex justify-end"><button type="submit" disabled={isLoading} className="bg-[#2f8eb2] text-white px-6 py-3 rounded-lg"><Save className="w-5 h-5 inline mr-2" />{isLoading ? 'Saving...' : 'Save'}</button></div>
+        <div className="flex justify-end gap-4">
+          <button
+            type="button"
+            onClick={() => navigate('/admin/accommodations')}
+            className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+          >
+            Cancel
+          </button>
+          <button type="submit" disabled={isLoading} className="bg-[#2f8eb2] text-white px-6 py-3 rounded-lg flex items-center gap-2">
+            <Save className="w-5 h-5 inline" />
+            {isLoading ? 'Saving...' : 'Save'}
+          </button>
+        </div>
       </form>
     </div>
   );

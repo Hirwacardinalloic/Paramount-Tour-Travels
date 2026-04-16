@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { blogPosts } from '../data/blogPosts';
+import { getBlogPostBySlug, getBlogPosts } from '../services/blogService';
 
 export default function BlogDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const post = blogPosts.find((entry) => entry.slug === slug);
+  const post = getBlogPostBySlug(slug);
 
   if (!post) {
     return (
@@ -24,7 +24,7 @@ export default function BlogDetail() {
     );
   }
 
-  const relatedPosts = blogPosts.filter((entry) => entry.slug !== slug).slice(0, 3);
+  const relatedPosts = getBlogPosts().filter((entry) => entry.slug !== slug).slice(0, 3);
 
   return (
     <div className="min-h-screen bg-[#f8fafc]">
@@ -54,7 +54,7 @@ export default function BlogDetail() {
             <div className="overflow-hidden rounded-[32px] bg-white shadow-xl">
               <img src={post.image} alt={post.title} className="h-[420px] w-full object-cover" />
               <div className="p-10 space-y-6">
-                {post.body.split('\n\n').map((paragraph, index) => (
+                {post.body.split('\n\n').map((paragraph: string, index: number) => (
                   <p key={index} className="text-gray-700 leading-8">{paragraph}</p>
                 ))}
               </div>

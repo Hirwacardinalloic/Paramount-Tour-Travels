@@ -1,8 +1,14 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { blogPosts } from '../data/blogPosts';
+import { getBlogPosts, type BlogPost } from '../services/blogService';
 
 export default function BlogPage() {
   const navigate = useNavigate();
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+
+  useEffect(() => {
+    setPosts(getBlogPosts());
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#f8fafc]">
@@ -19,14 +25,14 @@ export default function BlogPage() {
           </p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-2">
-          {blogPosts.map((post) => (
+        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          {posts.map((post) => (
             <article
               key={post.id}
               onClick={() => navigate(`/blog/${post.slug}`)}
               className="cursor-pointer overflow-hidden rounded-[32px] border border-gray-200 bg-white shadow-sm transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl"
             >
-              <div className="relative h-72 overflow-hidden">
+              <div className="relative h-64 overflow-hidden">
                 <img
                   src={post.image}
                   alt={post.title}

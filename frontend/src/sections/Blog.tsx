@@ -1,8 +1,14 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { blogPosts } from '../data/blogPosts';
+import { getBlogPosts, type BlogPost } from '../services/blogService';
 
 export default function Blog() {
   const navigate = useNavigate();
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+
+  useEffect(() => {
+    setPosts(getBlogPosts());
+  }, []);
 
   return (
     <section id="blog" className="relative w-full py-16 lg:py-24 bg-white overflow-hidden">
@@ -20,7 +26,7 @@ export default function Blog() {
         </div>
 
         <div className="grid gap-8 lg:grid-cols-3">
-          {blogPosts.slice(0, 3).map((post) => (
+          {posts.slice(0, 3).map((post) => (
             <article key={post.id} className="group overflow-hidden rounded-[32px] border border-gray-200 bg-white shadow-sm transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl">
               <div className="relative h-72 overflow-hidden">
                 <img

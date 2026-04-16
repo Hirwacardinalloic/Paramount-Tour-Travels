@@ -824,7 +824,14 @@ export default function TourismForm() {
         </div>
 
         {/* Submit */}
-        <div className="flex justify-end pt-6 border-t border-gray-200">
+        <div className="flex justify-end gap-3 pt-6 border-t border-gray-200">
+          <button
+            type="button"
+            onClick={() => navigate('/admin/tourism')}
+            className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+          >
+            Cancel
+          </button>
           <button
             type="submit"
             disabled={isLoading}

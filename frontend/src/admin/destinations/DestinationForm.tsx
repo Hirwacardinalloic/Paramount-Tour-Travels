@@ -245,61 +245,61 @@ export default function DestinationForm() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="flex items-center gap-4 mb-8">
-        <button onClick={() => navigate(`/admin/destinations`)} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+    <div className="max-w-5xl mx-auto p-6">
+      <div className="flex items-center gap-4 mb-6">
+        <button
+          onClick={() => navigate('/admin/destinations')}
+          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+        >
           <ArrowLeft className="w-5 h-5" />
         </button>
         <div>
-          <p className="text-sm uppercase tracking-[0.3em] text-[#2f8eb2] font-semibold">Destination management</p>
-          <h1 className="text-3xl font-bold text-black" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-            {id ? `Edit Destination` : `Add New Destination`}
-          </h1>
+          <h1 className="text-3xl font-bold text-black">{id ? 'Edit Destination' : 'Add New Destination'}</h1>
+          <p className="text-gray-500 mt-1">{id ? 'Update destination details' : 'Create a new destination'}</p>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-3xl shadow-xl overflow-hidden">
-        <div className="bg-[#f8f6ef] px-6 py-8 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-            Destination details
-          </h2>
-          <p className="mt-2 text-sm text-gray-600">
-            Use this form to add or update a destination. The layout matches the Tours & Safaris admin form style for consistency.
-          </p>
-        </div>
-
-        <div className="p-8 space-y-8">
-          <div className="grid gap-6 lg:grid-cols-2">
+      <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm p-8 space-y-6">
+        <div>
+          <h2 className="text-lg font-semibold mb-4 text-gray-800">Basic Information</h2>
+          <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Destination Name</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Destination Name *</label>
               <input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-2xl shadow-sm focus:border-[#2f8eb2] focus:ring-[#2f8eb2]/20"
+                required
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2]"
                 placeholder="e.g. Rwanda"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
-              <input
-                type="text"
+              <label className="block text-sm font-medium text-gray-700 mb-2">Category *</label>
+              <select
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-2xl shadow-sm focus:border-[#2f8eb2] focus:ring-[#2f8eb2]/20"
-                placeholder="e.g. Country"
-              />
+                required
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2]"
+              >
+                <option value="">Select Category</option>
+                <option value="wildlife-safaris">Wildlife Safaris</option>
+                <option value="gorilla-trekking">Gorilla Trekking</option>
+                <option value="cultural-tours">Cultural Tours</option>
+                <option value="adventure">Adventure</option>
+              </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Location *</label>
               <input
                 type="text"
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-2xl shadow-sm focus:border-[#2f8eb2] focus:ring-[#2f8eb2]/20"
+                required
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2]"
                 placeholder="e.g. East Africa"
               />
             </div>
@@ -310,7 +310,7 @@ export default function DestinationForm() {
                 name="duration"
                 value={formData.duration}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-2xl shadow-sm focus:border-[#2f8eb2] focus:ring-[#2f8eb2]/20"
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2]"
                 placeholder="e.g. 3-7 Days"
               />
             </div>
@@ -321,7 +321,7 @@ export default function DestinationForm() {
                 name="bestTime"
                 value={formData.bestTime}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-2xl shadow-sm focus:border-[#2f8eb2] focus:ring-[#2f8eb2]/20"
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2]"
                 placeholder="e.g. June - September"
               />
             </div>
@@ -332,7 +332,7 @@ export default function DestinationForm() {
                 name="bestSeason"
                 value={formData.bestSeason}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-2xl shadow-sm focus:border-[#2f8eb2] focus:ring-[#2f8eb2]/20"
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2]"
                 placeholder="e.g. Dry season"
               />
             </div>
@@ -343,63 +343,138 @@ export default function DestinationForm() {
                 name="price"
                 value={formData.price}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-2xl shadow-sm focus:border-[#2f8eb2] focus:ring-[#2f8eb2]/20"
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2]"
                 placeholder="e.g. $1,200 or Contact us"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Status *</label>
               <select
                 name="status"
                 value={formData.status}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-2xl shadow-sm focus:border-[#2f8eb2] focus:ring-[#2f8eb2]/20"
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2]"
               >
                 <option value="active">Active</option>
                 <option value="inactive">Inactive</option>
               </select>
             </div>
           </div>
+        </div>
 
-          <div className="grid gap-6 lg:grid-cols-1">
+        <div className="grid gap-6">
+          <div>
+            <h2 className="text-lg font-semibold mb-4 text-gray-800">Descriptions</h2>
+            <div className="grid gap-6 lg:grid-cols-2">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Highlights</label>
+                <div className="flex gap-2 mb-3">
+                  <input
+                    type="text"
+                    value={newHighlight}
+                    onChange={(e) => setNewHighlight(e.target.value)}
+                    placeholder="Add a highlight or activity"
+                    className="flex-1 px-4 py-2 border border-gray-200 rounded-lg"
+                    onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addHighlight())}
+                  />
+                  <button
+                    type="button"
+                    onClick={addHighlight}
+                    className="px-4 py-2 bg-[#2f8eb2] text-white rounded-lg hover:bg-[#1f6f95]"
+                  >
+                    <Plus className="w-4 h-4" />
+                  </button>
+                </div>
+                <div className="space-y-2">
+                  {formData.activities.map((item, idx) => (
+                    <div key={idx} className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                      <span className="flex-1 text-sm text-gray-700">{item}</span>
+                      <button type="button" onClick={() => removeHighlight(idx)} className="p-1 text-red-500 hover:bg-red-50 rounded-full">
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <p className="mt-2 text-sm text-gray-500">Add destination highlights that will display as cards on the detail page.</p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  rows={5}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2f8eb2]"
+                  placeholder="Write a short description of the destination and its highlights."
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Highlights</label>
+              <h2 className="text-lg font-semibold mb-4 text-gray-800">What's Included</h2>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Included</label>
               <div className="flex gap-2 mb-3">
                 <input
                   type="text"
-                  value={newHighlight}
-                  onChange={(e) => setNewHighlight(e.target.value)}
-                  placeholder="Add a highlight or activity"
-                  className="flex-1 px-4 py-3 border border-gray-200 rounded-2xl"
-                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addHighlight())}
+                  value={newIncluded}
+                  onChange={(e) => setNewIncluded(e.target.value)}
+                  placeholder="Add included item"
+                  className="flex-1 px-4 py-2 border border-gray-200 rounded-lg"
+                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addIncluded())}
                 />
-                <button type="button" onClick={addHighlight} className="px-4 py-3 bg-[#2f8eb2] text-white rounded-2xl hover:bg-[#1f6f95]">
-                  Add
+                <button
+                  type="button"
+                  onClick={addIncluded}
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                >
+                  <Plus className="w-4 h-4" />
                 </button>
               </div>
               <div className="space-y-2">
-                {formData.activities.map((item, idx) => (
-                  <div key={idx} className="flex items-center justify-between gap-3 p-3 bg-gray-50 rounded-2xl border border-gray-200">
-                    <span className="text-sm text-gray-700">{item}</span>
-                    <button type="button" onClick={() => removeHighlight(idx)} className="p-2 rounded-full text-red-500 hover:bg-red-50">
+                {formData.included.map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-2 p-3 bg-green-50 rounded-lg border border-green-200">
+                    <span className="flex-1 text-sm text-gray-700">{item}</span>
+                    <button type="button" onClick={() => removeIncluded(idx)} className="p-1 text-red-500 hover:bg-red-50 rounded-full">
                       <X className="w-4 h-4" />
                     </button>
                   </div>
                 ))}
               </div>
-              <p className="mt-2 text-sm text-gray-500">Add destination highlights that will display as cards on the detail page.</p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                rows={5}
-                className="w-full px-4 py-3 border border-gray-200 rounded-2xl shadow-sm focus:border-[#2f8eb2] focus:ring-[#2f8eb2]/20"
-                placeholder="Write a short description of the destination and its highlights."
-              />
+              <h2 className="text-lg font-semibold mb-4 text-gray-800">What's Excluded</h2>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Excluded</label>
+              <div className="flex gap-2 mb-3">
+                <input
+                  type="text"
+                  value={newExcluded}
+                  onChange={(e) => setNewExcluded(e.target.value)}
+                  placeholder="Add excluded item"
+                  className="flex-1 px-4 py-2 border border-gray-200 rounded-lg"
+                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addExcluded())}
+                />
+                <button
+                  type="button"
+                  onClick={addExcluded}
+                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                >
+                  <Plus className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="space-y-2">
+                {formData.excluded.map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-2 p-3 bg-red-50 rounded-lg border border-red-200">
+                    <span className="flex-1 text-sm text-gray-700">{item}</span>
+                    <button type="button" onClick={() => removeExcluded(idx)} className="p-1 text-red-500 hover:bg-red-50 rounded-full">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -480,90 +555,39 @@ export default function DestinationForm() {
                 ))}
               </div>
             </div>
-
-            <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Gallery images</h3>
-              <div className="grid gap-4 lg:grid-cols-2">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Add image URL</label>
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      value={newImageUrl}
-                      onChange={(e) => setNewImageUrl(e.target.value)}
-                      placeholder="Paste additional image URL"
-                      className="flex-1 px-4 py-3 border border-gray-200 rounded-2xl"
-                    />
-                    <button type="button" onClick={addImageUrl} className="px-4 py-3 bg-[#2f8eb2] text-white rounded-2xl hover:bg-[#1f6f95]">
-                      Add
-                    </button>
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Upload gallery images</label>
-                  <div className="relative">
-                    <input
-                      type="file"
-                      accept="image/*"
-                      multiple
-                      onChange={handleGalleryImageUpload}
-                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                    />
-                    <button
-                      type="button"
-                      className="w-full border border-dashed border-gray-300 rounded-3xl px-4 py-3 text-sm text-gray-600 hover:border-[#2f8eb2] hover:text-[#333] transition-colors"
-                    >
-                      <Upload className="w-5 h-5 inline-block mr-2" />
-                      {uploading ? 'Uploading...' : 'Choose images'}
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {formData.images.map((src, idx) => (
-                  <div key={idx} className="group relative overflow-hidden rounded-3xl border border-gray-200 bg-gray-50">
-                    <img src={src} alt={`Gallery image ${idx + 1}`} className="h-40 w-full object-cover" />
-                    <button
-                      type="button"
-                      onClick={() => removeImage(idx)}
-                      className="absolute top-3 right-3 rounded-full bg-white p-2 text-red-500 shadow-sm hover:bg-red-50"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-2">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
-              <input
-                type="text"
-                name="image"
-                value={formData.image}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-2xl shadow-sm focus:border-[#2f8eb2] focus:ring-[#2f8eb2]/20"
-                placeholder="Paste an image URL or use upload"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Upload Image</label>
-              <div className="relative">
+          <div>
+            <h2 className="text-lg font-semibold mb-4 text-gray-800">Destination Images</h2>
+            <div className="grid gap-6 lg:grid-cols-2">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
                 <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  type="text"
+                  name="image"
+                  value={formData.image}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-2xl shadow-sm focus:border-[#2f8eb2] focus:ring-[#2f8eb2]/20"
+                  placeholder="Paste an image URL or use upload"
                 />
-                <button
-                  type="button"
-                  className="w-full border border-dashed border-gray-300 rounded-3xl px-4 py-3 text-sm text-gray-600 hover:border-[#2f8eb2] hover:text-[#333] transition-colors flex items-center justify-center gap-2"
-                >
-                  <Upload className="w-5 h-5" />
-                  {uploading ? 'Uploading image...' : 'Choose image file'}
-                </button>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Upload Image</label>
+                <div className="relative">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  />
+                  <button
+                    type="button"
+                    className="w-full border border-dashed border-gray-300 rounded-3xl px-4 py-3 text-sm text-gray-600 hover:border-[#2f8eb2] hover:text-[#333] transition-colors flex items-center justify-center gap-2"
+                  >
+                    <Upload className="w-5 h-5" />
+                    {uploading ? 'Uploading image...' : 'Choose image file'}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -574,7 +598,14 @@ export default function DestinationForm() {
             </div>
           )}
 
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-3">
+            <button
+              type="button"
+              onClick={() => navigate('/admin/destinations')}
+              className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+            >
+              Cancel
+            </button>
             <button
               type="submit"
               disabled={isLoading}

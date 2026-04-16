@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, Clock, Users, DollarSign } from 'lucide-react';
 import type { Tour } from '../data/tours';
+import { getCountryFromLocation } from '../lib/utils';
 
 const categories = [
   { label: 'All Tours', value: 'all' },
@@ -55,7 +56,8 @@ export default function Tours() {
           images: Array.isArray(item.images) ? item.images : (item.images ? JSON.parse(item.images) : [item.image].filter(Boolean)),
           category: item.category,
           groupSize: item.groupSize || '',
-          bestTime: item.bestTime || ''
+          bestTime: item.bestTime || '',
+          country: getCountryFromLocation(item.location || item.name || item.description)
         }));
         
         setTours(transformedTours);
@@ -242,6 +244,19 @@ export default function Tours() {
                             <span>{tour.groupSize}</span>
                           </div>
                         </div>
+
+                        {tour.country && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/destinations/${tour.country}`);
+                            }}
+                            className="mb-3 w-full border border-[#2f8eb2] text-[#2f8eb2] py-2 rounded-lg text-sm font-semibold hover:bg-[#2f8eb2] hover:text-white transition-colors"
+                          >
+                            View all {tour.country.charAt(0).toUpperCase() + tour.country.slice(1)} tours
+                          </button>
+                        )}
 
                         {/* Button */}
                         <button className="w-full bg-[#2f8eb2] text-white py-2 rounded-lg text-sm font-semibold hover:bg-[#1f6f95] transition-colors">

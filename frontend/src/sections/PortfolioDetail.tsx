@@ -2,17 +2,13 @@ import { type FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   MapPin,
-  Clock,
   Calendar,
-  Users,
   ChevronLeft,
+  Check,
   Phone,
   Mail,
   MessageCircle,
-  Plane,
-  Hotel,
-  Car as CarIcon,
-  Compass,
+  Star,
   X as XIcon,
 } from 'lucide-react';
 
@@ -86,8 +82,14 @@ export default function PortfolioDetail() {
     name: '',
     email: '',
     phone: '',
+    from: 'Kigali',
+    to: '',
+    departureDate: '',
+    returnDate: '',
     travelDate: '',
-    travelers: 2,
+    travelers: 1,
+    flightClass: 'Economy',
+    airline: '',
     specialRequests: '',
   });
   const [error, setError] = useState<string | null>(null);
@@ -121,6 +123,7 @@ export default function PortfolioDetail() {
           id: data.id,
           title: data.title || data.name || data.model || `Details #${data.id}`,
           description: data.description || data.summary || '',
+          longDescription: data.longDescription || data.description || data.summary || '',
           image: data.image || '',
           price: data.price || data.pricePerNight || 'Contact us',
           location: data.location || data.route || data.category || '',
@@ -128,6 +131,8 @@ export default function PortfolioDetail() {
           bestTime: data.bestTime || data.bestSeason || '',
           itinerary: parseJsonField(data.itinerary),
           activities: parseJsonField(data.activities),
+          highlights: parseJsonField(data.highlights || data.activities),
+          importantInfo: parseJsonField(data.importantInfo || data.important_info),
           amenities: parseJsonField(data.amenities || data.features),
           included: parseJsonField(data.included || data.features || data.amenities),
           excluded: parseJsonField(data.excluded || data.notIncluded || data.not_included),
@@ -168,15 +173,49 @@ export default function PortfolioDetail() {
     setSelectedImage(0);
   }, [images]);
 
+  const hasItinerary = !['accommodation', 'flight', 'car'].includes(type || item?.type || '');
+
+  useEffect(() => {
+    if (!hasItinerary && activeTab === 'itinerary') {
+      setActiveTab('overview');
+    }
+  }, [hasItinerary, activeTab]);
+
   const handleBookingSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Booking submitted:', { ...bookingData, itemId: id, itemType: type, itemTitle: item?.title });
     alert('Booking request sent successfully! We will contact you soon.');
     setShowBookingForm(false);
-    setBookingData({ name: '', email: '', phone: '', travelDate: '', travelers: 2, specialRequests: '' });
+    setBookingData({
+      name: '',
+      email: '',
+      phone: '',
+      from: 'Kigali',
+      to: '',
+      departureDate: '',
+      returnDate: '',
+      travelDate: '',
+      travelers: 1,
+      flightClass: 'Economy',
+      airline: '',
+      specialRequests: '',
+    });
   };
 
   const backPath = `/portfolio?tab=${getTabForType(type || '')}`;
+  const backText = type ? `Back to ${type.charAt(0).toUpperCase() + type.slice(1)}` : 'Back to Portfolio';
+  const displayImages = images.length > 0 ? images : [item?.image || '/placeholder.jpg'];
+  const isFlightType = type === 'flight';
+  const flightAirlines = [
+    { name: 'RwandAir', code: 'WB' },
+    { name: 'Kenya Airways', code: 'KQ' },
+    { name: 'Ethiopian Airlines', code: 'ET' },
+    { name: 'Qatar Airways', code: 'QR' },
+    { name: 'Turkish Airlines', code: 'TK' },
+    { name: 'KLM Royal Dutch Airlines', code: 'KL' },
+    { name: 'FlyDubai', code: 'FZ' },
+    { name: 'Air Tanzania', code: 'TC' },
+  ];
 
   if (loading) {
     return (
@@ -203,363 +242,524 @@ export default function PortfolioDetail() {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-gray-50 pt-24 pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <button
-          onClick={() => navigate(backPath)}
-          className="flex items-center gap-2 text-gray-600 hover:text-[#2f8eb2] transition-colors mb-6"
-        >
-          <ChevronLeft className="w-5 h-5" />
-          Back to portfolio
-        </button>
+  if (isFlightType) {
+    return (
+      <div className="min-h-screen bg-gray-50 pt-24 pb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+          <button
+            onClick={() => navigate(backPath)}
+            className="flex items-center gap-2 text-gray-600 hover:text-[#2f8eb2] transition-colors"
+          >
+            <ChevronLeft className="w-5 h-5" />
+            {backText}
+          </button>
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 bg-white border border-gray-200 rounded-3xl p-6 lg:p-8">
-          <div className="lg:col-span-2">
-            <div className="relative h-96 lg:h-[520px] rounded-3xl overflow-hidden bg-gray-100">
-              <img
-                src={getImageUrl(images[selectedImage] || item.image)}
-                alt={item.title}
-                className="w-full h-full object-cover"
-              />
-              {images.length > 1 && (
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-                  {images.map((_, index) => (
-                    <button
-                      key={index}
-                      type="button"
-                      onClick={() => setSelectedImage(index)}
-                      className={`h-2 rounded-full transition-all ${selectedImage === index ? 'w-8 bg-[#2f8eb2]' : 'w-2 bg-white/70'}`}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <main className="lg:col-span-8 space-y-6">
+              <div className="bg-white rounded-3xl shadow-sm p-8">
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">Flight Booking</h1>
+                <p className="text-gray-600">Select your airline and fill the flight form for Rwanda departures. Click an airline on the right to prefill the airline field and start the booking process immediately.</p>
+              </div>
+
+              <div className="bg-white rounded-3xl shadow-sm p-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Book Your Flight</h2>
+                <form onSubmit={handleBookingSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <label className="block">
+                      <span className="text-gray-700">From</span>
+                      <input
+                        type="text"
+                        placeholder="Kigali"
+                        value={bookingData.from}
+                        onChange={(e) => setBookingData({ ...bookingData, from: e.target.value })}
+                        className="mt-1 w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-[#2f8eb2]"
+                      />
+                    </label>
+                    <label className="block">
+                      <span className="text-gray-700">To</span>
+                      <input
+                        type="text"
+                        placeholder="Destination"
+                        value={bookingData.to}
+                        onChange={(e) => setBookingData({ ...bookingData, to: e.target.value })}
+                        className="mt-1 w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-[#2f8eb2]"
+                      />
+                    </label>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <label className="block">
+                      <span className="text-gray-700">Departure Date</span>
+                      <input
+                        type="date"
+                        value={bookingData.departureDate}
+                        onChange={(e) => setBookingData({ ...bookingData, departureDate: e.target.value })}
+                        className="mt-1 w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-[#2f8eb2]"
+                      />
+                    </label>
+                    <label className="block">
+                      <span className="text-gray-700">Return Date</span>
+                      <input
+                        type="date"
+                        value={bookingData.returnDate}
+                        onChange={(e) => setBookingData({ ...bookingData, returnDate: e.target.value })}
+                        className="mt-1 w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-[#2f8eb2]"
+                      />
+                    </label>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <label className="block">
+                      <span className="text-gray-700">Travelers</span>
+                      <select
+                        value={bookingData.travelers}
+                        onChange={(e) => setBookingData({ ...bookingData, travelers: Number(e.target.value) })}
+                        className="mt-1 w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-[#2f8eb2]"
+                      >
+                        {[1,2,3,4,5,6,7,8,9,10].map((num) => (
+                          <option key={num} value={num}>{num}</option>
+                        ))}
+                      </select>
+                    </label>
+                    <label className="block">
+                      <span className="text-gray-700">Class</span>
+                      <select
+                        value={bookingData.flightClass}
+                        onChange={(e) => setBookingData({ ...bookingData, flightClass: e.target.value })}
+                        className="mt-1 w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-[#2f8eb2]"
+                      >
+                        {['Economy', 'Premium Economy', 'Business', 'First'].map((option) => (
+                          <option key={option} value={option}>{option}</option>
+                        ))}
+                      </select>
+                    </label>
+                    <label className="block">
+                      <span className="text-gray-700">Airline</span>
+                      <input
+                        type="text"
+                        placeholder="Choose airline from the list"
+                        value={bookingData.airline}
+                        readOnly
+                        className="mt-1 w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:border-[#2f8eb2]"
+                      />
+                    </label>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <label className="block">
+                      <span className="text-gray-700">Full Name</span>
+                      <input
+                        type="text"
+                        placeholder="Your full name"
+                        value={bookingData.name}
+                        onChange={(e) => setBookingData({ ...bookingData, name: e.target.value })}
+                        required
+                        className="mt-1 w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-[#2f8eb2]"
+                      />
+                    </label>
+                    <label className="block">
+                      <span className="text-gray-700">Email</span>
+                      <input
+                        type="email"
+                        placeholder="you@example.com"
+                        value={bookingData.email}
+                        onChange={(e) => setBookingData({ ...bookingData, email: e.target.value })}
+                        required
+                        className="mt-1 w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-[#2f8eb2]"
+                      />
+                    </label>
+                  </div>
+
+                  <label className="block">
+                    <span className="text-gray-700">Phone</span>
+                    <input
+                      type="tel"
+                      placeholder="+250 788 123 456"
+                      value={bookingData.phone}
+                      onChange={(e) => setBookingData({ ...bookingData, phone: e.target.value })}
+                      required
+                      className="mt-1 w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-[#2f8eb2]"
                     />
+                  </label>
+
+                  <label className="block">
+                    <span className="text-gray-700">Special Requests</span>
+                    <textarea
+                      rows={4}
+                      placeholder="Any special requirements"
+                      value={bookingData.specialRequests}
+                      onChange={(e) => setBookingData({ ...bookingData, specialRequests: e.target.value })}
+                      className="mt-1 w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-[#2f8eb2]"
+                    />
+                  </label>
+
+                  <button type="submit" className="w-full bg-[#2f8eb2] text-white py-3 rounded-lg font-semibold hover:bg-[#1f6f95] transition-colors">
+                    Submit Flight Request
+                  </button>
+                </form>
+              </div>
+            </main>
+
+            <aside className="lg:col-span-4 space-y-6">
+              <div className="bg-white rounded-3xl shadow-sm p-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Airlines Operating in Rwanda</h2>
+                <p className="text-gray-600 mb-6">Select any airline to prefill the booking form. This will launch the form on the left with the chosen carrier.</p>
+                <div className="space-y-4">
+                  {flightAirlines.map((airline) => (
+                    <button
+                      type="button"
+                      key={airline.code}
+                      onClick={() => setBookingData({ ...bookingData, airline: airline.name })}
+                      className="w-full text-left rounded-2xl border border-gray-200 px-5 py-4 hover:border-[#2f8eb2] hover:bg-[#eff6ff] transition-colors"
+                    >
+                      <div className="flex items-center justify-between gap-4">
+                        <div>
+                          <p className="font-semibold text-gray-900">{airline.name}</p>
+                          <p className="text-sm text-gray-600">Airline code: {airline.code}</p>
+                        </div>
+                        <span className="rounded-full bg-[#2f8eb2] px-3 py-1 text-sm text-white">Select</span>
+                      </div>
+                    </button>
                   ))}
                 </div>
-              )}
-            </div>
+              </div>
+
+              <div className="bg-white rounded-3xl shadow-sm p-8">
+                <h3 className="font-bold text-lg text-gray-900 mb-3">Need help?</h3>
+                <p className="text-gray-600 mb-4">Our team can help you choose the best airline and ticket option for Rwanda travel.</p>
+                <div className="space-y-3 text-gray-600">
+                  <div className="flex items-center gap-3"><Phone className="w-4 h-4 text-[#2f8eb2]" /><span>+250 788 123 456</span></div>
+                  <div className="flex items-center gap-3"><Mail className="w-4 h-4 text-[#2f8eb2]" /><span>info@paramountadventures.com</span></div>
+                </div>
+              </div>
+            </aside>
           </div>
+        </div>
+      </div>
+    );
+  }
 
-          <div className="rounded-3xl bg-gray-50 p-6 shadow-sm">
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#2f8eb2] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white">
-              <Compass className="w-4 h-4" />
-              {type ? type.charAt(0).toUpperCase() + type.slice(1) : 'Experience'}
-            </span>
-            <h1 className="mt-5 text-4xl font-bold text-gray-900 leading-tight">{item.title}</h1>
-            <p className="mt-4 text-gray-600 leading-relaxed">{item.description}</p>
+  return (
+    <div className="min-h-screen bg-gray-50 pt-24 pb-20">
+      {/* Back Button */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+        <button
+          onClick={() => navigate(backPath)}
+          className="flex items-center gap-2 text-gray-600 hover:text-[#2f8eb2] transition-colors"
+        >
+          <ChevronLeft className="w-5 h-5" />
+          {backText}
+        </button>
+      </div>
 
-            <div className="mt-6 grid gap-4">
-              <div className="rounded-3xl bg-white p-5 border border-gray-200">
-                <div className="flex items-center gap-3 text-gray-600">
-                  <MapPin className="w-4 h-4 text-[#2f8eb2]" />
-                  <span>{item.location || 'Location not specified'}</span>
-                </div>
-              </div>
-              <div className="rounded-3xl bg-white p-5 border border-gray-200">
-                <div className="flex items-center justify-between text-gray-600">
-                  <span>Price</span>
-                  <strong className="text-gray-900">{typeof item.price === 'number' ? `$${item.price}` : item.price}</strong>
-                </div>
-              </div>
-              <div className="rounded-3xl bg-white p-5 border border-gray-200">
-                <div className="flex items-center justify-between text-gray-600">
-                  <span>Duration</span>
-                  <strong className="text-gray-900">{item.duration || 'TBA'}</strong>
-                </div>
+      {/* Hero Section */}
+      <div className="bg-white border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <div className="relative h-96 lg:h-[500px] rounded-lg overflow-hidden">
+                <img
+                  src={getImageUrl(displayImages[selectedImage] || item.image)}
+                  alt={item.title}
+                  className="w-full h-full object-cover"
+                />
+                {displayImages.length > 1 && (
+                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+                    {displayImages.map((_, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setSelectedImage(idx)}
+                        className={`w-2 h-2 rounded-full transition-all ${
+                          idx === selectedImage ? 'bg-[#2f8eb2] w-4' : 'bg-white/50'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
-            <div className="mt-6 flex flex-col gap-3">
+            <div className="bg-gray-50 rounded-lg p-6">
+              <h1 className="text-2xl font-bold text-gray-900 mb-2">{item.title}</h1>
+              <div className="flex items-center gap-2 text-gray-600 mb-4">
+                <MapPin className="w-4 h-4 text-[#2f8eb2]" />
+                <span>{item.location || 'Location not specified'}</span>
+              </div>
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-600">Duration</span>
+                  <span className="font-semibold">{item.duration || 'TBA'}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-600">Price</span>
+                  <span className="text-2xl font-bold text-[#2f8eb2]">{typeof item.price === 'number' ? `$${item.price}` : item.price}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-600">Best Time</span>
+                  <span className="font-semibold">{item.bestTime || 'Anytime'}</span>
+                </div>
+              </div>
               <button
                 onClick={() => setShowBookingForm(true)}
-                className="rounded-full bg-[#2f8eb2] px-6 py-3 text-sm font-semibold text-white hover:bg-[#1f6f95] transition-colors"
+                className="w-full bg-[#2f8eb2] text-white py-3 rounded-lg font-semibold hover:bg-[#1f6f95] transition-colors mb-3"
               >
                 Book This Experience
               </button>
               <button
                 onClick={() => window.location.href = 'mailto:info@paramountadventures.com'}
-                className="rounded-full border border-[#2f8eb2] px-6 py-3 text-sm font-semibold text-[#2f8eb2] hover:bg-[#2f8eb2] hover:text-white transition-colors"
+                className="w-full border border-[#2f8eb2] text-[#2f8eb2] py-3 rounded-lg font-semibold hover:bg-[#2f8eb2] hover:text-white transition-colors"
               >
                 Request Quote
               </button>
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="bg-white shadow-sm mt-8">
-          <div className="flex gap-8 overflow-x-auto px-4 py-3 sm:px-6 lg:px-8">
+      {/* Tabs Navigation */}
+      <div className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex gap-8 overflow-x-auto">
             {[
               { id: 'overview', label: 'Overview' },
-              { id: 'itinerary', label: 'Itinerary' },
+              ...(hasItinerary ? [{ id: 'itinerary', label: 'Itinerary' }] : []),
               { id: 'included', label: 'Included/Excluded' },
-              { id: 'map', label: 'Map' },
-            ].map((tab) => (
+              { id: 'map', label: 'Map' }
+            ].map(tab => (
               <button
                 key={tab.id}
-                type="button"
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`py-4 px-2 font-semibold transition-colors border-b-2 ${activeTab === tab.id ? 'border-[#2f8eb2] text-[#2f8eb2]' : 'border-transparent text-gray-600 hover:text-[#2f8eb2]'}`}
+                className={`py-4 px-2 font-semibold transition-colors border-b-2 ${
+                  activeTab === tab.id
+                    ? 'border-[#2f8eb2] text-[#2f8eb2]'
+                    : 'border-transparent text-gray-600 hover:text-[#2f8eb2]'
+                }`}
               >
                 {tab.label}
               </button>
             ))}
           </div>
         </div>
+      </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            <div className="lg:col-span-2 space-y-8">
-              {activeTab === 'overview' && (
-                <div className="space-y-8">
-                  <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                    <h2 className="text-2xl font-bold text-gray-900">Experience Overview</h2>
-                    <p className="mt-4 text-gray-600 leading-relaxed">{item.description}</p>
-                  </div>
-
-                  {item.activities?.length > 0 && (
-                    <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                      <h2 className="text-2xl font-bold text-gray-900">Highlights</h2>
-                      <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                        {item.activities.map((activity: string, index: number) => (
-                          <div key={index} className="rounded-3xl bg-gray-50 p-4 text-gray-700">{activity}</div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+      {/* Tab Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <div className="lg:col-span-2">
+            {activeTab === 'overview' && (
+              <div className="space-y-8">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">Overview</h2>
+                  <p className="text-gray-600 leading-relaxed">{item.longDescription || item.description}</p>
                 </div>
-              )}
 
-              {activeTab === 'itinerary' && (
-                <div className="space-y-8">
-                  <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                    <h2 className="text-2xl font-bold text-gray-900">Itinerary</h2>
-                    <div className="mt-6 space-y-6 text-gray-600">
-                      {item.itinerary && item.itinerary.length > 0 ? (
-                        item.itinerary.map((step: any, index: number) => (
-                          <div key={index} className="rounded-3xl bg-gray-50 p-5">
-                            {typeof step === 'object' ? (
-                              <>
-                                <h3 className="font-semibold text-gray-900">{step.title || step.day || `Step ${index + 1}`}</h3>
-                                <p className="mt-2 text-sm leading-relaxed">{step.description || step.details || step.content}</p>
-                              </>
-                            ) : (
-                              <p>{step}</p>
-                            )}
-                          </div>
-                        ))
-                      ) : item.activities && item.activities.length > 0 ? (
-                        item.activities.map((activity: string, index: number) => (
-                          <div key={index} className="rounded-3xl bg-gray-50 p-5">
-                            <p>{activity}</p>
-                          </div>
-                        ))
-                      ) : (
-                        <p>No itinerary details available for this experience.</p>
-                      )}
+                {item.highlights?.length > 0 && (
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">Highlights</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {item.highlights.map((highlight: string, idx: number) => (
+                        <div key={idx} className="flex items-center gap-2">
+                          <Star className="w-5 h-5 text-[#2f8eb2]" />
+                          <span className="text-gray-700">{highlight}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
+                )}
 
-                  {(type === 'destination' || type === 'tourism') && item.activities?.length > 0 && (
-                    <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                      <h2 className="text-2xl font-bold text-gray-900">Highlights</h2>
-                      <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                        {item.activities.map((activity: string, index: number) => (
-                          <div key={index} className="rounded-3xl bg-gray-50 p-4 text-gray-700">{activity}</div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                {item.importantInfo?.length > 0 && (
+                  <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+                    <h4 className="font-bold text-gray-900 mb-2">Important Information</h4>
+                    <ul className="space-y-1">
+                      {item.importantInfo.map((info: string, idx: number) => (
+                        <li key={idx} className="text-gray-600 text-sm">• {info}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
 
-                  {type === 'accommodation' && (
-                    <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                      <h2 className="text-2xl font-bold text-gray-900">Accommodation Details</h2>
-                      <div className="mt-6 grid gap-4 md:grid-cols-2 text-gray-600">
-                        <div className="space-y-4">
-                          <div className="flex items-center gap-3"><Hotel className="w-5 h-5 text-[#2f8eb2]" /><span>{item.roomType || 'Room type not listed'}</span></div>
-                          <div className="flex items-center gap-3"><MapPin className="w-5 h-5 text-[#2f8eb2]" /><span>{item.location || 'Location unknown'}</span></div>
-                          <div className="flex items-center gap-3"><Clock className="w-5 h-5 text-[#2f8eb2]" /><span>{item.duration || 'No duration info'}</span></div>
+            {activeTab === 'itinerary' && (
+              <div className="space-y-6">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Detailed Itinerary</h2>
+                {item.itinerary && item.itinerary.length > 0 ? (
+                  item.itinerary.map((step: any, index: number) => {
+                    const title = typeof step === 'object' ? step.title || step.day || `Day ${index + 1}` : `Day ${index + 1}`;
+                    const description = typeof step === 'object' ? step.description || step.details || step.content : step;
+                    return (
+                      <div key={index} className="border-l-4 border-[#2f8eb2] pl-6 pb-6">
+                        <div className="flex items-center gap-3 mb-3">
+                          <Calendar className="w-5 h-5 text-[#2f8eb2]" />
+                          <h3 className="text-xl font-bold text-gray-900">{title}</h3>
                         </div>
-                        {item.amenities?.length > 0 && (
-                          <div>
-                            <h3 className="text-lg font-semibold text-gray-900">Amenities</h3>
-                            <div className="mt-4 flex flex-wrap gap-2">
-                              {item.amenities.map((amenity: string, index: number) => (
-                                <span key={index} className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700">{amenity}</span>
-                              ))}
-                            </div>
-                          </div>
+                        <p className="text-gray-600 leading-relaxed mb-3">{description}</p>
+                        {typeof step === 'object' && step.overnight && (
+                          <p className="text-sm text-gray-500">
+                            <span className="font-semibold">Overnight:</span> {step.overnight}
+                          </p>
+                        )}
+                        {typeof step === 'object' && step.meals && (
+                          <p className="text-sm text-gray-500">
+                            <span className="font-semibold">Meals:</span> {step.meals}
+                          </p>
                         )}
                       </div>
-                    </div>
-                  )}
-
-                  {type === 'flight' && (
-                    <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                      <h2 className="text-2xl font-bold text-gray-900">Flight Details</h2>
-                      <div className="mt-6 grid gap-4 text-gray-600">
-                        <div className="flex items-center gap-3"><Plane className="w-5 h-5 text-[#2f8eb2]" /><span>{item.airline || 'Airline not specified'}</span></div>
-                        <div className="flex items-center gap-3"><MapPin className="w-5 h-5 text-[#2f8eb2]" /><span>{item.route || 'Route unknown'}</span></div>
-                        <div className="flex items-center gap-3"><Calendar className="w-5 h-5 text-[#2f8eb2]" /><span>{item.departureDate || 'Departure date TBD'}</span></div>
-                      </div>
-                    </div>
-                  )}
-
-                  {type === 'car' && (
-                    <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                      <h2 className="text-2xl font-bold text-gray-900">Car Details</h2>
-                      <div className="mt-6 grid gap-4 text-gray-600">
-                        <div className="flex items-center gap-3"><CarIcon className="w-5 h-5 text-[#2f8eb2]" /><span>{item.model || 'Model unknown'}</span></div>
-                        <div className="flex items-center gap-3"><Users className="w-5 h-5 text-[#2f8eb2]" /><span>{item.seats ? `${item.seats} seats` : 'Seat count unavailable'}</span></div>
-                        <div className="flex items-center gap-3"><MapPin className="w-5 h-5 text-[#2f8eb2]" /><span>{item.transmission || 'Transmission info unavailable'}</span></div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {activeTab === 'included' && (
-                <div className="space-y-8">
+                    );
+                  })
+                ) : (
                   <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                    <h2 className="text-2xl font-bold text-gray-900">Included</h2>
-                    <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                      {item.included && item.included.length > 0 ? (
-                        item.included.map((feature: string, index: number) => (
-                          <div key={index} className="rounded-3xl bg-gray-50 p-4 text-gray-700">{feature}</div>
-                        ))
-                      ) : (
-                        <p className="text-gray-600">No included items listed for this experience.</p>
-                      )}
-                    </div>
+                    <p className="text-gray-600">No itinerary details available for this experience.</p>
                   </div>
+                )}
+              </div>
+            )}
 
-                  <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                    <h2 className="text-2xl font-bold text-gray-900">Excluded</h2>
-                    <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                      {item.excluded && item.excluded.length > 0 ? (
-                        item.excluded.map((feature: string, index: number) => (
-                          <div key={index} className="rounded-3xl bg-gray-50 p-4 text-gray-700">{feature}</div>
-                        ))
-                      ) : (
-                        <p className="text-gray-600">No excluded items listed for this experience.</p>
-                      )}
-                    </div>
+            {activeTab === 'included' && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    <Check className="w-6 h-6 text-green-600" />
+                    Included
+                  </h3>
+                  <ul className="space-y-2">
+                    {item.included?.length > 0 ? (
+                      item.included.map((feature: string, idx: number) => (
+                        <li key={idx} className="flex items-start gap-2 text-gray-700">
+                          <Check className="w-4 h-4 text-green-600 mt-1 flex-shrink-0" />
+                          <span>{feature}</span>
+                        </li>
+                      ))
+                    ) : (
+                      <li className="text-gray-600">No included items listed for this experience.</li>
+                    )}
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    <XIcon className="w-6 h-6 text-red-600" />
+                    Excluded
+                  </h3>
+                  <ul className="space-y-2">
+                    {item.excluded?.length > 0 ? (
+                      item.excluded.map((feature: string, idx: number) => (
+                        <li key={idx} className="flex items-start gap-2 text-gray-700">
+                          <XIcon className="w-4 h-4 text-red-600 mt-1 flex-shrink-0" />
+                          <span>{feature}</span>
+                        </li>
+                      ))
+                    ) : (
+                      <li className="text-gray-600">No excluded items listed for this experience.</li>
+                    )}
+                  </ul>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'map' && (
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Map</h2>
+                <div className="bg-gray-200 rounded-lg h-96 flex items-center justify-center">
+                  <div className="text-center">
+                    <p className="text-gray-500">Map coming soon</p>
+                    <p className="text-sm text-gray-400 mt-2">Contact us for exact location details.</p>
                   </div>
                 </div>
-              )}
+              </div>
+            )}
+          </div>
 
-              {activeTab === 'map' && (
-                <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                  <h2 className="text-2xl font-bold text-gray-900">Map</h2>
-                  <div className="mt-6 bg-gray-200 rounded-3xl h-96 flex items-center justify-center">
-                    <div className="text-center">
-                      <p className="text-gray-500">Map coming soon</p>
-                      <p className="text-sm text-gray-400 mt-2">Contact us for exact location details.</p>
-                    </div>
-                  </div>
-                </div>
-              )}
+          <aside className="lg:col-span-1">
+            <div className="bg-white rounded-lg shadow-md p-6 sticky top-32">
+              <h3 className="font-bold text-lg mb-4">Quick Contact</h3>
+              <div className="space-y-3 mb-6 text-gray-600">
+                <div className="flex items-center gap-3"><Phone className="w-4 h-4 text-[#2f8eb2]" /><span>+250 788 123 456</span></div>
+                <div className="flex items-center gap-3"><Mail className="w-4 h-4 text-[#2f8eb2]" /><span>info@paramountadventures.com</span></div>
+              </div>
+              <button
+                onClick={() => window.open('https://wa.me/250788123456', '_blank')}
+                className="w-full bg-[#2f8eb2] text-white py-2 rounded-lg font-semibold hover:bg-[#1f6f95] transition-colors inline-flex items-center justify-center gap-2"
+              >
+                <MessageCircle className="w-5 h-5" />
+                WhatsApp Us
+              </button>
             </div>
+          </aside>
+        </div>
+      </div>
 
-            <aside className="space-y-6 lg:sticky lg:top-28">
-              <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                <h3 className="font-bold text-lg text-gray-900 mb-4">Quick Contact</h3>
-                <div className="space-y-3 text-gray-600">
-                  <div className="flex items-center gap-3"><Phone className="w-5 h-5 text-[#2f8eb2]" /><span>+250 788 123 456</span></div>
-                  <div className="flex items-center gap-3"><Mail className="w-5 h-5 text-[#2f8eb2]" /><span>info@paramountadventures.com</span></div>
-                  <button onClick={() => window.open('https://wa.me/250788123456', '_blank')} className="inline-flex items-center gap-2 text-[#2f8eb2] hover:text-[#1f6f95]"><MessageCircle className="w-5 h-5" />WhatsApp Us</button>
-                </div>
-              </div>
-
-              <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                <h3 className="font-bold text-lg text-gray-900 mb-4">Pricing</h3>
-                <p className="text-4xl font-bold text-[#2f8eb2]">{typeof item.price === 'number' ? `$${item.price}` : item.price}</p>
-                <button
-                  onClick={() => setShowBookingForm(true)}
-                  className="mt-6 w-full rounded-full bg-[#2f8eb2] px-6 py-3 text-sm font-semibold text-white hover:bg-[#1f6f95] transition-colors"
-                >
-                  Book Now
-                </button>
-              </div>
-
-              {(type === 'accommodation' || type === 'car') && (
-                <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                  <h3 className="font-bold text-lg text-gray-900 mb-4">Additional Info</h3>
-                  <div className="space-y-3 text-gray-600">
-                    {type === 'accommodation' && <p>Room type: {item.roomType || 'N/A'}</p>}
-                    {type === 'accommodation' && <p>Rating: {item.rating || 'N/A'}</p>}
-                    {type === 'car' && <p>Fuel: {item.fuel || 'N/A'}</p>}
-                    {type === 'car' && <p>Transmission: {item.transmission || 'N/A'}</p>}
-                  </div>
-                </div>
-              )}
-            </aside>
+      {/* Booking Modal */}
+      {showBookingForm && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center p-6 border-b">
+              <h3 className="text-xl font-bold">Book This Experience</h3>
+              <button onClick={() => setShowBookingForm(false)} className="p-1 hover:bg-gray-100 rounded">
+                <XIcon className="w-5 h-5" />
+              </button>
+            </div>
+            <form onSubmit={handleBookingSubmit} className="p-6 space-y-4">
+              <input
+                type="text"
+                placeholder="Full Name *"
+                required
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#2f8eb2]"
+                value={bookingData.name}
+                onChange={(e) => setBookingData({ ...bookingData, name: e.target.value })}
+              />
+              <input
+                type="email"
+                placeholder="Email *"
+                required
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#2f8eb2]"
+                value={bookingData.email}
+                onChange={(e) => setBookingData({ ...bookingData, email: e.target.value })}
+              />
+              <input
+                type="tel"
+                placeholder="Phone Number *"
+                required
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#2f8eb2]"
+                value={bookingData.phone}
+                onChange={(e) => setBookingData({ ...bookingData, phone: e.target.value })}
+              />
+              <input
+                type="date"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#2f8eb2]"
+                value={bookingData.travelDate}
+                onChange={(e) => setBookingData({ ...bookingData, travelDate: e.target.value })}
+              />
+              <select
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#2f8eb2]"
+                value={bookingData.travelers}
+                onChange={(e) => setBookingData({ ...bookingData, travelers: Number(e.target.value) })}
+              >
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                  <option key={num} value={num}>
+                    {num} {num === 1 ? 'Traveler' : 'Travelers'}
+                  </option>
+                ))}
+              </select>
+              <textarea
+                placeholder="Special Requests"
+                rows={3}
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#2f8eb2]"
+                value={bookingData.specialRequests}
+                onChange={(e) => setBookingData({ ...bookingData, specialRequests: e.target.value })}
+              />
+              <button
+                type="submit"
+                className="w-full bg-[#2f8eb2] text-white py-3 rounded-lg font-semibold hover:bg-[#1f6f95] transition-colors"
+              >
+                Submit Booking Request
+              </button>
+            </form>
           </div>
         </div>
-
-        {showBookingForm && (
-          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-              <div className="flex justify-between items-center p-6 border-b">
-                <h3 className="text-xl font-bold">Book This Experience</h3>
-                <button onClick={() => setShowBookingForm(false)} className="p-1 hover:bg-gray-100 rounded"><XIcon className="w-5 h-5" /></button>
-              </div>
-              <form onSubmit={handleBookingSubmit} className="p-6 space-y-4">
-                <input
-                  type="text"
-                  placeholder="Full Name *"
-                  required
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#2f8eb2]"
-                  value={bookingData.name}
-                  onChange={(e) => setBookingData({ ...bookingData, name: e.target.value })}
-                />
-                <input
-                  type="email"
-                  placeholder="Email *"
-                  required
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#2f8eb2]"
-                  value={bookingData.email}
-                  onChange={(e) => setBookingData({ ...bookingData, email: e.target.value })}
-                />
-                <input
-                  type="tel"
-                  placeholder="Phone Number *"
-                  required
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#2f8eb2]"
-                  value={bookingData.phone}
-                  onChange={(e) => setBookingData({ ...bookingData, phone: e.target.value })}
-                />
-                <input
-                  type="date"
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#2f8eb2]"
-                  value={bookingData.travelDate}
-                  onChange={(e) => setBookingData({ ...bookingData, travelDate: e.target.value })}
-                />
-                <select
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#2f8eb2]"
-                  value={bookingData.travelers}
-                  onChange={(e) => setBookingData({ ...bookingData, travelers: Number(e.target.value) })}
-                >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                    <option key={num} value={num}>
-                      {num} {num === 1 ? 'Traveler' : 'Travelers'}
-                    </option>
-                  ))}
-                </select>
-                <textarea
-                  placeholder="Special Requests"
-                  rows={3}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#2f8eb2]"
-                  value={bookingData.specialRequests}
-                  onChange={(e) => setBookingData({ ...bookingData, specialRequests: e.target.value })}
-                />
-                <button
-                  type="submit"
-                  className="w-full bg-[#2f8eb2] text-white py-3 rounded-lg font-semibold hover:bg-[#1f6f95] transition-colors"
-                >
-                  Submit Booking Request
-                </button>
-              </form>
-            </div>
-          </div>
-        )}
-      </div>
+      )}
     </div>
   );
 }

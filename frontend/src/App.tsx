@@ -35,10 +35,6 @@ import DestinationsList from './admin/destinations/DestinationsList';
 import DestinationForm from './admin/destinations/DestinationForm';
 import DestinationDetail from './admin/destinations/DestinationDetail';
 
-import FlightsList from './admin/flights/FlightsList';
-import FlightForm from './admin/flights/FlightForm';
-import FlightDetail from './admin/flights/FlightDetail';
-
 import AccommodationsList from './admin/accommodations/AccommodationsList';
 import AccommodationForm from './admin/accommodations/AccommodationForm';
 import AccommodationDetail from './admin/accommodations/AccommodationDetail';
@@ -56,6 +52,10 @@ import PartnerForm from './admin/partners/partnerForm';
 
 import MessagesList from './admin/messages/messagesList';
 import MessageDetail from './admin/messages/messageDetail';
+
+import BlogList from './admin/blog/BlogList';
+import BlogForm from './admin/blog/BlogForm';
+import BlogDetailAdmin from './admin/blog/BlogDetail';
 
 import Settings from './admin/settings/settings';
 
@@ -260,12 +260,7 @@ function App() {
               <Route path="destinations/:id" element={<DestinationDetail />} />
               <Route path="destinations/:id/edit" element={<DestinationForm />} />
               
-              {/* Flights - These already exist */}
-              <Route path="flights" element={<FlightsList />} />
-              <Route path="flights/new" element={<FlightForm />} />
-              <Route path="flights/:id" element={<FlightDetail />} />
-              <Route path="flights/:id/edit" element={<FlightForm />} />
-              
+              {/* Flights have been removed from admin dashboard and are handled in the public UI only */}
               {/* Accommodations - These already exist */}
               <Route path="accommodations" element={<AccommodationsList />} />
               <Route path="accommodations/new" element={<AccommodationForm />} />
@@ -292,6 +287,12 @@ function App() {
               {/* Messages - These already exist */}
               <Route path="messages" element={<MessagesList />} />
               <Route path="messages/:id" element={<MessageDetail />} />
+
+              {/* Blog management */}
+              <Route path="blog" element={<BlogList />} />
+              <Route path="blog/new" element={<BlogForm />} />
+              <Route path="blog/:id" element={<BlogDetailAdmin />} />
+              <Route path="blog/:id/edit" element={<BlogForm />} />
               
               {/* Settings - These already exist */}
               <Route path="settings" element={<Settings />} />

@@ -15,6 +15,7 @@ export interface Tour {
   category: string;
   groupSize: string;
   bestTime: string;
+  country?: string;
 }
 
 export interface ItineraryDay {

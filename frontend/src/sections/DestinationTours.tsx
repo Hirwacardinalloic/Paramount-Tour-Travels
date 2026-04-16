@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { MapPin, Clock, Users, ArrowLeft, ArrowRight } from 'lucide-react';
 import type { Tour } from '../data/tours';
+import { getCountryFromLocation } from '../lib/utils';
 
 const categories = [
   { label: 'All Tours', value: 'all' },
@@ -109,18 +110,24 @@ export default function DestinationTours() {
           images: Array.isArray(item.images) ? item.images : (item.images ? JSON.parse(item.images) : [item.image].filter(Boolean)),
           category: item.category,
           groupSize: item.groupSize || '',
-          bestTime: item.bestTime || ''
+          bestTime: item.bestTime || '',
+          country: getCountryFromLocation(item.location || item.name || item.description)
         }));
 
         // Filter tours by destination/country
         let filteredByDestination = transformedTours;
         if (country) {
-          const countryName = destination?.name || country.charAt(0).toUpperCase() + country.slice(1);
-          filteredByDestination = transformedTours.filter(tour =>
-            tour.location.toLowerCase().includes(countryName.toLowerCase()) ||
-            tour.name.toLowerCase().includes(countryName.toLowerCase()) ||
-            tour.description.toLowerCase().includes(countryName.toLowerCase())
-          );
+          const filteredCountry = country.toLowerCase();
+          filteredByDestination = transformedTours.filter((tour) => {
+            if (tour.country === filteredCountry) return true;
+
+            const countryName = destination?.name || country.charAt(0).toUpperCase() + country.slice(1);
+            return (
+              tour.location.toLowerCase().includes(countryName.toLowerCase()) ||
+              tour.name.toLowerCase().includes(countryName.toLowerCase()) ||
+              tour.description.toLowerCase().includes(countryName.toLowerCase())
+            );
+          });
         }
 
         setTours(filteredByDestination);

@@ -7,6 +7,7 @@ import {
   MapPin,
   BookOpen,
   MessageSquare,
+  FileText,
   LogOut,
   Menu,
   X,
@@ -18,7 +19,6 @@ import {
   Home,
   Bell,
   Search,
-  Plane,
   Building,
   Globe
 } from 'lucide-react';
@@ -29,9 +29,9 @@ const sidebarItems = [
   { label: 'Bookings', icon: BookOpen, href: '/admin/bookings' },
   { label: 'Tours & Safaris', icon: MapPin, href: '/admin/tourism' },
   { label: 'Destinations', icon: Globe, href: '/admin/destinations' },
-  { label: 'Flight Tickets', icon: Plane, href: '/admin/flights' },
   { label: 'Accommodation', icon: Building, href: '/admin/accommodations' },
   { label: 'Car Rental', icon: Car, href: '/admin/cars' },
+  { label: 'Blog Posts', icon: FileText, href: '/admin/blog' },
   { label: 'Partners', icon: Briefcase, href: '/admin/partners' },
   { label: 'Messages', icon: MessageSquare, href: '/admin/messages' },
   { label: 'Settings', icon: Settings, href: '/admin/settings' },

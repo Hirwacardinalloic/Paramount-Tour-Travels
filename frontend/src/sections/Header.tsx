@@ -41,8 +41,10 @@ export default function Header() {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
 
   const scrollToSection = (href: string) => {
     if (href.startsWith('/')) {
@@ -94,11 +96,13 @@ export default function Header() {
     window.open('https://maps.google.com/?q=Town+centre+Building+(TCB)+GOB-013D,+Nyarugenge,+Kigali+Rwanda', '_blank');
   };
 
+  const headerIsWhite = !isHome || isScrolled;
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-lg py-3'
+        headerIsWhite
+          ? 'bg-white backdrop-blur-md shadow-lg py-3'
           : 'bg-transparent py-5'
       }`}
     >
@@ -117,7 +121,7 @@ export default function Header() {
               src="/ParamountLogo.png"
               alt="Paramount Adventure and Travels"
               className={`h-12 md:h-14 w-auto object-contain transition-all duration-300 ${
-                isScrolled ? 'brightness-75' : 'brightness-100'
+                headerIsWhite ? 'brightness-75' : 'brightness-100'
               }`}
             />
           </a>
@@ -138,7 +142,7 @@ export default function Header() {
                     scrollToSection(item.href);
                   }}
                   className={`flex items-center gap-1 text-sm font-medium uppercase tracking-wider transition-all duration-300 ${
-                    isScrolled || !isHome ? 'text-black' : 'text-white'
+                    headerIsWhite ? 'text-black' : 'text-white'
                   } hover:text-[#2e8b11]`}
                   style={{ fontFamily: 'Montserrat, sans-serif' }}
                 >
@@ -177,7 +181,7 @@ export default function Header() {
             <button
               onClick={openCompanyLocation}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-300 hover:scale-105 hover:border-[#2e8b11] ${
-                isScrolled || !isHome
+                headerIsWhite
                   ? 'border-gray-300 text-black hover:bg-gray-50'
                   : 'border-white/50 text-white hover:bg-white/10'
               }`}
@@ -209,7 +213,7 @@ export default function Header() {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={`lg:hidden p-2 transition-colors duration-300 ${
-              isScrolled || !isHome ? 'text-black' : 'text-white'
+              headerIsWhite ? 'text-black' : 'text-white'
             }`}
             aria-label="Toggle menu"
           >

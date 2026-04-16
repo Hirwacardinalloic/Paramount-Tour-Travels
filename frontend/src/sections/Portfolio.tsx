@@ -82,8 +82,16 @@ export default function Portfolio() {
     queryFn: async () => {
       const response = await fetch('/api/cars');
       const data = await response.json();
-      const activeCars = data.filter((c: any) => c.status === 'available');
-      return removeDuplicates(activeCars, 'title');
+      const activeCars = data.filter((c: any) => ['available', 'active'].includes(c.status));
+      return removeDuplicates(
+        activeCars.map((c: any) => ({
+          ...c,
+          type: 'car',
+          title: c.title || 'Car rental',
+          price: c.price || '',
+        })),
+        'title'
+      );
     },
   });
 
@@ -105,7 +113,23 @@ export default function Portfolio() {
       const response = await fetch('/api/destinations');
       const data = await response.json();
       const activeDestinations = data.filter((d: any) => d.status === 'active');
-      return removeDuplicates(activeDestinations, 'title');
+      return removeDuplicates(
+        activeDestinations.map((d: any) => ({
+          ...d,
+          type: 'destination',
+          title: d.title || d.name || 'Untitled destination',
+          price: d.price || d.pricePerNight || '',
+          location: d.location || '',
+          duration: d.duration || '',
+          bestTime: d.bestTime || d.bestSeason || '',
+          activities: d.activities
+            ? Array.isArray(d.activities)
+              ? d.activities
+              : [d.activities]
+            : [],
+        })),
+        'title'
+      );
     },
   });
 
