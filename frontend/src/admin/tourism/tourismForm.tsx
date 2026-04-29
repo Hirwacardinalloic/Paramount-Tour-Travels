@@ -174,6 +174,15 @@ export default function TourismForm() {
     setFormData(prev => ({ ...prev, itinerary: (prev.itinerary || []).filter((_, i) => i !== index) }));
   };
 
+  const updateItineraryItem = (index: number, field: keyof ItineraryDay, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      itinerary: (prev.itinerary || []).map((item, idx) =>
+        idx === index ? { ...item, [field]: value } : item
+      )
+    }));
+  };
+
   const addIncluded = () => {
     if (newIncluded.trim()) {
       setFormData(prev => ({ ...prev, included: [...(prev.included || []), newIncluded.trim()] }));
@@ -566,11 +575,13 @@ export default function TourismForm() {
               Add Day
             </button>
           </div>
-          <div className="space-y-2">
+          <div className="space-y-4">
             {(formData.itinerary || []).map((day, idx) => (
-              <div key={idx} className="p-3 bg-gray-50 rounded-lg">
-                <div className="flex justify-between items-start mb-1">
-                  <h4 className="font-medium text-sm">Day {day.day}: {day.title}</h4>
+              <div key={idx} className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <div className="flex justify-between items-start gap-4 mb-3">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.2em] text-gray-500">Day {day.day}</p>
+                  </div>
                   <button
                     type="button"
                     onClick={() => removeItineraryDay(idx)}
@@ -579,9 +590,38 @@ export default function TourismForm() {
                     <X className="w-4 h-4" />
                   </button>
                 </div>
-                <p className="text-sm text-gray-600">{day.description}</p>
-                {day.overnight && <p className="text-xs text-gray-500">Overnight: {day.overnight}</p>}
-                {day.meals && <p className="text-xs text-gray-500">Meals: {day.meals}</p>}
+                <div className="grid gap-3">
+                  <input
+                    type="text"
+                    value={day.title}
+                    onChange={(e) => updateItineraryItem(idx, 'title', e.target.value)}
+                    placeholder="Day title"
+                    className="w-full px-3 py-2 border border-gray-200 rounded"
+                  />
+                  <textarea
+                    rows={3}
+                    value={day.description}
+                    onChange={(e) => updateItineraryItem(idx, 'description', e.target.value)}
+                    placeholder="Day description"
+                    className="w-full px-3 py-2 border border-gray-200 rounded"
+                  />
+                  <div className="grid md:grid-cols-2 gap-3">
+                    <input
+                      type="text"
+                      value={day.overnight || ''}
+                      onChange={(e) => updateItineraryItem(idx, 'overnight', e.target.value)}
+                      placeholder="Overnight location (optional)"
+                      className="w-full px-3 py-2 border border-gray-200 rounded"
+                    />
+                    <input
+                      type="text"
+                      value={day.meals || ''}
+                      onChange={(e) => updateItineraryItem(idx, 'meals', e.target.value)}
+                      placeholder="Meals (optional)"
+                      className="w-full px-3 py-2 border border-gray-200 rounded"
+                    />
+                  </div>
+                </div>
               </div>
             ))}
           </div>

@@ -7,7 +7,7 @@ const slides = [
     subtitle: 'DESTINATIONS',
     title: 'Explore Breathtaking Destinations',
     description: 'We curate tailored getaways and guided tours across Rwanda and the region for every kind of traveler.',
-    image: './kivu.png',
+    image: './zanzibar2.jpg',
     link: '#destinations',
   },
   {
@@ -15,7 +15,7 @@ const slides = [
     subtitle: 'FLIGHT TICKETS',
     title: 'Seamless Worldwide Travel',
     description: 'Book domestic and international flights with competitive rates and comprehensive support to get you wherever you need to go.',
-    image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&q=80',
+    image: './flight.jpg',
     link: '#destinations',
   },
   {

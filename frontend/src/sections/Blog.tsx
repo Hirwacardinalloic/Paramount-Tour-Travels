@@ -27,7 +27,18 @@ export default function Blog() {
 
         <div className="grid gap-8 lg:grid-cols-3">
           {posts.slice(0, 3).map((post) => (
-            <article key={post.id} className="group overflow-hidden rounded-[32px] border border-gray-200 bg-white shadow-sm transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl">
+            <article
+              key={post.id}
+              role="button"
+              tabIndex={0}
+              onClick={() => navigate(`/blog/${post.slug}`)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  navigate(`/blog/${post.slug}`);
+                }
+              }}
+              className="group cursor-pointer overflow-hidden rounded-[32px] border border-gray-200 bg-white shadow-sm transition duration-300 hover:-translate-y-4 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-[#2E8B11]"
+            >
               <div className="relative h-72 overflow-hidden">
                 <img
                   src={post.image}
@@ -47,13 +58,9 @@ export default function Blog() {
                 </div>
                 <h3 className="text-2xl font-bold text-[#0f172a] mb-4">{post.title}</h3>
                 <p className="text-gray-600 leading-relaxed mb-6">{post.description}</p>
-                <button
-                  type="button"
-                  onClick={() => navigate(`/blog/${post.slug}`)}
-                  className="inline-flex items-center gap-2 rounded-full bg-[#2E8B11] px-5 py-3 text-sm font-semibold text-white transition-colors duration-300 hover:bg-[#1f6f95]"
-                >
+                <div className="inline-flex items-center gap-2 rounded-full bg-[#2E8B11] px-5 py-3 text-sm font-semibold text-white transition-colors duration-300 hover:bg-[#1f6f95]">
                   Continue Reading
-                </button>
+                </div>
               </div>
             </article>
           ))}

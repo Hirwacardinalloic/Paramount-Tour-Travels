@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
-  MapPin, Clock, Calendar, Users, ChevronLeft, Check, X as XIcon, 
+  MapPin, Clock, Calendar, Users, ChevronLeft, ChevronRight, Check, X as XIcon, 
   Phone, Mail, MessageCircle, Star
 } from 'lucide-react';
 import type { Tour } from '../data/tours';
@@ -126,6 +126,16 @@ export default function TourDetail() {
     fetchRelatedTours();
   }, [tour, tourId]);
 
+  const handleImageNav = (direction: 'prev' | 'next') => {
+    if (!tour?.images?.length) return;
+    setSelectedImage((current) => {
+      const count = tour.images.length;
+      return direction === 'next'
+        ? (current + 1) % count
+        : (current - 1 + count) % count;
+    });
+  };
+
   const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Here you would send to your backend
@@ -182,17 +192,35 @@ export default function TourDetail() {
                   className="w-full h-full object-cover"
                 />
                 {tour.images && tour.images.length > 1 && (
-                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-                    {tour.images.map((_, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setSelectedImage(idx)}
-                        className={`w-2 h-2 rounded-full transition-all ${
-                          idx === selectedImage ? 'bg-[#2f8eb2] w-4' : 'bg-white/50'
-                        }`}
-                      />
-                    ))}
-                  </div>
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => handleImageNav('prev')}
+                      className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black transition"
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleImageNav('next')}
+                      className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black transition"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+                      {tour.images.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setSelectedImage(idx)}
+                          className={`w-2 h-2 rounded-full transition-all ${
+                            idx === selectedImage ? 'bg-[#2f8eb2] w-4' : 'bg-white/50'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </>
                 )}
               </div>
             </div>
@@ -208,10 +236,6 @@ export default function TourDetail() {
                 <div className="flex items-center justify-between">
                   <span className="text-gray-600">Duration</span>
                   <span className="font-semibold">{tour.duration}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-600">Price</span>
-                  <span className="text-2xl font-bold text-[#2f8eb2]">${tour.price}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-gray-600">Group Size</span>
@@ -398,7 +422,7 @@ export default function TourDetail() {
               {relatedTours.map((relatedTour) => (
                 <div key={relatedTour.id} onClick={() => navigate(`/tour/${relatedTour.id}`)} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group">
                   <div className="h-48 overflow-hidden"><img src={relatedTour.images[0]} alt={relatedTour.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" /></div>
-                  <div className="p-4"><h3 className="font-bold text-gray-900 mb-2 line-clamp-2">{relatedTour.name}</h3><div className="flex items-center justify-between"><span className="text-[#2f8eb2] font-bold">${relatedTour.price}</span><span className="text-sm text-gray-500">{relatedTour.duration}</span></div></div>
+                  <div className="p-4"><h3 className="font-bold text-gray-900 mb-2 line-clamp-2">{relatedTour.name}</h3><div className="flex items-center justify-between"><span className="text-sm text-gray-500">{relatedTour.duration}</span></div></div>
                 </div>
               ))}
             </div>

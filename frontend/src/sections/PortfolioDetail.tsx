@@ -4,6 +4,7 @@ import {
   MapPin,
   Calendar,
   ChevronLeft,
+  ChevronRight,
   Check,
   Phone,
   Mail,
@@ -77,6 +78,16 @@ export default function PortfolioDetail() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [showBookingForm, setShowBookingForm] = useState(false);
+
+  const handleImageNav = (direction: 'prev' | 'next') => {
+    setSelectedImage((current) => {
+      const count = displayImages.length;
+      if (!count) return 0;
+      return direction === 'next'
+        ? (current + 1) % count
+        : (current - 1 + count) % count;
+    });
+  };
   const [activeTab, setActiveTab] = useState<'overview' | 'itinerary' | 'included' | 'map'>('overview');
   const [bookingData, setBookingData] = useState({
     name: '',
@@ -150,7 +161,12 @@ export default function PortfolioDetail() {
         };
 
         setItem(normalized);
-        setImages([normalized.image].filter(Boolean));
+        const initialImages = [normalized.image];
+        if (data.images) {
+          const parsedImages = Array.isArray(data.images) ? data.images : parseJsonField(data.images);
+          initialImages.push(...parsedImages);
+        }
+        setImages(Array.from(new Set(initialImages.filter(Boolean))));
 
         const galleryResponse = await fetch(`/api/gallery/${type}/${id}`);
         if (galleryResponse.ok) {
@@ -466,18 +482,36 @@ export default function PortfolioDetail() {
                   className="w-full h-full object-cover"
                 />
                 {displayImages.length > 1 && (
-                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-                    {displayImages.map((_, idx) => (
-                      <button
-                        key={idx}
-                        type="button"
-                        onClick={() => setSelectedImage(idx)}
-                        className={`w-2 h-2 rounded-full transition-all ${
-                          idx === selectedImage ? 'bg-[#2f8eb2] w-4' : 'bg-white/50'
-                        }`}
-                      />
-                    ))}
-                  </div>
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => handleImageNav('prev')}
+                      className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black transition"
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleImageNav('next')}
+                      className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black transition"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+                      {displayImages.map((_, idx) => (
+                        <button
+                          key={idx}
+                          type="button"
+                          onClick={() => setSelectedImage(idx)}
+                          className={`w-2 h-2 rounded-full transition-all ${
+                            idx === selectedImage ? 'bg-[#2f8eb2] w-4' : 'bg-white/50'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </>
                 )}
               </div>
             </div>
@@ -492,10 +526,6 @@ export default function PortfolioDetail() {
                 <div className="flex items-center justify-between">
                   <span className="text-gray-600">Duration</span>
                   <span className="font-semibold">{item.duration || 'TBA'}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-600">Price</span>
-                  <span className="text-2xl font-bold text-[#2f8eb2]">{typeof item.price === 'number' ? `$${item.price}` : item.price}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-gray-600">Best Time</span>

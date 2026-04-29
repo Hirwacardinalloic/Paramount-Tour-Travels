@@ -549,7 +549,6 @@ export default function Portfolio() {
                   {selectedCar.category}
                 </span>
                 <h2 className="text-3xl font-bold mb-2">{selectedCar.title}</h2>
-                <p className="text-[#2f8eb2] font-semibold text-xl mb-4">{selectedCar.price}</p>
                 <p className="text-gray-600 mb-6">{selectedCar.description}</p>
                 
                 {/* Features as styled tags */}

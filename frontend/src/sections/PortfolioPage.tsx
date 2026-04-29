@@ -5,6 +5,7 @@ import {
   MapPin, Car, 
   Briefcase, Filter, Plane, Hotel, Compass, Mail
 } from 'lucide-react';
+import { NavigationMenuContent } from '@radix-ui/react-navigation-menu';
 
 interface Destination {
   id: number;
@@ -228,31 +229,35 @@ export default function PortfolioPage() {
     airline: '',
   });
 
-  const airlineOptions = Array.from(
-    new Set(flights.map((flight: Flight) => flight.airline || '').filter(Boolean))
-  ).map((name) => {
-    const airlineName = String(name);
-    return {
-      name: airlineName,
-      code: airlineName
-        .split(' ')
-        .map((part) => part[0])
-        .join('')
-        .slice(0, 3)
-        .toUpperCase(),
-    };
-  });
+  const airlineLogoMap: Record<string, string> = {
+    'Any cheap flight': 'https://ui-avatars.com/api/?name=Any+cheap+flight&background=2f8eb2&color=ffffff&size=80',
+    'RwandAir': 'https://logo.clearbit.com/rwandair.com?size=80',
+    'Kenya Airways': 'https://logo.clearbit.com/kenya-airways.com?size=80',
+    'Ethiopian Airlines': 'https://logo.clearbit.com/ethiopianairlines.com?size=80',
+    'Qatar Airways': 'https://logo.clearbit.com/qatarairways.com?size=80',
+    'Turkish Airlines': 'https://logo.clearbit.com/turkishairlines.com?size=80',
+    'KLM Royal Dutch Airlines': 'https://logo.clearbit.com/klm.com?size=80',
+    'FlyDubai': 'https://logo.clearbit.com/flydubai.com?size=80',
+    'Air Tanzania': 'https://logo.clearbit.com/airtanzania.co.tz?size=80',
+  };
 
-  const availableAirlines = [{ name: 'Any cheap flight', code: 'CHEAP' }].concat(
+  const airlineOptions = Array.from(
+    new Set(flights.map((flight: Flight) => flight.airline || '').filter(Boolean)) 
+  ).map((name) => ({
+    name: String(name),
+    logo: airlineLogoMap[String(name)] || `https://ui-avatars.com/api/?name=${encodeURIComponent(String(name))}&background=2f8eb2&color=ffffff&size=80`,
+  }));
+
+  const availableAirlines = [{ name: 'Any cheap flight', logo: airlineLogoMap['Any cheap flight'] }].concat(
     airlineOptions.length > 0 ? airlineOptions : [
-      { name: 'RwandAir', code: 'WB' },
-      { name: 'Kenya Airways', code: 'KQ' },
-      { name: 'Ethiopian Airlines', code: 'ET' },
-      { name: 'Qatar Airways', code: 'QR' },
-      { name: 'Turkish Airlines', code: 'TK' },
-      { name: 'KLM Royal Dutch Airlines', code: 'KL' },
-      { name: 'FlyDubai', code: 'FZ' },
-      { name: 'Air Tanzania', code: 'TC' },
+      { name: 'RwandAir', logo: airlineLogoMap['RwandAir'] },
+      { name: 'Kenya Airways', logo: airlineLogoMap['Kenya Airways'] },
+      { name: 'Ethiopian Airlines', logo: airlineLogoMap['Ethiopian Airlines'] },
+      { name: 'Qatar Airways', logo: airlineLogoMap['Qatar Airways'] },
+      { name: 'Turkish Airlines', logo: airlineLogoMap['Turkish Airlines'] },
+      { name: 'KLM Royal Dutch Airlines', logo: airlineLogoMap['KLM Royal Dutch Airlines'] },
+      { name: 'FlyDubai', logo: airlineLogoMap['FlyDubai'] },
+      { name: 'Air Tanzania', logo: airlineLogoMap['Air Tanzania'] },
     ]
   );
 
@@ -405,7 +410,7 @@ export default function PortfolioPage() {
                     const isCheapOption = airline.name === 'Any cheap flight';
                     return (
                       <button
-                        key={airline.code}
+                        key={airline.name}
                         type="button"
                         onClick={() => selectAirline(airline.name)}
                         className={`w-full text-left rounded-2xl border px-5 py-4 transition-colors ${
@@ -415,13 +420,22 @@ export default function PortfolioPage() {
                         }`}
                       >
                         <div className="flex items-center justify-between gap-4">
-                          <div>
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={airline.logo}
+                              alt={`${airline.name} logo`}
+                              className="h-10 w-10 rounded-full border border-gray-200 bg-white object-contain"
+                              onError={(e) => {
+                                const target = e.currentTarget as HTMLImageElement;
+                                target.onerror = null;
+                                target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(airline.name)}&background=2f8eb2&color=ffffff&size=80`;
+                              }}
+                            />
                             <p className={`font-semibold ${isCheapOption ? 'text-[#2f8eb2]' : 'text-gray-900'}`}>{airline.name}</p>
-                            <p className="text-sm text-gray-500">Code: {airline.code}</p>
                           </div>
                           <div className="flex items-center gap-2">
                             {isCheapOption && (
-                              <span className="rounded-full bg-[#2f8eb2] px-3 py-1 text-xs font-semibold text-white">Best Price</span>
+                              <span className="rounded-full bg-[#2f8eb2] px-3 py-1 text-xs font-semibold text-white">Best Option</span>
                             )}
                             <span className={`rounded-full px-3 py-1 text-sm text-white ${isCheapOption ? 'bg-black' : 'bg-[#2f8eb2]'}`}>
                               Select
@@ -664,9 +678,6 @@ export default function PortfolioPage() {
                     </span>
                   </div>
 
-                  <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm px-2 py-1 rounded-lg">
-                    <span className="text-white font-bold text-sm">{item.price}</span>
-                  </div>
 
                   <div className="absolute bottom-0 left-0 right-0 p-5">
                     <h3 className="text-xl font-bold text-white mb-2 line-clamp-2 group-hover:text-[#2f8eb2] transition-colors">

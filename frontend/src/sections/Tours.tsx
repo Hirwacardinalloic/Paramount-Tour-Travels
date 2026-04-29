@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { MapPin, Clock, Users, DollarSign } from 'lucide-react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Clock, Users } from 'lucide-react';
 import type { Tour } from '../data/tours';
 import { getCountryFromLocation } from '../lib/utils';
 
@@ -22,11 +22,11 @@ const durations = [
 
 export default function Tours() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [tours, setTours] = useState<Tour[]>([]);
   const [filteredTours, setFilteredTours] = useState<Tour[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [priceRange, setPriceRange] = useState([0, 2000]);
+  const [selectedCategory, setSelectedCategory] = useState(() => searchParams.get('category') || 'all');
   const [selectedDuration, setSelectedDuration] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
@@ -78,7 +78,6 @@ export default function Tours() {
       const matchesSearch = tour.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            tour.description.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = selectedCategory === 'all' || tour.category === selectedCategory;
-      const matchesPrice = tour.price >= priceRange[0] && tour.price <= priceRange[1];
       
       // Duration filter logic
       let matchesDuration = true;
@@ -90,12 +89,12 @@ export default function Tours() {
         else if (selectedDuration === '5+') matchesDuration = days >= 5;
       }
       
-      return matchesSearch && matchesCategory && matchesPrice && matchesDuration;
+      return matchesSearch && matchesCategory && matchesDuration;
     });
 
     setFilteredTours(filtered);
     setCurrentPage(1);
-  }, [searchTerm, selectedCategory, priceRange, selectedDuration]);
+  }, [searchTerm, selectedCategory, selectedDuration, tours]);
 
   // Pagination
   const totalPages = Math.ceil(filteredTours.length / toursPerPage);
@@ -103,6 +102,13 @@ export default function Tours() {
     (currentPage - 1) * toursPerPage,
     currentPage * toursPerPage
   );
+
+  useEffect(() => {
+    const categoryParam = searchParams.get('category');
+    if (categoryParam && categoryParam !== selectedCategory) {
+      setSelectedCategory(categoryParam);
+    }
+  }, [searchParams, selectedCategory]);
 
   return (
     <div className="min-h-screen bg-gray-50 pt-24 pb-20">
@@ -171,28 +177,6 @@ export default function Tours() {
                 </div>
               </div>
 
-              {/* Price Range */}
-              <div className="mb-8">
-                <label className="block text-sm font-semibold text-gray-700 mb-3">
-                  <DollarSign className="inline w-4 h-4 mr-2" />
-                  Price Range (USD)
-                </label>
-                <div className="space-y-4">
-                  <input
-                    type="range"
-                    min="0"
-                    max="2000"
-                    step="50"
-                    value={priceRange[1]}
-                    onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
-                    className="w-full"
-                  />
-                  <div className="flex justify-between text-sm text-gray-600">
-                    <span>${priceRange[0]}</span>
-                    <span>${priceRange[1]}</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -219,29 +203,22 @@ export default function Tours() {
                           alt={tour.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
-                        <div className="absolute top-2 right-2 bg-[#2f8eb2] text-white px-2 py-1 rounded text-xs font-semibold">
-                          ${tour.price}
-                        </div>
                       </div>
 
-                      {/* Content */}
-                      <div className="p-4">
-                        <h3 className="font-bold text-gray-900 mb-2 line-clamp-2">{tour.name}</h3>
-                        <p className="text-gray-600 text-sm mb-3 line-clamp-2">{tour.description}</p>
-                        
-                        {/* Details */}
-                        <div className="space-y-2 text-sm text-gray-600 mb-4">
-                          <div className="flex items-center">
-                            <MapPin className="w-4 h-4 mr-2 text-[#2f8eb2]" />
-                            <span>{tour.location}</span>
-                          </div>
-                          <div className="flex items-center">
-                            <Clock className="w-4 h-4 mr-2 text-[#2f8eb2]" />
+                      <div className="p-5 space-y-4">
+                        <div>
+                          <h3 className="text-xl font-semibold text-gray-900">{tour.name}</h3>
+                          <p className="text-sm text-gray-500 mt-1">{tour.location}</p>
+                        </div>
+
+                        <div className="space-y-3 text-sm text-gray-600">
+                          <div className="flex items-center gap-2">
+                            <Clock className="w-4 h-4 text-[#2f8eb2]" />
                             <span>{tour.duration}</span>
                           </div>
-                          <div className="flex items-center">
-                            <Users className="w-4 h-4 mr-2 text-[#2f8eb2]" />
-                            <span>{tour.groupSize}</span>
+                          <div className="flex items-center gap-2">
+                            <Users className="w-4 h-4 text-[#2f8eb2]" />
+                            <span>{tour.groupSize || 'Group size varies'}</span>
                           </div>
                         </div>
 
@@ -252,13 +229,12 @@ export default function Tours() {
                               e.stopPropagation();
                               navigate(`/destinations/${tour.country}`);
                             }}
-                            className="mb-3 w-full border border-[#2f8eb2] text-[#2f8eb2] py-2 rounded-lg text-sm font-semibold hover:bg-[#2f8eb2] hover:text-white transition-colors"
+                            className="w-full border border-[#2f8eb2] text-[#2f8eb2] py-2 rounded-lg text-sm font-semibold hover:bg-[#2f8eb2] hover:text-white transition-colors"
                           >
                             View all {tour.country.charAt(0).toUpperCase() + tour.country.slice(1)} tours
                           </button>
                         )}
 
-                        {/* Button */}
                         <button className="w-full bg-[#2f8eb2] text-white py-2 rounded-lg text-sm font-semibold hover:bg-[#1f6f95] transition-colors">
                           View Details
                         </button>

@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Camera, Heart, Trees, Compass, Map } from 'lucide-react';
+import { Camera, Heart, Trees, Compass, Map, ArrowRight } from 'lucide-react';
 
 const travelStyles = [
   {
@@ -8,7 +8,7 @@ const travelStyles = [
     title: 'Wildlife Safari',
     value: 'wildlife',
     description: 'Experience the thrill of the African savannah.',
-    image: 'https://images.unsplash.com/photo-1516426122078-c8fae3f11904?w=800&q=80',
+    image: './_DSC0331.JPG',
     icon: Camera,
   },
   {
@@ -16,7 +16,7 @@ const travelStyles = [
     title: 'Gorilla Trekking',
     value: 'gorilla',
     description: 'Come face-to-face with majestic mountain gorillas.',
-    image: 'https://images.unsplash.com/photo-1565552636402-4fc8034ec3b5?w=800&q=80',
+    image: './gorilla4.jpg',
     icon: Trees,
   },
   {
@@ -24,23 +24,15 @@ const travelStyles = [
     title: 'Cultural Tours',
     value: 'cultural',
     description: 'Immerse yourself in rich local heritage.',
-    image: 'https://images.unsplash.com/photo-1560086847-aef8c5476a6e?w=800&q=80',
+    image: './intore.jpg',
     icon: Compass,
-  },
-  {
-    id: 4,
-    title: 'Honeymoon & Luxury',
-    value: 'honeymoon',
-    description: 'Unforgettable romantic escapes.',
-    image: 'https://images.unsplash.com/photo-1622396481328-9b1b78cdd9fd?w=800&q=80',
-    icon: Heart,
   },
   {
     id: 5,
     title: 'Adventure & Hiking',
     value: 'adventure',
     description: 'Conquer the spectacular peaks and trails.',
-    image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80',
+    image: './adventure.jpg',
     icon: Map,
   },
 ];
@@ -78,34 +70,37 @@ export default function TravelStyle() {
       </div>
 
       <div className="relative z-10 w-full px-4 sm:px-6 lg:px-12 xl:px-20 mx-auto max-w-[1400px]">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-10 lg:gap-12">
           {travelStyles.map((style, index) => (
             <div 
               key={style.id} 
               onClick={() => handleStyleClick(style.value)}
-              className="group cursor-pointer flex flex-col items-center animate-fade-in"
+              className="group cursor-pointer overflow-hidden rounded-[2rem] bg-white shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl animate-fade-in min-h-[28rem]"
               style={{ animationDelay: `${index * 150}ms` }}
             >
-              <div className="relative w-36 h-36 sm:w-44 sm:h-44 md:w-48 md:h-48 rounded-full overflow-hidden mb-6 shadow-md transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+              <div className="relative h-72 overflow-hidden">
                 <img 
                   src={style.image} 
                   alt={style.title}
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.15]"
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
-                {/* Subtle dark gradient for perfect modern look */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                {/* Clean white icon fading in */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0 text-white drop-shadow-md">
-                  <style.icon className="w-10 h-10" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <div className="absolute top-4 right-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-[#2E8B11] shadow-sm">
+                  <style.icon className="w-6 h-6" />
                 </div>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-[#002315] text-center mb-2 group-hover:text-[#2E8B11] transition-colors duration-300" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                {style.title}
-              </h3>
-              <p className="text-sm text-gray-500 text-center px-2 max-w-[220px]">
-                {style.description}
-              </p>
+              <div className="p-6 text-left">
+                <h3 className="text-xl font-bold text-[#002315] mb-3" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                  {style.title}
+                </h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  {style.description}
+                </p>
+                <div className="mt-6 inline-flex items-center gap-2 text-[#2E8B11] font-semibold">
+                  <span>Explore</span>
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
             </div>
           ))}
         </div>

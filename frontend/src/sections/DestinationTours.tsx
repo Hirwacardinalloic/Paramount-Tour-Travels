@@ -78,11 +78,24 @@ export default function DestinationTours() {
   const [filteredTours, setFilteredTours] = useState<Tour[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [priceRange, setPriceRange] = useState([0, 2000]);
   const [selectedDuration, setSelectedDuration] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<Record<string, number>>({});
   const toursPerPage = 12;
+
+  const handleImageNav = (tourId: string, direction: 'prev' | 'next') => {
+    setSelectedImageIndex((prev) => {
+      const currentIndex = prev[tourId] ?? 0;
+      const tour = tours.find((item) => item.id === tourId);
+      const count = tour?.images?.length || 0;
+      if (!count) return prev;
+      const nextIndex = direction === 'next'
+        ? (currentIndex + 1) % count
+        : (currentIndex - 1 + count) % count;
+      return { ...prev, [tourId]: nextIndex };
+    });
+  };
 
   const destination = country ? destinationInfo[country as keyof typeof destinationInfo] : null;
 
@@ -148,7 +161,6 @@ export default function DestinationTours() {
       const matchesSearch = tour.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            tour.description.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = selectedCategory === 'all' || tour.category === selectedCategory;
-      const matchesPrice = tour.price >= priceRange[0] && tour.price <= priceRange[1];
 
       // Duration filter logic
       let matchesDuration = true;
@@ -160,12 +172,12 @@ export default function DestinationTours() {
         else if (selectedDuration === '5+') matchesDuration = days >= 5;
       }
 
-      return matchesSearch && matchesCategory && matchesPrice && matchesDuration;
+      return matchesSearch && matchesCategory && matchesDuration;
     });
 
     setFilteredTours(filtered);
     setCurrentPage(1);
-  }, [searchTerm, selectedCategory, priceRange, selectedDuration]);
+  }, [searchTerm, selectedCategory, selectedDuration]);
 
   // Pagination
   const totalPages = Math.ceil(filteredTours.length / toursPerPage);
@@ -281,19 +293,6 @@ export default function DestinationTours() {
               </select>
             </div>
 
-            {/* Price Range */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-3">Max Price: ${priceRange[1]}</label>
-              <input
-                type="range"
-                min="0"
-                max="2000"
-                step="50"
-                value={priceRange[1]}
-                onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
-                className="w-full"
-              />
-            </div>
           </div>
         </div>
 
@@ -320,13 +319,36 @@ export default function DestinationTours() {
                     {/* Image */}
                     <div className="relative h-64 overflow-hidden">
                       <img
-                        src={tour.images[0]}
+                        src={tour.images?.[selectedImageIndex[tour.id] ?? 0] || tour.images?.[0] || '/placeholder.jpg'}
                         alt={tour.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
-                      <div className="absolute top-4 right-4 bg-[#2f8eb2] text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
-                        ${tour.price}
-                      </div>
+                      {tour.images && tour.images.length > 1 && (
+                        <>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleImageNav(tour.id, 'prev');
+                            }}
+                            className="absolute left-3 top-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white hover:bg-black transition"
+                            aria-label={`Previous photo for ${tour.name}`}
+                          >
+                            <ArrowLeft className="w-5 h-5" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleImageNav(tour.id, 'next');
+                            }}
+                            className="absolute right-3 top-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white hover:bg-black transition"
+                            aria-label={`Next photo for ${tour.name}`}
+                          >
+                            <ArrowRight className="w-5 h-5" />
+                          </button>
+                        </>
+                      )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
 
@@ -409,7 +431,6 @@ export default function DestinationTours() {
                   setSearchTerm('');
                   setSelectedCategory('all');
                   setSelectedDuration('all');
-                  setPriceRange([0, 2000]);
                 }}
                 className="bg-[#2f8eb2] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#1f6f95] transition-colors"
               >

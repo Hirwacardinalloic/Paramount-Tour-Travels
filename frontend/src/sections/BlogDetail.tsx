@@ -72,8 +72,19 @@ export default function BlogDetail() {
                     onClick={() => navigate(`/blog/${related.slug}`)}
                     className="w-full text-left rounded-3xl border border-gray-100 bg-gray-50 px-4 py-4 transition hover:border-[#2E8B11] hover:bg-[#f0fdf4]"
                   >
-                    <p className="font-semibold text-[#0f172a]">{related.title}</p>
-                    <p className="text-sm text-gray-500">{related.date}</p>
+                    <div className="flex items-center gap-4">
+                      <div className="h-20 w-20 shrink-0 overflow-hidden rounded-3xl bg-gray-100">
+                        <img
+                          src={related.image}
+                          alt={related.title}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-[#0f172a]">{related.title}</p>
+                        <p className="text-sm text-gray-500">{related.date}</p>
+                      </div>
+                    </div>
                   </button>
                 ))}
               </div>

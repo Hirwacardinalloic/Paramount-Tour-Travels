@@ -144,10 +144,9 @@ export default function About() {
                     : 'opacity-0 translate-y-6'
                 }`}
               >
-                Paramount Adventure and Travels is a value-driven business company specializing in
-                Curated Tours, Air Ticketing, Corporate Travel, Accommodation and
-                Premium Car Rentals. We are committed to
-                delivering professional and reliable services across the region.
+                At Paramount Adventure and Travels, we craft extraordinary journeys with expert care and a personal touch. 
+                From the moment you dream of your next adventure to the day you return home, we stand by your 
+                side handling every detail with precision and passion.
               </p>
               <p
                 className={`transition-all duration-700 delay-300 ${
@@ -156,10 +155,10 @@ export default function About() {
                     : 'opacity-0 translate-y-6'
                 }`}
               >
-                Our comprehensive services include event planning, production,
-                car rental, and Tourism. We pride ourselves on
-                delivering exceptional experiences that exceed our clients'
-                expectations.
+               Our approach blends seamless planning with responsible exploration, ensuring that your travels are 
+               not only stress free but also deeply meaningful. We believe the best journeys do more than show you 
+               new places they transform you. They spark curiosity, build genuine connections, and leave a lasting 
+               positive impact on both you and the communities you visit.
               </p>
               <p
                 className={`transition-all duration-700 delay-400 ${
@@ -168,9 +167,9 @@ export default function About() {
                     : 'opacity-0 translate-y-6'
                 }`}
               >
-                From corporate conferences to cultural celebrations, we bring
-                creativity, professionalism, and attention to detail to every
-                project we undertake.
+                Whether you're seeking hidden trails, cultural encounters, or once in a lifetime experiences,
+                 we turn your travels into transformative adventures connecting you deeply with the world 
+                 and its people.
               </p>
             </div>
 
@@ -193,7 +192,7 @@ export default function About() {
             </div>
           </div>
 
-          {/* Video Section */}
+          {/* Video Section */}  
           <div
             className={`relative transition-all duration-1000 delay-300 ${
               isVisible

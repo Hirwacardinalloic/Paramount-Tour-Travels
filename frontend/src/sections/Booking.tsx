@@ -115,205 +115,155 @@ const termsContent = {
     content: `Paramount Adventure and Travels - Event Management Terms (Rwanda)
 
 1. BOOKING CONFIRMATION
-   • A binding contract is formed upon confirmation of booking and receipt of deposit
-   • 50% non-refundable deposit to secure your date
-   • Full payment due 5 days before event date
-   • All prices quoted in USD or RWF as per contract
+   • A binding contract is formed upon confirmation of booking and receipt of agreed deposit.
+   • Booking and payment terms are confirmed directly with the client.
+   • Service details, dates, and venue requirements are agreed before final confirmation.
 
-2. CANCELLATION POLICY (Based on Rwandan Civil Code)
-   • 60+ days before event: 50% of deposit refunded
-   • 30-59 days before event: 25% of deposit refunded
-   • 15-29 days before event: No refund of deposit
-   • 0-14 days before event: 100% of total contract value payable
-   • All refunds processed within 30 days
+2. CANCELLATION POLICY
+   • Cancellation terms are based on the service type and notice provided.
+   • Any refund eligibility is determined according to the agreed booking terms.
+   • Our team will provide the applicable policy as part of the booking process.
 
-3. FORCE MAJEURE (Act of God)
-   • In case of events beyond reasonable control (natural disasters, government restrictions, public health emergencies)
-   • Parties may reschedule without penalty within 12 months
-   • If rescheduling impossible, refunds issued minus non-recoverable costs
-   • Documentation of force majeure event
+3. FORCE MAJEURE
+   • In case of events beyond reasonable control (natural disasters, government restrictions, public health emergencies), parties may reschedule.
+   • If rescheduling is not possible, fees are handled according to the agreed contract.
+   • Documentation of the event may be required.
 
 4. LIABILITY AND INSURANCE
-   • Paramount Adventure and Travels carries public liability insurance as by Rwandan law
-   • Maximum liability limited to total contract value
-   • Client responsible for venue rules compliance and obtaining necessary permits
-   • Client responsible for security of personal belongings
-   • Paramount Adventure and Travels not liable for third-party vendor performance
+   • Paramount Adventure and Travels carries appropriate public liability insurance.
+   • Liability is subject to applicable law and the terms agreed in the booking.
+   • Clients are responsible for venue rules compliance and required permits.
+   • The company is not liable for third-party vendor performance beyond its control.
 
 5. PAYMENT TERMS
-   • Payments accepted: Bank transfer, Mobile Money (MTN MoMo, Airtel Money), Cash
-   • All payments must be in RWF unless otherwise agreed
-   • VAT (18%) included where applicable as per Rwanda Revenue Authority
-   • Late payments subject to 5% penalty per week
-   • Non-payment constitutes contract breach
+   • Accepted payment methods include bank transfer, mobile money, and cash.
+   • Specific payment and deposit terms are agreed directly with each client.
+   • Late payments may be subject to the terms outlined in the confirmed agreement.
 
 6. CLIENT RESPONSIBILITIES
-   • Final guest count 10 days before event
-   • Ensure venue access for setup 4 hours before event
-   • Obtain all necessary permits and licenses (Rwanda National Police, RURA, etc.)
-   • Provide dietary requirements 7 days in advance
-   • Comply with all Rwandan laws and regulations during event
+   • Provide final guest count and event requirements in a timely manner.
+   • Ensure venue access for setup according to the agreed schedule.
+   • Provide dietary requirements and special requests before the event.
+   • Comply with all applicable Rwanda laws and venue regulations.
 
 7. POST-EVENT
-   • Feedback form sent within 3 days
-   • Photos/videos delivered within 21 days
-   • Equipment removal within agreed timeframe (overtime charges apply)
-   • Damage to equipment charged at replacement cost
+   • Feedback and follow-up communication are provided after the event.
+   • Any additional services or changes after the event are handled per the contract.
 
 8. DISPUTE RESOLUTION
-   • Any disputes shall first be resolved through negotiation
-   • If unresolved, mediation through Rwanda Arbitration Center
-   • Governing law: Laws of the Republic of Rwanda
-   • Courts of Kigali have exclusive jurisdiction`,
+   • Disputes are first addressed through negotiation.
+   • If unresolved, mediation may be pursued.
+   • The governing law is based on the terms agreed in the contract.
+   • Any jurisdiction details are provided in the booking agreement.`,
   },
   car: {
     title: 'Car Rental Terms and Conditions',
     content: `Paramount Adventure and Travels - Car Rental Terms (Rwanda)
 
 1. RENTAL REQUIREMENTS
-   • Valid Rwandan or International Driving Permit (minimum 2 years)
-   • Minimum age: 25 years
-   • National ID or Passport for verification
-   • Security deposit:
-     - Standard vehicles: 500,000 RWF
-     - Luxury vehicles: 1,000,000 RWF
-     - Buses: 1,500,000 RWF
-   • Deposit returned within 7 days after inspection
+   • Valid Rwandan or international driving permit is required.
+   • Minimum age and identification requirements are confirmed at booking.
+   • A security deposit may be required and is handled according to the booking terms.
 
-2. INSURANCE (As per Rwandan Law)
-   • Third-party liability insurance included (RC - Responsabilité Civile)
-   • Collision Damage Waiver (CDW) optional at 15,000 RWF/day
-   • Theft protection included
-   • Excess liability: 500,000 RWF per incident
-   • Client responsible for first 500,000 RWF of any damage
+2. INSURANCE
+   • Third-party liability coverage is included where applicable.
+   • Additional insurance options are available and discussed during booking.
+   • Clients are responsible for damages not covered by insurance.
 
 3. FUEL POLICY
-   • Vehicle provided with full tank
-   • Return with full tank or fuel charges apply at 2,000 RWF/L
-   • Pre-paid fuel option available at 50,000 RWF for half tank
+   • Vehicles are provided with a full tank where applicable.
+   • Fuel policy and refueling requirements are confirmed in the rental agreement.
+   • Optional pre-paid fuel packages may be offered.
 
 4. MILEAGE AND TRAVEL
-   • Unlimited mileage within Rwanda
-   • Cross-border travel requires prior approval (additional fees apply)
-   • Permitted countries: Uganda, DRC, Burundi, Tanzania (with permits)
-   • Cross-border permit: 200,000 RWF + visa fees
-   • GPS tracking mandatory for all vehicles
+   • Mileage allowances and cross-border travel permissions are agreed per booking.
+   • Cross-border travel requires prior approval and proper documentation.
+   • Additional documentation or permits may be needed for neighboring countries.
 
 5. DRIVER SERVICE
-   • Professional drivers available at 30,000 RWF/day
-   • Driver hours: 8:00 AM - 8:00 PM standard
-   • Overtime: 5,000 RWF/hour after 8:00 PM
-   • Driver accommodation for multi-day trips (client responsibility)
+   • Driver options and service hours are confirmed at booking.
+   • Overtime and accommodation requirements are handled through the rental agreement.
+   • Driver arrangements are subject to availability and confirmed terms.
 
 6. CANCELLATION AND REFUNDS
-   • Free cancellation up to 72 hours before pickup
-   • 50% charge within 72 hours of pickup
-   • No-show: 100% charge
-   • Early returns: No refund for unused days
-   • All cancellations must be in writing
+   • Cancellation terms are agreed upon during the booking process.
+   • Refund eligibility is based on notice period and booking terms.
+   • All cancellations must be communicated in writing.
 
 7. DAMAGE AND ACCIDENTS
-   • Report any damage immediately (within 24 hours)
-   • Police report for all accidents (Rwanda National Police)
-   • Client responsible for damage during rental period
-   • Interior smoking fine: 250,000 RWF
-   • Loss of keys: 150,000 RWF replacement fee
+   • Report all incidents promptly and follow local reporting procedures.
+   • Clients are responsible for vehicle damages as outlined in the rental agreement.
+   • Additional fees may apply for loss or damage to the vehicle.
 
 8. ADDITIONAL DRIVERS
-   • Additional drivers allowed at 10,000 RWF/day
-   • Must meet same requirements as primary driver
-   • Maximum 3 additional drivers per vehicle
-   • All drivers must sign rental agreement
+   • Additional drivers are permitted subject to booking approval.
+   • All drivers must meet the same requirements as the primary driver.
+   • Additional driver terms are included in the rental agreement.
 
 9. RWANDA-SPECIFIC REGULATIONS
-   • Compliance with RURA (Rwanda Utilities Regulatory Authority) rules
-   • Seatbelts mandatory for all passengers
-   • No alcohol consumption while driving (zero tolerance)
-   • Speed limits strictly enforced
-   • Child seats mandatory for children under 5`,
+   • All rentals comply with RURA and Rwanda traffic regulations.
+   • Seat belts are mandatory for all passengers.
+   • No alcohol consumption is allowed while driving.
+   • Local road rules and safety regulations apply throughout the rental period.`,
   },
   tour: {
     title: 'Tourism Package Terms and Conditions',
     content: `Paramount Adventure and Travels - Tourism Terms (Rwanda)
 
 1. PACKAGE INCLUSIONS
-   • As specified in package description
-   • All entrance fees and permits included (including gorilla permits)
-   • Meals as specified in itinerary
-   • Accommodation as booked (star-rated hotels as per RDB classification)
-   • Professional English/French-speaking guide (RDB certified)
-   • Ground transportation in private vehicle with A/C
-   • Bottled water during tours
+   • As specified in package description.
+   • Entrance fees and permits are handled as agreed.
+   • Meals and accommodation are provided as described in the itinerary.
+   • Guides and ground transportation are included where noted.
 
 2. EXCLUSIONS
-   • International flights
-   • Travel insurance (MANDATORY for all tourists)
-   • Visa fees ($50 USD for single entry - subject to change)
-   • Personal expenses (souvenirs, laundry, telephone)
-   • Tips and gratuities (recommended: $10-20/day)
-   • Alcoholic beverages
-   • COVID-19 testing requirements
+   • International flights are not included.
+   • Travel insurance is required and arranged separately.
+   • Personal expenses, visa processing, and tips are not included.
+   • Additional services may be requested at extra cost.
 
 3. BOOKING AND PAYMENT
-   • 30% deposit to confirm booking
-   • Balance due 45 days before travel
-   • Gorilla permits require FULL PAYMENT at time of booking
-   • Permits are non-transferable and non-refundable
-   • Group discounts available for 6+ pax
-   • All prices in USD or equivalent RWF (central bank rate)
+   • Booking and payment terms are confirmed with each client.
+   • Deposit and balance details are specified in the booking agreement.
+   • Permit payment timing follows permit availability and regulations.
+   • Special offers or group arrangements are applied through booking.
 
-4. RWANDA-SPECIFIC CANCELLATION POLICY
-   • 60+ days before departure: 75% refund
-   • 30-59 days before departure: 50% refund
-   • 15-29 days before departure: 25% refund
-   • 0-14 days before departure: No refund
-   • Gorilla permits: NON-REFUNDABLE under any circumstances
-   • Name changes on permits: $50 fee (subject to RDB policy)
+4. CANCELLATION POLICY
+   • Cancellation terms are agreed at the time of booking.
+   • Refund eligibility depends on notice period and booking terms.
+   • Some permits or services may have separate refund rules.
 
-5. HEALTH AND SAFETY (Rwanda Requirements)
-   • Travel insurance with medical evacuation MANDATORY
-   • Yellow fever vaccination certificate REQUIRED for entry
-   • Malaria prophylaxis strongly recommended
-   • COVID-19 requirements as per current Rwanda Biomedical Centre guidelines
-   • Declare any medical conditions in writing
-   • Emergency evacuation insurance recommended
+5. HEALTH AND SAFETY
+   • Travel insurance with medical coverage is strongly recommended.
+   • Required travel documents and vaccinations should be in place.
+   • Clients should disclose any medical conditions prior to travel.
+   • Safety guidance is provided for all tour activities.
 
-6. GORILLA TREKKING SPECIFIC
-   • Age limit: 15 years and above (strictly enforced by RDB)
-   • Physical fitness (trekking can take 2-6 hours)
-   • Porter service available at $20 (supports local communities)
-   • Maximum 1 hour with gorillas once located
-   • No flash photography allowed
-   • Maintain 7 meters distance from gorillas
-   • No eating or drinking near gorillas
+6. GORILLA TREKKING
+   • Gorilla trekking is subject to park regulations and permit availability.
+   • Participants should meet the applicable fitness and health requirements.
+   • Porter service and other support options are available on request.
+   • Wildlife viewing rules and etiquette must be followed.
 
 7. ITINERARY CHANGES
-   • RDB reserves right to modify trekking groups
-   • Weather-related changes accommodated where possible
-   • Equivalent alternatives provided
-   • No refund for voluntary changes
-   • Force majeure handled as per Rwanda Tourism policy
+   • Itineraries may change due to weather, park requirements, or logistics.
+   • Alternative arrangements will be provided when necessary.
+   • Force majeure situations are handled according to the booking agreement.
 
 8. RESPONSIBILITY AND LIABILITY
-   • Paramount Adventure and Travels acts as intermediary for services
-   • Not liable for acts of God, weather, political instability
-   • Clients responsible for valid passport (6 months validity)
-   • Baggage at owner's risk throughout tour
-   • Compliance with Rwanda National Police and RDB regulations
+   • Paramount Adventure and Travels coordinates services on behalf of clients.
+   • Clients are responsible for valid travel documents and local compliance.
+   • Baggage is carried at owner’s risk unless otherwise specified.
 
-9. RWANDA TOURISM BOARD REGULATIONS
-   • All tours comply with RDB sustainable tourism guidelines
-   • Community benefit sharing included
-   • Environmental protection rules must be followed
-   • No single-use plastics in national parks
-   • Respect local customs and traditions
+9. SUSTAINABILITY AND LOCAL REGULATIONS
+   • Tours comply with Rwanda Development Board guidelines.
+   • Respect for local communities and the environment is required.
+   • Plastic waste and littering are discouraged in all locations.
 
 10. EMERGENCY PROCEDURES
-    • 24/7 emergency contact provided
-    • Evacuation procedures explained
-    • Nearest medical facilities identified
-    • Embassy contact details provided
-    • Insurance claim assistance available`,
+    • Emergency contact details are provided with booking confirmation.
+    • Support is available for medical and travel emergencies.
+    • Embassy and local assistance information is shared on request.`,
   },
 };
 
@@ -609,7 +559,6 @@ export default function Booking() {
         venuePreference: eventForm.venuePreference,
         selectedServices: eventForm.selectedServices,
         notes: eventForm.message,
-        totalPrice: 5000 // Base event price
       };
     } else if (selectedType === 'car') {
       // STEP 1: Log form data before sending
@@ -638,7 +587,6 @@ export default function Booking() {
         carSelectedServices: carForm.selectedServices,
         numberOfCars: carForm.numberOfCars,
         notes: carForm.message,
-        totalPrice: 85 * (carForm.numberOfCars || 1)
       };
       
       // STEP 2: Log what's being sent to email
@@ -662,7 +610,6 @@ export default function Booking() {
         numberOfTravelers: tourForm.numberOfTravelers,
         tourSelectedServices: tourForm.selectedServices,
         specialRequests: tourForm.specialRequests,
-        totalPrice: 150 * (tourForm.numberOfTravelers || 1)
       };
     }
 
@@ -689,7 +636,6 @@ export default function Booking() {
         customerId: customerId,
         serviceId: completeData.service_id,
         guests: selectedType === 'event' ? eventForm.numberOfGuests : selectedType === 'tour' ? tourForm.numberOfTravelers : carForm.numberOfCars,
-        totalPrice: completeData.totalPrice,
         status: 'pending',
         paymentStatus: 'unpaid',
         bookingNumber: newBookingNumber,

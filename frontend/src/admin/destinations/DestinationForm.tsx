@@ -171,6 +171,15 @@ export default function DestinationForm() {
     setFormData(prev => ({ ...prev, activities: prev.activities.filter((_, i) => i !== index) }));
   };
 
+  const updateItineraryItem = (index: number, field: keyof ItineraryDay, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      itinerary: prev.itinerary.map((item, idx) =>
+        idx === index ? { ...item, [field]: value } : item
+      )
+    }));
+  };
+
   const addImageUrl = () => {
     if (!newImageUrl.trim()) return;
     setFormData(prev => ({ ...prev, images: [...prev.images, newImageUrl.trim()] }));
@@ -535,22 +544,46 @@ export default function DestinationForm() {
               <div className="mt-6 space-y-4">
                 {formData.itinerary.map((item, idx) => (
                   <div key={idx} className="rounded-3xl border border-gray-200 bg-gray-50 p-4">
-                    <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-start justify-between gap-4 mb-3">
                       <div>
                         <p className="text-sm uppercase tracking-[0.2em] text-gray-500">Day {item.day}</p>
-                        <h4 className="text-lg font-semibold text-gray-900">{item.title}</h4>
                       </div>
                       <button type="button" onClick={() => removeItineraryDay(idx)} className="text-red-500 hover:text-red-600">
                         <X className="w-5 h-5" />
                       </button>
                     </div>
-                    <p className="mt-3 text-gray-700">{item.description}</p>
-                    {(item.overnight || item.meals) && (
-                      <div className="mt-3 flex flex-wrap gap-3 text-sm text-gray-600">
-                        {item.overnight && <span className="rounded-full bg-white px-3 py-1 border border-gray-200">Overnight: {item.overnight}</span>}
-                        {item.meals && <span className="rounded-full bg-white px-3 py-1 border border-gray-200">Meals: {item.meals}</span>}
+                    <div className="grid gap-4">
+                      <input
+                        type="text"
+                        value={item.title}
+                        onChange={(e) => updateItineraryItem(idx, 'title', e.target.value)}
+                        className="w-full px-4 py-3 border border-gray-200 rounded-2xl"
+                        placeholder="Day title"
+                      />
+                      <textarea
+                        rows={3}
+                        value={item.description}
+                        onChange={(e) => updateItineraryItem(idx, 'description', e.target.value)}
+                        className="w-full px-4 py-3 border border-gray-200 rounded-2xl"
+                        placeholder="Day description"
+                      />
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <input
+                          type="text"
+                          value={item.overnight || ''}
+                          onChange={(e) => updateItineraryItem(idx, 'overnight', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-200 rounded-2xl"
+                          placeholder="Overnight location (optional)"
+                        />
+                        <input
+                          type="text"
+                          value={item.meals || ''}
+                          onChange={(e) => updateItineraryItem(idx, 'meals', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-200 rounded-2xl"
+                          placeholder="Meals (optional)"
+                        />
                       </div>
-                    )}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -597,6 +630,66 @@ export default function DestinationForm() {
               <img src={formData.image} alt="Destination preview" className="w-full h-64 object-cover" />
             </div>
           )}
+
+          <div className="rounded-3xl border border-gray-200 bg-white p-6 mt-6">
+            <h3 className="text-lg font-semibold mb-4 text-gray-900">Gallery Images</h3>
+            <div className="grid gap-4 lg:grid-cols-2">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Add image URL</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={newImageUrl}
+                    onChange={(e) => setNewImageUrl(e.target.value)}
+                    className="flex-1 px-4 py-3 border border-gray-200 rounded-2xl"
+                    placeholder="Enter image URL"
+                  />
+                  <button
+                    type="button"
+                    onClick={addImageUrl}
+                    className="px-4 py-3 bg-[#2f8eb2] text-white rounded-2xl hover:bg-[#1f6f95]"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Upload gallery images</label>
+                <div className="relative">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleGalleryImageUpload}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  />
+                  <button
+                    type="button"
+                    className="w-full px-4 py-3 border border-dashed border-gray-300 rounded-2xl text-gray-600 hover:border-[#2f8eb2] hover:text-[#2f8eb2] transition"
+                  >
+                    {uploading ? 'Uploading...' : 'Choose files'}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {formData.images.length > 0 && (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-6">
+                {formData.images.map((img, idx) => (
+                  <div key={idx} className="relative rounded-3xl overflow-hidden border border-gray-200">
+                    <img src={img} alt={`Gallery ${idx + 1}`} className="w-full h-40 object-cover" />
+                    <button
+                      type="button"
+                      onClick={() => removeImage(idx)}
+                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
 
           <div className="flex justify-end gap-3">
             <button

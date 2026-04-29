@@ -8,7 +8,7 @@ const destinations = [
     id: 1,
     title: 'Rwanda',
     description: 'Experience the Land of a Thousand Hills with gorilla trekking, wildlife safaris, and vibrant culture.',
-    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&q=80',
+     image: '/gorilla1.jpg',
     icon: Globe,
     highlights: [
       'Mountain Gorilla Trekking',
@@ -22,7 +22,7 @@ const destinations = [
     id: 2,
     title: 'Uganda',
     description: 'Discover the Pearl of Africa with chimpanzee tracking, Nile River adventures, and diverse wildlife.',
-    image: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=800&q=80',
+    image: '/uganda.JPG',
     icon: Globe,
     highlights: [
       'Chimpanzee Tracking',
@@ -36,7 +36,7 @@ const destinations = [
     id: 3,
     title: 'Kenya',
     description: 'Explore the cradle of humanity with Maasai culture, big five safaris, and stunning landscapes.',
-    image: 'https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?w=800&q=80',
+    image: '/kenya.jpg',
     icon: Globe,
     highlights: [
       'Maasai Mara Safaris',
@@ -50,7 +50,7 @@ const destinations = [
     id: 4,
     title: 'Tanzania',
     description: 'Witness the Great Migration, climb Mount Kilimanjaro, and experience the Serengeti plains.',
-    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80',
+    image: '/Tanzania.png',
     icon: Globe,
     highlights: [
       'Serengeti Great Migration',
